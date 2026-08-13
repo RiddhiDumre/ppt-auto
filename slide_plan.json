@@ -1,0 +1,681 @@
+{
+  "proposalName": "Naik Wealth - Wealth Management Platform Proposal",
+  "dynamicSlides": [
+    {
+      "layout": "ROW_LIST",
+      "title": "Presentation Index",
+      "tagline": "Overview of the proposal sections",
+      "rows": [
+        {
+          "title": "1.0 Our Understanding",
+          "body": "Key insights from the brief and research."
+        },
+        {
+          "title": "2.0 Our Strategic POV",
+          "body": "Our unique perspective on advisor-led wealth management."
+        },
+        {
+          "title": "3.0 The Prototype",
+          "body": "Visual representation of the proposed solution."
+        },
+        {
+          "title": "4.0 Overview & Systems",
+          "body": "Scope of the platform and its five interconnected systems."
+        },
+        {
+          "title": "5.0 Implementation Approach",
+          "body": "Our methodology from proposal to product launch."
+        },
+        {
+          "title": "6.0 Technical Architecture & Stack",
+          "body": "Technology choices and AI integration strategy."
+        }
+      ],
+      "theme": "light"
+    },
+    {
+      "layout": "ROW_LIST",
+      "title": "Our Understanding of the Brief",
+      "tagline": "Key takeaways from Naik Wealth's requirements",
+      "rows": [
+        {
+          "title": "What Naik Wealth Wants",
+          "body": "A platform extending 35+ years of advisor-led, relationship-first investing into a digital experience."
+        },
+        {
+          "title": "What We're Deliberately Not Doing",
+          "body": "Not a replacement for the advisor, but an extension. Technology serves the relationship, not the other way around."
+        },
+        {
+          "title": "Scope",
+          "body": "Phase 1 core platform for web and mobile (iOS/Android), plus advisory team tools."
+        }
+      ],
+      "theme": "light"
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "The Business Goal",
+      "tagline": "The single north-star metric this platform is built to serve",
+      "leftText": "Achieve ₹40,000 Cr Assets Under Management (AUM).",
+      "rightText": "This platform is specifically designed to serve this overarching business objective, driving growth and client retention.",
+      "divider": true,
+      "theme": "dark"
+    },
+    {
+      "layout": "ROW_LIST",
+      "title": "Three Pillars to Reach the Goal",
+      "tagline": "The client relationship is the anchor connecting all three growth drivers",
+      "rows": [
+        {
+          "title": "Increase Top-Ups",
+          "body": "Encourage existing customers to invest more, more often."
+        },
+        {
+          "title": "Reduce Exits",
+          "body": "Keep customers invested for longer, minimizing churn."
+        },
+        {
+          "title": "Increase Referrals",
+          "body": "Leverage word-of-mouth from happy customers as the primary acquisition engine."
+        }
+      ],
+      "theme": "light"
+    },
+    {
+      "layout": "ROW_LIST",
+      "title": "Key Research Findings",
+      "tagline": "Insights shaping our strategic approach",
+      "rows": [
+        {
+          "title": "Transactional Platforms",
+          "body": "Most wealth platforms (Dezerv, ET Money) are transactional with minimal advisor presence."
+        },
+        {
+          "title": "Desire for Calm",
+          "body": "Investors want simplification, not more data. Platforms that simplify win on experience."
+        },
+        {
+          "title": "Relationship as Growth Lever",
+          "body": "For Naik Wealth, the relationship has always been the strongest growth driver."
+        },
+        {
+          "title": "Communication is Key",
+          "body": "72% of clients leave advisors due to poor communication, ahead of performance."
+        }
+      ],
+      "theme": "light"
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "Our Strategic Point of View",
+      "tagline": "Beyond just wealth growth, focusing on trust",
+      "leftText": "Advisory isn't only about maximising wealth growth for your customers.",
+      "rightText": "The advisor should provide a sense of trust — and that relationship is what keeps someone invested through a bad quarter, not returns alone.",
+      "divider": true,
+      "theme": "light"
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "Reimagining the Wealth App",
+      "tagline": "From portfolio-led to advisor-led, embracing 'phygital'",
+      "leftText": "So what if we turned the typical wealth app around from portfolio-led to advisor-led?",
+      "rightText": "Not purely digital but phygital. Digital where it helps, personal where it matters — because anything fully digital works against a relationship-driven model.",
+      "divider": true,
+      "theme": "light"
+    },
+    {
+      "layout": "ROW_LIST",
+      "title": "Our Solution: Advisor-Led Experience",
+      "tagline": "Key features reflecting the relationship-first approach",
+      "rows": [
+        {
+          "title": "Open with Advisor's Voice",
+          "body": "The homepage leads with the advisor’s note, not a portfolio value."
+        },
+        {
+          "title": "Make the Relationship Visible",
+          "body": "Visits, milestones, check-ins – a dedicated place in the app."
+        },
+        {
+          "title": "Recommendations Traceable to Conversation",
+          "body": "Read as a reflection of a real advisor conversation, not system-generated."
+        },
+        {
+          "title": "A Reminder, Never a Replacement",
+          "body": "The app's role is to reflect the relationship, not replace direct communication channels."
+        }
+      ],
+      "theme": "light"
+    },
+    {
+      "layout": "SECTION_STARTER",
+      "number": "03",
+      "title": "The Prototype",
+      "theme": "green"
+    },
+    {
+      "layout": "SECTION_STARTER",
+      "number": "04",
+      "title": "Overview & Systems",
+      "theme": "green"
+    },
+    {
+      "layout": "ROW_LIST",
+      "title": "Five Systems, One Platform",
+      "tagline": "A premium digital engagement layer for high-value investors",
+      "rows": [
+        {
+          "title": "Mobile App",
+          "body": "For investors — iOS & Android."
+        },
+        {
+          "title": "Web App",
+          "body": "For investors — desktop & tablet."
+        },
+        {
+          "title": "Middleware",
+          "body": "Central orchestration layer."
+        },
+        {
+          "title": "Advisor Copilot",
+          "body": "For the advisory team — mobile."
+        },
+        {
+          "title": "Back Office",
+          "body": "For compliance & operations — web."
+        }
+      ],
+      "theme": "light"
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "System Interconnections",
+      "tagline": "Orchestrating investor and team interactions",
+      "leftText": "Investor-facing systems: Mobile App & Web App. Designed for seamless client engagement and portfolio visibility.",
+      "rightText": "Naik Wealth team systems: Advisor Copilot & Back Office. Supported by Middleware for central orchestration, data flow, and integration with third-party services.",
+      "divider": true,
+      "theme": "light"
+    },
+    {
+      "layout": "SECTION_STARTER",
+      "number": "04",
+      "title": "Mobile & Web App Modules",
+      "theme": "green"
+    },
+    {
+      "layout": "ROW_LIST",
+      "title": "Investor App Modules (1/2)",
+      "tagline": "Core functionalities for mobile and web applications",
+      "rows": [
+        {
+          "title": "M1: Onboarding & Registration",
+          "body": "OTP, PAN, KRA, profile setup, orientation, prospective client capture."
+        },
+        {
+          "title": "M2: Investment Account Setup",
+          "body": "Risk profiling, video KYC, bank linking, nominee, FATCA/CRS, strategy selection."
+        },
+        {
+          "title": "M3: Financial Profile & Wealth Aggregation",
+          "body": "Account Aggregator consent, external wealth import, goal audit, consolidated view."
+        },
+        {
+          "title": "M4: Home & Portfolio",
+          "body": "Advisor voice-led home, full portfolio view with XIRR/CAGR, goal health, holdings."
+        },
+        {
+          "title": "M5: Recommendations",
+          "body": "Nudges on home, full detail in Portfolio. Approve/reject/discuss, bundled actions, tax at exit."
+        },
+        {
+          "title": "M6: Goals & Planning",
+          "body": "Goal library, adaptive formation, lifecycle chart, future readiness, inflation adjustment, calculators."
+        }
+      ],
+      "theme": "light"
+    },
+    {
+      "layout": "ROW_LIST",
+      "title": "Investor App Modules (2/2)",
+      "tagline": "Advanced features and account management",
+      "rows": [
+        {
+          "title": "M7: Reports & Statements",
+          "body": "Capital gains, transaction history, CAS, ELSS proof, performance reports, export options."
+        },
+        {
+          "title": "M8: Advisory & Relationship ('Together')",
+          "body": "Advisor/team profiles, communication links, market commentary, scheduling, relationship timeline."
+        },
+        {
+          "title": "M9: Research & Content",
+          "body": "Fund factsheets, comparison, market updates, educational library, inline explainers."
+        },
+        {
+          "title": "M10: Notifications & Alerts",
+          "body": "Transaction, SIP, portfolio, document, goal, and market/advisory alerts via FCM."
+        },
+        {
+          "title": "M11: Account & Settings",
+          "body": "Profile, risk profile, bank/nominee, notification preferences, display, security, KYC status."
+        },
+        {
+          "title": "M12: Security & Authentication",
+          "body": "OTP login, biometric, session management, transaction 2FA, device management."
+        }
+      ],
+      "theme": "light"
+    },
+    {
+      "layout": "SECTION_STARTER",
+      "number": "04",
+      "title": "Middleware, Advisor Copilot & Back Office",
+      "theme": "green"
+    },
+    {
+      "layout": "ROW_LIST",
+      "title": "Middleware Modules (1/2)",
+      "tagline": "The central engine for platform operations and integrations",
+      "rows": [
+        {
+          "title": "W1: API Gateway",
+          "body": "Screen-shaped API composition, caching, rate limiting, graceful degradation."
+        },
+        {
+          "title": "W2: Authentication & Session",
+          "body": "OTP, biometric sessions, 2FA, lockout, multi-device management."
+        },
+        {
+          "title": "W3: Investwell Mint Connector",
+          "body": "Portfolio data, holdings, transaction history sync."
+        },
+        {
+          "title": "W4: Account Aggregator Connector",
+          "body": "Consent lifecycle, data fetch, renewal, failure handling (Setu integration)."
+        },
+        {
+          "title": "W5: KYC/KRA Connector",
+          "body": "KRA status queries, video KYC integration via Digio, status lifecycle."
+        },
+        {
+          "title": "W6: Market Data & Utilities",
+          "body": "NAV feed, factsheets, NACH mandate registration, market index feeds."
+        }
+      ],
+      "theme": "light"
+    },
+    {
+      "layout": "ROW_LIST",
+      "title": "Middleware Modules (2/2)",
+      "tagline": "Advanced engines and compliance support",
+      "rows": [
+        {
+          "title": "W8: Recommendation Engine",
+          "body": "Recommendation state machine, advisor-led enforcement, goal-impact computation."
+        },
+        {
+          "title": "W9: Goals & Projection Engine",
+          "body": "Lifecycle projections, inflation adjustment, future readiness, adaptive checkpoints."
+        },
+        {
+          "title": "W10: Tax Computation Engine",
+          "body": "FIFO lot-level STCG/LTCG, exemptions, 'wait and save' advisory."
+        },
+        {
+          "title": "W11: Behavioural Event Tracking",
+          "body": "Event ingestion, pattern detection, nudge triggers, throttling."
+        },
+        {
+          "title": "W12: Notification Orchestration",
+          "body": "Push (Firebase), email, channel preferences, frequency controls."
+        },
+        {
+          "title": "W13: Content & Compliance API",
+          "body": "Serves maker-checker-gated commentary and recommendations to the app."
+        }
+      ],
+      "theme": "light"
+    },
+    {
+      "layout": "ROW_LIST",
+      "title": "Advisor Copilot Modules",
+      "tagline": "Essential tools for the advisory team",
+      "rows": [
+        {
+          "title": "AC1: Client Directory",
+          "body": "Client list, status, profile completion, account setup progress, quick actions."
+        },
+        {
+          "title": "AC2: Recommendation Authoring",
+          "body": "Create individual/bundled recommendations, submit for compliance, track approval."
+        },
+        {
+          "title": "AC3: Client Conversations & Notes",
+          "body": "Log call summaries, meeting notes, WhatsApp follow-ups. Feeds relationship timeline."
+        },
+        {
+          "title": "AC4: Visits & Scheduling",
+          "body": "Schedule and log in-person visits, mark founder visits, coordinate calendar."
+        },
+        {
+          "title": "AC5: Client Insights",
+          "body": "Portfolio health, drift alerts, upcoming milestones, behavioural nudges for advisor action."
+        },
+        {
+          "title": "AC6: Push & Handoff",
+          "body": "Push notifications for compliance approvals, investor responses, RM handoff workflows."
+        }
+      ],
+      "theme": "light"
+    },
+    {
+      "layout": "ROW_LIST",
+      "title": "Back Office Modules",
+      "tagline": "Operational and compliance management for Naik Wealth",
+      "rows": [
+        {
+          "title": "BO1: Cohort Management",
+          "body": "Create and manage user cohorts for targeted recommendations and commentary."
+        },
+        {
+          "title": "BO2: Content Publishing",
+          "body": "Author and publish market commentary (text, video, podcast) and educational content."
+        },
+        {
+          "title": "BO3: Maker-Checker Workflow",
+          "body": "Compliance review queue for recommendations and investor-facing content."
+        },
+        {
+          "title": "BO4: Audit & Compliance",
+          "body": "Full audit logs, consent records, operational reports for compliance."
+        },
+        {
+          "title": "BO5: CRM Integration",
+          "body": "Zoho CRM sync for leads, conversions, call requests, task creation."
+        },
+        {
+          "title": "BO6: Operational Dashboards",
+          "body": "Goal history, recommendation analytics, call queue, funnel metrics."
+        }
+      ],
+      "theme": "light"
+    },
+    {
+      "layout": "SECTION_STARTER",
+      "number": "05",
+      "title": "Implementation Approach",
+      "theme": "green"
+    },
+    {
+      "layout": "ROW_LIST",
+      "title": "Our Implementation Approach",
+      "tagline": "How we move from a signed proposal to a shipped product",
+      "rows": [
+        {
+          "title": "01 Discovery",
+          "body": "Stakeholder interviews, competitive study, API review, workflow mapping, detailed project plan."
+        },
+        {
+          "title": "02 Strategy",
+          "body": "Information architecture, user journey maps, UX strategy, wireframes for all systems."
+        },
+        {
+          "title": "03 Design",
+          "body": "High-fidelity UI, design system, data-heavy component design, prototype delivery, design QA."
+        },
+        {
+          "title": "04 Development",
+          "body": "React Native/React/Node.js development, third-party integrations, embedded QA, UAT, deployment."
+        }
+      ],
+      "theme": "light"
+    },
+    {
+      "layout": "SECTION_STARTER",
+      "number": "06",
+      "title": "Technical Architecture & Stack",
+      "theme": "green"
+    },
+    {
+      "layout": "ROW_LIST",
+      "title": "Recommended Technology Stack",
+      "tagline": "Robust and scalable choices for the platform",
+      "rows": [
+        {
+          "title": "Mobile App (investors)",
+          "body": "React Native — iOS & Android"
+        },
+        {
+          "title": "Web App (investors)",
+          "body": "React / Next.js — desktop & tablet"
+        },
+        {
+          "title": "Middleware",
+          "body": "Python/Node.js — auth, business logic, integrations, engines"
+        },
+        {
+          "title": "Advisor Copilot (mobile)",
+          "body": "React Native — iOS & Android"
+        },
+        {
+          "title": "Back Office (web)",
+          "body": "React / Next.js — role-specific compliance & ops workflows"
+        },
+        {
+          "title": "Database & Caching",
+          "body": "PostgreSQL (transactional), Redis / Memcache (caching)"
+        }
+      ],
+      "theme": "light"
+    },
+    {
+      "layout": "ROW_LIST",
+      "title": "AI Integration Strategy",
+      "tagline": "Leveraging AI responsibly in wealth management",
+      "rows": [
+        {
+          "title": "Advisory Recommendations",
+          "body": "Human-authored and compliance-reviewed. AI models will not produce financial advice due to high compliance weight."
+        },
+        {
+          "title": "Market Commentary & Content",
+          "body": "Market commentary videos, educational content, and general market updates can be AI-generated."
+        },
+        {
+          "title": "AI-Driven Design & Development",
+          "body": "AI can enhance the design and development of investor and client-facing applications."
+        }
+      ],
+      "theme": "light"
+    },
+    {
+      "layout": "SECTION_STARTER",
+      "number": "06",
+      "title": "Security, Performance & QA",
+      "theme": "green"
+    },
+    {
+      "layout": "ROW_LIST",
+      "title": "Security, Performance & Compliance",
+      "tagline": "Enterprise-grade fundamentals across every system",
+      "rows": [
+        {
+          "title": "Security",
+          "body": "OWASP Top 10, API security, OTP/biometric auth, TLS 1.3, AES-256, no full Aadhaar storage, RBAC."
+        },
+        {
+          "title": "Performance",
+          "body": "API response time targets, distributed caching, last-known-value fallback, background data sync, load testing."
+        },
+        {
+          "title": "Compliance",
+          "body": "Maker-checker for content/recommendations, timestamped consent ledger, full audit trail, MFD-aligned workflow."
+        }
+      ],
+      "theme": "light"
+    },
+    {
+      "layout": "SECTION_STARTER",
+      "number": "07",
+      "title": "Governance Methodology",
+      "theme": "green"
+    },
+    {
+      "layout": "ROW_LIST",
+      "title": "Governance Methodology",
+      "tagline": "Ensuring transparent and efficient engagement",
+      "rows": [
+        {
+          "title": "Daily Reviews",
+          "body": "Daily project check-ins with the client to discuss progress and blockers."
+        },
+        {
+          "title": "Weekly Reviews",
+          "body": "Weekly project review with the Naik Wealth team covering dependencies, risks, and design handoffs."
+        },
+        {
+          "title": "Documentation",
+          "body": "Versioned technical architecture, API specs, data model, workflows, test cases, and handover documentation."
+        },
+        {
+          "title": "Stakeholder Communication",
+          "body": "Fortnightly status reports to leadership, milestone-based sign-off, and impact-assessed change requests."
+        }
+      ],
+      "theme": "light"
+    },
+    {
+      "layout": "SECTION_STARTER",
+      "number": "08",
+      "title": "Post-Launch Analytics & Optimization",
+      "theme": "green"
+    },
+    {
+      "layout": "ROW_LIST",
+      "title": "Post-Launch Analytics & Optimization",
+      "tagline": "Continuous improvement and ongoing partnership",
+      "rows": [
+        {
+          "title": "6 Months Post-Launch",
+          "body": "Analyze app performance, usage analytics, engagement patterns, feature adoption, and Advisor Copilot observations. Structured report with recommendations."
+        },
+        {
+          "title": "Annual Cadence",
+          "body": "Repeat analytics review annually to track changes, suggest improvements, and refresh the product roadmap. Priced separately."
+        }
+      ],
+      "theme": "light"
+    },
+    {
+      "layout": "SECTION_STARTER",
+      "number": "09",
+      "title": "Estimated Cost",
+      "theme": "green"
+    },
+    {
+      "layout": "ROW_LIST",
+      "title": "Estimated Investment",
+      "tagline": "Cost breakdown across all five systems",
+      "rows": [
+        {
+          "title": "Discovery & Strategy",
+          "body": "INR 5,00,000"
+        },
+        {
+          "title": "UX / UI Design",
+          "body": "INR 28,00,000 (Mobile, Web, Advisor Copilot, Back Office)"
+        },
+        {
+          "title": "Mobile App Development",
+          "body": "INR 22,00,000 (Investor-facing)"
+        },
+        {
+          "title": "Web App Development",
+          "body": "INR 14,00,000 (Investor-facing)"
+        },
+        {
+          "title": "Middleware Development",
+          "body": "INR 18,00,000"
+        },
+        {
+          "title": "Advisor Copilot Development",
+          "body": "INR 10,00,000 (Mobile)"
+        }
+      ],
+      "theme": "light"
+    },
+    {
+      "layout": "SECTION_STARTER",
+      "number": "10",
+      "title": "Payment Terms",
+      "theme": "green"
+    },
+    {
+      "layout": "ROW_LIST",
+      "title": "Payment Terms",
+      "tagline": "Milestone-based payment schedule",
+      "rows": [
+        {
+          "title": "Advance",
+          "body": "25% of total amount."
+        },
+        {
+          "title": "After Information Architecture",
+          "body": "15% of total amount."
+        },
+        {
+          "title": "After Designs for All Systems",
+          "body": "20% of total amount (Mobile, Web, Advisor Copilot & Back Office)."
+        },
+        {
+          "title": "After Development of All Five Systems",
+          "body": "30% of total amount."
+        },
+        {
+          "title": "After Deployment to Server and App Stores",
+          "body": "10% of total amount."
+        }
+      ],
+      "theme": "light"
+    },
+    {
+      "layout": "SECTION_STARTER",
+      "number": "11",
+      "title": "Exclusions",
+      "theme": "green"
+    },
+    {
+      "layout": "ROW_LIST",
+      "title": "Exclusions: Design & Scope",
+      "tagline": "What is outside the current proposal",
+      "rows": [
+        {
+          "title": "Design Exclusions",
+          "body": "Photography, videography, illustration production, brand identity design, marketing collateral, print design, custom icon creation beyond design system."
+        },
+        {
+          "title": "Product & Scope Exclusions",
+          "body": "In-app two-way messaging, direct fund execution by investor, all Phase 2 features, AI-based content generation embedded in the platform."
+        }
+      ],
+      "theme": "light"
+    },
+    {
+      "layout": "ROW_LIST",
+      "title": "Exclusions: Technical & Client Responsibilities",
+      "tagline": "Clear delineation of roles and responsibilities",
+      "rows": [
+        {
+          "title": "Technical Exclusions",
+          "body": "Third-party software licenses, WhatsApp Business API integration, data migration, ongoing maintenance and support post-launch."
+        },
+        {
+          "title": "Client Responsibilities",
+          "body": "Content authorship, Investwell API credentials, Zoho CRM access, AA/KYC provider selection, compliance review, App Store access, branding assets, timely feedback."
+        }
+      ],
+      "theme": "light"
+    }
+  ]
+}

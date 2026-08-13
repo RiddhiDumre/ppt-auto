@@ -1,0 +1,4 @@
+node_modules/
+*.pptx
+extracted_all_media/
+bg_images/

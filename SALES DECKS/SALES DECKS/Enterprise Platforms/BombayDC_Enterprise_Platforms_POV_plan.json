@@ -1,0 +1,418 @@
+{
+  "presentationTitle": "BOMBAYDC",
+  "clientName": "Enterprise Client",
+  "date": "August 2026",
+  "coverSlide": {
+    "title": "BOMBAYDC",
+    "subtitle": "0",
+    "createdFor": "Enterprise Client",
+    "createdBy": "Team BOMBAYDC",
+    "date": "August 2026"
+  },
+  "dynamicSlides": [
+    {
+      "layout": "SECTION_STARTER",
+      "number": "1",
+      "title": "Four outcomes define enterprise platform performance.",
+      "theme": "green",
+      "tagline": "Leaders do not invest in portals. They invest in stronger business performance. Adoption is not a separate outcome. It is evidence that the platform is helping users create value.",
+      "rows": [
+        {
+          "title": "1",
+          "body": "Accelerate revenue"
+        },
+        {
+          "title": "Shorten discovery, configuration, quotation, approval, ordering and onboarding. Velocity",
+          "body": "2"
+        },
+        {
+          "title": "Increase productivity",
+          "body": "Help customers, partners and employees complete more meaningful work with less effort.\nCompletion"
+        },
+        {
+          "title": "3",
+          "body": "Reduce cost to serve"
+        },
+        {
+          "title": "Resolve more routine needs through guided self-service and intelligent assistance. Efficiency",
+          "body": "4"
+        },
+        {
+          "title": "Increase platform agility",
+          "body": "Improve speed, consistency, release cycles and control across the product estate.\nAdaptability"
+        }
+      ]
+    },
+    {
+      "layout": "CARD_GRID",
+      "title": "Value leaks across the complete enterprise platform lifecycle.",
+      "tagline": "The same platform must help users discover, decide, transact, operate, resolve and grow.",
+      "leftText": "Accelerate revenue\nShorten discovery, configuration,\nquotation, approval, ordering and\nonboarding.\nVelocity\nIncrease productivity\nHelp customers, partners and\nemployees complete more\nmeaningful work with less effort.\nCompletion\nReduce cost to serve\nResolve more routine needs through\nguided self-service and intelligent\nassistance.\nEfficiency\nIncrease platform agility\nImprove speed, consistency, release\ncycles and control across the\nproduct estate.\nAdaptability\nAdoption is not a separate outcome. It is evidence that the platform is helping users create value.",
+      "rightText": "",
+      "divider": true,
+      "number": "1.1",
+      "theme": "dark",
+      "bg_image": "C:\\Users\\Riddhi Dumre\\Desktop\\ppt_automation\\extracted_bg_images\\deck_10\\slide_bg_10_2.jpg",
+      "rows": [
+        {
+          "title": "DISCOVER",
+          "body": "Relevant solutions stay hidden"
+        },
+        {
+          "title": "DECIDE",
+          "body": "Complex choices create delay"
+        },
+        {
+          "title": "TRANSACT",
+          "body": "Quotes, approvals and orders break"
+        },
+        {
+          "title": "OPERATE",
+          "body": "Users work around the platform"
+        },
+        {
+          "title": "RESOLVE",
+          "body": "Routine needs reach human teams"
+        },
+        {
+          "title": "GROW",
+          "body": "Accounts lack proactive guidance"
+        }
+      ]
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "Why revenue workflows remain slow and fragmented.",
+      "tagline": "Complex products, pricing, approvals and onboarding turn digital journeys into assisted processes. The opportunity: turn discovery, configuration, approval and onboarding into one guided revenue workflow.",
+      "leftText": "Discover\nRelevant solutions stay\nhidden\nRevenue\nDecide\nComplex choices create\ndelay\nRevenue\nTransact\nQuotes, approvals and\norders break\nVelocity\nOperate",
+      "rightText": "Users work around the\nplatform\nProductivity\nResolve\nRoutine needs reach\nhuman teams\nCost to serve\nGrow\nAccounts lack proactive\nguidance\nRevenue\nThe constraint is rarely a lack of features. It is the gap between user intent, platform behaviour and business outcomes.",
+      "divider": true,
+      "number": "1.2",
+      "theme": "dark"
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "Digital Sales and Transaction Acceleration.",
+      "tagline": "Guide customers and teams from business need to completed transaction with less delay. Business outcomes: shorter sales cycles, higher completion and lower assisted-sales effort",
+      "leftText": "What the business experiences",
+      "rightText": "Why it persists\nSales teams compensate with offline coordination\nCustomers struggle to select and configure the right solution\nQuotes and approvals take too long to progress\nOnboarding and order status require manual follow-up\nNavigation follows the product catalogue, not customer intent\nRules and dependencies are exposed instead of resolved\nPricing, CRM, ordering and fulfilment sit across systems\nThe platform reports status but does not remove blockers\nThe opportunity: turn discovery, configuration, approval and onboarding into one guided revenue workflow.",
+      "divider": true,
+      "number": "1.3",
+      "theme": "light",
+      "rows": [
+        {
+          "title": "INTENT-LED DISCOVERY",
+          "body": "Begin with the user goal and context, not the enterprise product hierarchy."
+        },
+        {
+          "title": "GUIDED CONFIGURATION",
+          "body": "Translate requirements into relevant solutions, options and dependencies."
+        },
+        {
+          "title": "QUOTE AND APPROVAL FLOWS",
+          "body": "Simplify pricing, documents, approvals and hand-offs across teams."
+        },
+        {
+          "title": "ASSISTED SELLING",
+          "body": "Give sales teams account context, recommendations and next-best actions."
+        },
+        {
+          "title": "ORDERING AND ONBOARDING",
+          "body": "Connect commitment, fulfilment, activation and early-life support."
+        },
+        {
+          "title": "REVENUE INTELLIGENCE",
+          "body": "Identify stalled journeys, likely blockers and high-value interventions."
+        }
+      ]
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "Why customers and partners still depend on people.",
+      "tagline": "A functional platform can still create support dependency when workflows are difficult to understand or complete. The opportunity: make the platform a productive workspace for customers, partners and service teams.",
+      "leftText": "Business outcomes: shorter sales cycles, higher completion and lower assisted-sales effort\nIntent-led discovery\nBegin with the user goal and context, not the\nenterprise product hierarchy.\nGuided configuration\nTranslate requirements into relevant solutions,\noptions and dependencies.\nQuote and approval flows\nSimplify pricing, documents, approvals and hand-\noffs across teams.",
+      "rightText": "Assisted selling\nGive sales teams account context,\nrecommendations and next-best actions.\nOrdering and onboarding\nConnect commitment, fulfilment, activation and\nearly-life support.\nRevenue intelligence\nIdentify stalled journeys, likely blockers and high-\nvalue interventions.\nEnterprise Platforms POV",
+      "divider": true,
+      "number": "1.4",
+      "theme": "dark"
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "Customer, Partner and Service Productivity.",
+      "tagline": "Design role-aware workspaces that make important tasks clearer, faster and easier to resolve.",
+      "leftText": "What the business experiences",
+      "rightText": "Why it persists\nUsers call sales or service for routine tasks\nPartners need help to order, track and resolve\nImportant capabilities remain undiscovered\nAccount teams become the interface to the platform\nDifferent roles see the same information and workflows\nModules use inconsistent patterns and terminology\nSelf-service provides forms, not guidance\nAccount and service context does not carry across journeys\nThe opportunity: make the platform a productive workspace for customers, partners and service teams.",
+      "divider": true,
+      "number": "1.5",
+      "theme": "dark",
+      "bg_image": "C:\\Users\\Riddhi Dumre\\Desktop\\ppt_automation\\extracted_bg_images\\deck_10\\slide_bg_10_3.jpg",
+      "rows": [
+        {
+          "title": "ROLE-BASED WORKSPACES",
+          "body": "Prioritise relevant tasks, decisions and context for each user role."
+        },
+        {
+          "title": "GUIDED SELF-SERVICE",
+          "body": "Turn routine service and account tasks into clear completion journeys."
+        },
+        {
+          "title": "PARTNER ENABLEMENT",
+          "body": "Support selling, ordering, tracking and issue resolution in one place."
+        },
+        {
+          "title": "ACCOUNT INTELLIGENCE",
+          "body": "Surface commitments, usage, opportunities, risks and recommended actions."
+        },
+        {
+          "title": "SERVICE COPILOTS",
+          "body": "Help users and employees understand issues and complete resolution workflows."
+        },
+        {
+          "title": "CONTEXTUAL ROUTING",
+          "body": "Carry the right history and evidence when human assistance is required."
+        }
+      ]
+    },
+    {
+      "layout": "SECTION_STARTER",
+      "number": "2",
+      "title": "Why teams have data, but struggle to decide and act.",
+      "theme": "green",
+      "tagline": "Dashboards describe the platform. They rarely explain what matters, why it matters or what to do next. The opportunity: turn operational signals into prioritised decisions, guided action and verified outcomes."
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "Intelligent Operations and Decision Support.",
+      "tagline": "Help teams understand what needs attention, choose the right action and follow it through to impact. Business outcomes: faster decisions, fewer preventable issues and more consistent operations",
+      "leftText": "Business outcomes: higher productivity, stronger self-service and lower support dependency\nRole-based workspaces\nPrioritise relevant tasks, decisions and context for\neach user role.\nGuided self-service\nTurn routine service and account tasks into clear\ncompletion journeys.\nPartner enablement\nSupport selling, ordering, tracking and issue\nresolution in one place.",
+      "rightText": "Account intelligence\nSurface commitments, usage, opportunities, risks\nand recommended actions.\nService copilots\nHelp users and employees understand issues and\ncomplete resolution workflows.\nContextual routing\nCarry the right history and evidence when human\nassistance is required.\nEnterprise Platforms POV",
+      "divider": true,
+      "number": "2.1",
+      "theme": "light",
+      "rows": [
+        {
+          "title": "Intent-led command centre",
+          "body": "Organise the experience around goals, priorities and decisions - not products."
+        },
+        {
+          "title": "Proactive risk signals",
+          "body": "Predict delays, capacity issues, service risks and account opportunities."
+        },
+        {
+          "title": "Explainable recommendations",
+          "body": "Show why an action is recommended, expected impact, cost and confidence."
+        },
+        {
+          "title": "Guided diagnosis",
+          "body": "Connect telemetry, history and context to identify likely causes and options."
+        },
+        {
+          "title": "Approval and automation",
+          "body": "Separate recommendations, approval-ready actions and safe automation."
+        },
+        {
+          "title": "Outcome verification",
+          "body": "Compare actual results with the intended outcome and recommend what comes next."
+        }
+      ]
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "Why the platform becomes harder to change over time.",
+      "tagline": "Experience, technology and operations accumulate complexity faster than the platform can absorb it. The opportunity: create a modular, measurable platform that can improve without requiring a full reset.",
+      "leftText": "What the business experiences",
+      "rightText": "Why it persists\nTeams monitor multiple dashboards and alerts\nRisks surface after service or revenue is affected\nUsers investigate issues across tools and teams\nApprovals slow because impact and evidence are unclear\nData is organised by system rather than business goal\nSignals are reported without context or prioritisation\nAnalytics is separated from the workflow that acts on it\nRecommendations do not show cost, risk or confidence\nThe opportunity: turn operational signals into prioritised decisions, guided action and verified outcomes.",
+      "divider": true,
+      "number": "2.2",
+      "theme": "dark"
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "Platform Modernisation and Performance Intelligence.",
+      "tagline": "Improve experience and platform foundations in the sequence that creates the most business value. Business outcomes: faster change, stronger control and better return on existing platform investment",
+      "leftText": "Business outcomes: faster decisions, fewer preventable issues and more consistent operations\nIntent-led command centre\nOrganise the experience around goals, priorities\nand decisions - not products.\nProactive risk signals\nPredict delays, capacity issues, service risks and\naccount opportunities.\nExplainable recommendations\nShow why an action is recommended, expected\nimpact, cost and confidence.",
+      "rightText": "Guided diagnosis\nConnect telemetry, history and context to identify\nlikely causes and options.\nApproval and automation\nSeparate recommendations, approval-ready\nactions and safe automation.\nOutcome verification\nCompare actual results with the intended outcome\nand recommend what comes next.\nEnterprise Platforms POV",
+      "divider": true,
+      "number": "2.3",
+      "theme": "dark",
+      "bg_image": "C:\\Users\\Riddhi Dumre\\Desktop\\ppt_automation\\extracted_bg_images\\deck_10\\slide_bg_10_4.jpg",
+      "rows": [
+        {
+          "title": "Platform diagnosis",
+          "body": "Identify the journeys, constraints and value leaks that matter most."
+        },
+        {
+          "title": "Experience architecture",
+          "body": "Create coherent journeys, navigation and patterns across roles and modules."
+        },
+        {
+          "title": "Design systems",
+          "body": "Build reusable foundations that increase consistency and delivery speed."
+        },
+        {
+          "title": "Front-end modernisation",
+          "body": "Improve high-value journeys while working within backend realities."
+        },
+        {
+          "title": "Journey instrumentation",
+          "body": "Measure behaviour, completion, friction and operational impact."
+        },
+        {
+          "title": "Experimentation system",
+          "body": "Make prioritisation, testing and continuous optimisation part of delivery."
+        }
+      ]
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "Analytics identifies friction. AI helps the platform respond.",
+      "tagline": "Together they create a closed loop from signal to action to measurable improvement. The goal is not to add AI to the platform. It is to help more users decide, act and complete successfully.",
+      "leftText": "What the business experiences",
+      "rightText": "Why it persists\nRelease cycles slow as dependencies increase\nExperiences vary across modules, roles and channels\nBusiness teams depend heavily on technology teams\nInvestment shifts from improvement to maintenance\nPoint solutions and workarounds accumulate\nDesign and engineering evolve separately\nLegacy systems constrain journey-level change\nMeasurement and experimentation arrive after launch\nThe opportunity: create a modular, measurable platform that can improve without requiring a full reset.",
+      "divider": true,
+      "number": "2.4",
+      "theme": "dark",
+      "rows": [
+        {
+          "title": "OBSERVE",
+          "body": "Behavioural, transactional, service and operational signals"
+        },
+        {
+          "title": "UNDERSTAND",
+          "body": "Intent, friction, risk, cause and opportunity"
+        },
+        {
+          "title": "RECOMMEND",
+          "body": "Best action, expected impact, cost and confidence"
+        },
+        {
+          "title": "ACT",
+          "body": "Guide, assist, automate, route or escalate"
+        },
+        {
+          "title": "LEARN",
+          "body": "Measure outcomes and improve the next response"
+        }
+      ]
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "Intelligent platforms behave differently.",
+      "tagline": "Intelligence matters when it changes how the platform understands context and responds.",
+      "leftText": "Business outcomes: faster change, stronger control and better return on existing platform investment\nPlatform diagnosis\nIdentify the journeys, constraints and value leaks\nthat matter most.\nExperience architecture\nCreate coherent journeys, navigation and patterns\nacross roles and modules.\nDesign systems\nBuild reusable foundations that increase\nconsistency and delivery speed.",
+      "rightText": "Front-end modernisation\nImprove high-value journeys while working within\nbackend realities.\nJourney instrumentation\nMeasure behaviour, completion, friction and\noperational impact.\nExperimentation system\nMake prioritisation, testing and continuous\noptimisation part of delivery.\nEnterprise Platforms POV",
+      "divider": true,
+      "number": "2.5",
+      "theme": "light"
+    },
+    {
+      "layout": "SECTION_STARTER",
+      "number": "3",
+      "title": "Capabilities across the enterprise platform stack.",
+      "theme": "green",
+      "tagline": "We can address the complete platform or focus on the layer that unlocks the next business outcome. One integrated team across business, behaviour, design, intelligence and technology.",
+      "rows": [
+        {
+          "title": "Product strategy",
+          "body": "Business diagnosis, research, proposition, roadmap and outcome definition."
+        },
+        {
+          "title": "Behaviour and experience",
+          "body": "User research, behavioural science, journey design, UX, UI and design systems."
+        },
+        {
+          "title": "AI, data and intelligence",
+          "body": "Signal design, assistants, recommendations, prediction, analytics and experimentation."
+        },
+        {
+          "title": "Engineering and integration",
+          "body": "Front-end, full-stack, APIs, workflow integration and platform modernisation."
+        },
+        {
+          "title": "Content and communication",
+          "body": "Product language, knowledge, service content and AI-assisted content operations."
+        }
+      ]
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "Improving a complex platform within real constraints.",
+      "tagline": "A multi-role platform spanning onboarding, ordering, service management and account visibility. The value is not a cosmetic redesign. It is a clearer path from user intent to business completion.",
+      "leftText": "OBSERVE\nBehavioural, transactional,\nservice and operational signals\nUNDERSTAND\nIntent, friction, risk, cause and\nopportunity\nRECOMMEND\nBest action, expected impact,",
+      "rightText": "cost and confidence\nACT\nGuide, assist, automate, route\nor escalate\nLEARN\nMeasure outcomes and\nimprove the next response\nThe goal is not to add AI to the platform. It is to help more users decide, act and complete successfully.",
+      "divider": true,
+      "number": "3.1",
+      "theme": "dark",
+      "bg_image": "C:\\Users\\Riddhi Dumre\\Desktop\\ppt_automation\\extracted_bg_images\\deck_10\\slide_bg_10_5.jpg",
+      "rows": [
+        {
+          "title": "1",
+          "body": "SITUATION"
+        },
+        {
+          "title": "Customers and internal sales teams used a global enterprise platform across high-value workflows.",
+          "body": "2"
+        },
+        {
+          "title": "CONSTRAINT",
+          "body": "Core backend workflows could not change immediately; improvement had to support phased rollout."
+        },
+        {
+          "title": "3",
+          "body": "INTERVENTION"
+        },
+        {
+          "title": "We combined UI, usability and heuristic audits with journey redesign and a scalable design system.",
+          "body": "4"
+        },
+        {
+          "title": "WHY IT MATTERS",
+          "body": "Enterprise platforms can improve adoption and task completion while the deeper transformation evolves."
+        }
+      ]
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "LET&apos;S BUILD WHAT&apos;S NEXT",
+      "tagline": "Explore our work, sectors, and point of view at www.bombaydc.com",
+      "leftText": "Intelligence matters when it changes how the platform understands context and responds.\nMOST PLATFORMS TODAY",
+      "rightText": "INTELLIGENT PLATFORMS\nShow the same workspace to every role\nWait for users to search and interpret\nReport issues after they occur\nSeparate insight from the workflow\nEscalate when self-service fails\nAdapt to role, intent and operating context\nSurface the likely next need or action\nAnticipate risk and recommend intervention\nEmbed decisions, approvals and action together\nGuide, resolve or route with context\nEnterprise Platforms POV",
+      "divider": true,
+      "number": "3.2",
+      "theme": "dark"
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "Capabilities across the enterprise platform stack",
+      "tagline": "We can address the complete platform or focus on the layer that unlocks the next business outcome.",
+      "leftText": "Product strategy\nBusiness diagnosis, research,\nproposition, roadmap and\noutcome definition.\nBehaviour and\nexperience\nUser research, behavioural\nscience, journey design, UX, UI\nand design systems.\nAI, data and intelligence\nSignal design, assistants,\nrecommendations, prediction,\nanalytics and experimentation.\nEngineering and\nintegration\nFront-end, full-stack, APIs,\nworkflow integration and\nplatform modernisation.\nContent and\ncommunication",
+      "rightText": "Product language, knowledge,\nservice content and AI-assisted\ncontent operations.\nOne integrated team across business, behaviour, design, intelligence and technology.",
+      "divider": true,
+      "number": "3.3",
+      "theme": "light"
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "Improving a complex platform within real constraints",
+      "tagline": "A multi-role platform spanning onboarding, ordering, service management and account visibility.",
+      "leftText": "SITUATION\nCustomers and internal sales teams\nused a global enterprise platform\nacross high-value workflows.\nCONSTRAINT\nCore backend workflows could not\nchange immediately; improvement\nhad to support phased rollout.\nINTERVENTION\nWe combined UI, usability and",
+      "rightText": "heuristic audits with journey\nredesign and a scalable design\nsystem.\nWHAT IT SHOWS\nEnterprise platforms can improve\nadoption and task completion while\nthe deeper transformation evolves.\nThe value is not a cosmetic redesign. It is a clearer path from user intent to business completion.\nEnterprise Platforms POV",
+      "divider": true,
+      "number": "3.4",
+      "theme": "dark"
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "Where is platform value leaking most in",
+      "tagline": "your business?",
+      "leftText": "Revenue velocity  /  Customer and partner productivity  /  Decision quality  /  Platform agility\nLet us identify the highest-value journeys to improve first.",
+      "rightText": "Enterprise platforms should not only manage transactions. They should help the business decide, act\nand improve.",
+      "divider": true,
+      "number": "3.5",
+      "theme": "light"
+    }
+  ],
+  "coverBgImage": "C:\\Users\\Riddhi Dumre\\Desktop\\ppt_automation\\extracted_bg_images\\deck_10\\slide_bg_10_1.jpg",
+  "proposalName": "Enterprise platforms do not always translate digital investment into business performance",
+  "proposalSubtitle": "We help enterprises accelerate revenue, increase productivity, reduce cost to serve and modernise the platforms that power operations"
+}

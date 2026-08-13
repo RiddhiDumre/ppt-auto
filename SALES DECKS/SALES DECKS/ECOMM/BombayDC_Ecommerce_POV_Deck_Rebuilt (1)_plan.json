@@ -1,0 +1,278 @@
+{
+  "presentationTitle": "BOMBAYDC",
+  "clientName": "Enterprise Client",
+  "date": "August 2026",
+  "coverSlide": {
+    "title": "BOMBAYDC",
+    "subtitle": "Ecommerce POV",
+    "createdFor": "Enterprise Client",
+    "createdBy": "Team BOMBAYDC",
+    "date": "August 2026"
+  },
+  "dynamicSlides": [
+    {
+      "layout": "SECTION_STARTER",
+      "number": "1",
+      "title": "The outcomes that matter.",
+      "theme": "green",
+      "tagline": "Commerce teams do not buy a store. They buy better business performance.",
+      "rows": [
+        {
+          "title": "HIGHER CONVERSION",
+          "body": "Make discovery, PDPs and checkout convert more visitors."
+        },
+        {
+          "title": "HIGHER AOV",
+          "body": "Use bundling, merchandising and stronger product confidence."
+        },
+        {
+          "title": "REPEAT PURCHASE",
+          "body": "Create reasons to come back, not just buy once."
+        },
+        {
+          "title": "LOYALTY / CLV",
+          "body": "Reward value and deepen the relationship over time."
+        },
+        {
+          "title": "LOWER ABANDONMENT",
+          "body": "Reduce drop-offs across cart, checkout and post-click journeys."
+        }
+      ]
+    },
+    {
+      "layout": "CARD_GRID",
+      "title": "Stronger brand-led differentiation.",
+      "tagline": "The best commerce platforms do more than transact. They communicate positioning, justify premium perception, improve conversion quality, and create pricing power.",
+      "leftText": "Higher\nconversion\nMake discovery, PDPs and\ncheckout convert more\nvisitors.\nHigher AOV\nUse bundling, merchandising\nand stronger product\nconfidence.\nRepeat\npurchase\nCreate reasons to come back,\nnot just buy once.\nLoyalty / CLV\nReward value and deepen the\nrelationship over time.\nLower\nabandonmen\nt\nReduce drop-offs across\ncart, checkout and post-\nclick journeys.\nFor premium brands, one more outcome matters:\nstronger brand-led differentiation.\nThe best commerce platforms do more than transact. They communicate positioning, justify\npremium perception, improve conversion quality, and create pricing power. That is why\nbranded experience, content quality and implementation fidelity are not cosmetic — they are\ncommercial.\nBrand expression\nContent quality\nMerchandising\nCheckout flow\nLifecycle / loyalty",
+      "rightText": "",
+      "divider": true,
+      "number": "1.1",
+      "theme": "light"
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "Why most stores underperform.",
+      "tagline": "The problem is rarely the platform alone. It is how the experience gets designed, merchandised, and translated into build.",
+      "leftText": "merchandised, and translated into build.\nWhat template-led agencies ship\n• Functional storefronts that all look similar\n• Generic grids, PDPs and checkout patterns\n• Content and imagery treated as page-fillers\n• Loyalty and offers bolted on later\n• Theme implementation that loses design nuance",
+      "rightText": "What premium commerce brands\nactually need\n• A store that reflects the brand’s real positioning\n• Discovery and PDPs that increase confidence\n• Imagery and content as conversion levers\n• Lifecycle, loyalty and offers designed into the journey\n• A build that preserves the original experience intent",
+      "divider": true,
+      "number": "1.2",
+      "theme": "dark",
+      "bg_image": "C:\\Users\\Riddhi Dumre\\Desktop\\ppt_automation\\extracted_bg_images\\deck_7\\slide_bg_7_2.jpg"
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "What this now demands from the platform.",
+      "tagline": "To improve conversion, AOV, repeat purchase and loyalty, the platform has to become more than a store. When the business outcome changes, the platform has to change. And when the platform has to change, the way it is designed and built must change too.",
+      "leftText": "To improve conversion, AOV, repeat purchase and loyalty, the platform has to become\nmore than a store.\nA brand environment\nThe experience should express what the brand\nstands for — not what the theme template\npermits.\nA decision-support system\nHelp customers choose with confidence through\ncomparison, context, reassurance and richer PDP\nlogic.\nA merchandising engine",
+      "rightText": "Surface bundles, edits,\nrecommendations and offers that\nimprove revenue quality, not just\ntransactions.\nA loyalty + lifecycle engine\nDrive repeat purchase through rewards, recognition, replenishment and well-\ntimed re-engagement.\nA content-rich system\nTreat imagery, copy and editorial storytelling as commerce levers, not cosmetic layers.\nWhen the business outcome changes, the platform has to change. And when the platform has to change, the way it is designed and built must\nchange too.",
+      "divider": true,
+      "number": "1.3",
+      "theme": "light",
+      "rows": [
+        {
+          "title": "A BRAND ENVIRONMENT",
+          "body": "The experience should express what the brand stands for — not what the theme template permits."
+        },
+        {
+          "title": "A DECISION-SUPPORT SYSTEM",
+          "body": "Help customers choose with confidence through comparison, context, reassurance and richer PDP logic."
+        },
+        {
+          "title": "A MERCHANDISING ENGINE",
+          "body": "Surface bundles, edits, recommendations and offers that improve revenue quality, not just transactions."
+        },
+        {
+          "title": "A LOYALTY + LIFECYCLE ENGINE",
+          "body": "Drive repeat purchase through rewards, recognition, replenishment and well-timed re-engagement."
+        },
+        {
+          "title": "A CONTENT-RICH SYSTEM",
+          "body": "Treat imagery, copy and editorial storytelling as commerce levers, not cosmetic layers."
+        }
+      ]
+    },
+    {
+      "layout": "SECTION_STARTER",
+      "number": "2",
+      "title": "The full ecommerce loop.",
+      "theme": "green",
+      "tagline": "The best commerce systems create value across discovery, conversion, repeat purchase, and loyalty — not just at checkout. Premium commerce is not a storefront problem. It is a full-loop performance problem.",
+      "rows": [
+        {
+          "title": "1",
+          "body": "Discovery"
+        },
+        {
+          "title": "Help customers find the right product, understand the brand, and enter the right category or edit. • KPIs: quality traffic, product discovery, product-page depth",
+          "body": "2"
+        },
+        {
+          "title": "Conversion",
+          "body": "Reduce hesitation with stronger merchandising, richer PDPs, better confidence signals and cleaner checkout logic.\n• KPIs: conversion rate, AOV, cart abandonment"
+        },
+        {
+          "title": "3",
+          "body": "Repeat purchase"
+        },
+        {
+          "title": "Use offers, replenishment logic, post-purchase follow-up and intelligent recommendations to create return behavior. • KPIs: repeat rate, reorder rate, revenue per customer",
+          "body": "4"
+        },
+        {
+          "title": "Loyalty &amp; lifecycle",
+          "body": "Turn one-time buyers into members through rewards, recognition, exclusive access and relevance over time.\n• KPIs: CLV, retention, loyalty participation"
+        }
+      ]
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "How BombayDC creates value across the loop.",
+      "tagline": "This is where premium design, content, intelligent features, and integrated delivery come together.",
+      "leftText": "and loyalty — not just at checkout.\n01 Discovery\nHelp customers find the\nright product, understand\nthe brand, and enter the\nright category or edit.\nKPIs: quality traffic, product\ndiscovery, product-page depth\n02 Conversion\nReduce hesitation with\nstronger merchandising,\nricher PDPs, better\nconfidence signals and\ncleaner checkout logic.\nKPIs: conversion rate, AOV, cart\nabandonment\n03 Repeat\npurchase",
+      "rightText": "Use offers, replenishment\nlogic, post-purchase\nfollow-up and intelligent\nrecommendations to\ncreate return behavior.\nKPIs: repeat rate, reorder rate,\nrevenue per customer\n04 Loyalty & lifecycle\nTurn one-time buyers into\nmembers through\nrewards, recognition,\nexclusive access and\nrelevance over time.\nKPIs: CLV, retention, loyalty\nparticipation\nPremium commerce is not a storefront problem. It is a full-\nloop performance problem.",
+      "divider": true,
+      "number": "2.1",
+      "theme": "light",
+      "rows": [
+        {
+          "title": "1",
+          "body": "Discovery"
+        },
+        {
+          "title": "• Branded storefronts, category edits, rich imagery, story-led landing pages • Make the brand feel distinctive before the first add-to-cart",
+          "body": "2"
+        },
+        {
+          "title": "Conversion",
+          "body": "• Confidence-rich PDPs, smart bundling, better checkout and cross-sell logic\n• Improve conversion and AOV without flattening the experience"
+        },
+        {
+          "title": "3",
+          "body": "Repeat"
+        },
+        {
+          "title": "• Offer systems, reorder prompts, post-purchase journeys, intelligent recommendations • Give customers a reason to come back sooner",
+          "body": "4"
+        },
+        {
+          "title": "Loyalty / lifecycle",
+          "body": "• Membership design, rewards logic, recognition, reactivation and CRM-linked journeys\n• Increase retention and CLV over time"
+        }
+      ]
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "AI-era commerce features worth building.",
+      "tagline": "The point is not “AI-powered commerce.” The point is features that move real commerce KPIs.",
+      "leftText": "together.\nStage\nWhat we design\nBusiness effect\nDiscovery\nBranded storefronts, category edits, rich\nimagery, story-led landing pages\nMake the brand feel\ndistinctive before the first\nadd-to-cart\nConversion\nConfidence-rich PDPs, smart bundling, better\ncheckout and cross-sell logic\nImprove conversion and AOV",
+      "rightText": "without flattening the\nexperience\nRepeat\nOffer systems, reorder prompts, post-purchase\njourneys, intelligent recommendations\nGive customers a reason to\ncome back sooner\nLoyalty /\nlifecycle\nMembership design, rewards logic, recognition,\nreactivation and CRM-linked journeys\nIncrease retention and CLV\nover time",
+      "divider": true,
+      "number": "2.2",
+      "theme": "dark",
+      "bg_image": "C:\\Users\\Riddhi Dumre\\Desktop\\ppt_automation\\extracted_bg_images\\deck_7\\slide_bg_7_3.jpg",
+      "rows": [
+        {
+          "title": "GUIDED PRODUCT DISCOVERY",
+          "body": "Conversational or wizard-led flows that help customers find the right product faster.\nMoves: discovery, conversion"
+        },
+        {
+          "title": "PERSONALIZED RECOMMENDATIONS",
+          "body": "Next-best products, bundles and edits based on browsing, purchase and context.\nMoves: AOV, repeat purchase"
+        },
+        {
+          "title": "SMARTER OFFERS",
+          "body": "Targeted incentives based on behavior, order value or comeback probability.\nMoves: conversion, comeback rate"
+        },
+        {
+          "title": "LOYALTY INTELLIGENCE",
+          "body": "Tier logic, reward relevance and recognition based on actual customer value.\nMoves: CLV, retention"
+        },
+        {
+          "title": "LIFECYCLE TRIGGERS",
+          "body": "Replenishment, reorder, win-back and seasonal re-engagement journeys.\nMoves: repeat purchase"
+        },
+        {
+          "title": "CONTENT OPERATIONS",
+          "body": "AI-assisted catalog enrichment, copy variants, tagging and campaign adaptation at scale.\nMoves: speed, merchandising quality"
+        }
+      ]
+    },
+    {
+      "layout": "CARD_GRID",
+      "title": "Why BombayDC is different.",
+      "tagline": "The next generation of ecommerce will not be won by templates. It will be won by branded, intelligent, high-performance commerce systems.",
+      "leftText": "The point is not “AI-powered commerce.” The point is features that move real commerce\nKPIs.\nGuided product discovery\nConversational or wizard-led flows that help\ncustomers find the right product faster.\nMoves: discovery, conversion\nPersonalized\nrecommendations\nNext-best products, bundles and edits based on\nbrowsing, purchase and context.\nMoves: AOV, repeat purchase\nSmarter offers\nTargeted incentives based on behavior, order\nvalue or comeback probability.\nMoves: conversion, comeback rate\nLoyalty intelligence\nTier logic, reward relevance and recognition\nbased on actual customer value.\nMoves: CLV, retention\nLifecycle triggers\nReplenishment, reorder, win-back and seasonal\nre-engagement journeys.\nMoves: repeat purchase\nContent operations\nAI-assisted catalog enrichment, copy variants,\ntagging and campaign adaptation at scale.\nMoves: speed, merchandising quality",
+      "rightText": "",
+      "divider": true,
+      "number": "2.3",
+      "theme": "light",
+      "rows": [
+        {
+          "title": "1",
+          "body": "Premium stores, not templates"
+        },
+        {
+          "title": "We design commerce experiences that reflect the brand’s actual positioning and visual world.",
+          "body": "2"
+        },
+        {
+          "title": "Content and imagery as performance levers",
+          "body": "We treat product storytelling, visual quality and content depth as commercial drivers."
+        },
+        {
+          "title": "3",
+          "body": "Integrated design + tech delivery"
+        },
+        {
+          "title": "The final build preserves the experience intent, instead of diluting it through generic theme implementation.",
+          "body": "4"
+        },
+        {
+          "title": "Commerce systems, not pages",
+          "body": "We think across discovery, conversion, repeat purchase, loyalty and lifecycle — not just storefront screens."
+        }
+      ]
+    },
+    {
+      "layout": "SECTION_STARTER",
+      "number": "3",
+      "title": "Proof: Lotto India launch.",
+      "theme": "green",
+      "tagline": "A BombayDC commerce project that shows the intersection of premium design, rich content, mobile-first UX and conversion-minded system thinking."
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "Premium ecommerce for the AI era.",
+      "tagline": "If the store has to do more than transact — if it has to differentiate, persuade, retain and evolve — it needs a different level of design, content, intelligence and build fidelity.",
+      "leftText": "Premium stores, not templates\nWe design commerce experiences that reflect the brand’s actual positioning\nand visual world.\nContent and imagery as performance levers\nWe treat product storytelling, visual quality and content depth as\ncommercial drivers.\nIntegrated design + tech delivery\nThe final build preserves the experience intent, instead of diluting it through\ngeneric theme implementation.\nCommerce systems, not pages\nWe think across discovery, conversion, repeat purchase, loyalty and lifecycle",
+      "rightText": "— not just storefront screens.\n85%\nclient repeat business\n98%\non-time delivery\nIn-house\ntech + analytics + content\nIntegrate\nd\ndesign-to-tech execution",
+      "divider": true,
+      "number": "3.1",
+      "theme": "light"
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "LET&apos;S BUILD WHAT&apos;S NEXT",
+      "tagline": "Explore our work, sectors, and point of view at www.bombaydc.com",
+      "leftText": "• Designed a conversion-first\ncheckout and mobile-first flow\n• Used rich imagery, lifestyle video\nand A+ content to improve product\nconfidence\n• Made the store feel like the brand’s\nfirst digital expression in India",
+      "rightText": "• Built a flexible design system that\nmoved away from traditional\nsportswear layouts\n“This platform isn’t just an online\nstore — it’s the brand’s first digital\nexpression in India.”",
+      "divider": true,
+      "number": "3.2",
+      "theme": "dark"
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "Premium ecommerce for the AI",
+      "tagline": "era.",
+      "leftText": "If the store has to do more than transact — if it has to differentiate, persuade,\nretain and evolve — it needs a different level of design, content, intelligence and\nbuild fidelity.\nReplatforming\nPremium D2C\nConversion + AOV\nLoyalty + lifecycle\nLet’s build what’s next.",
+      "rightText": "What to talk to us about\nA premium store that better reflects the brand\nDiscovery and PDP work that improves conversion\nquality\nCheckout, bundles and merchandising that lift AOV\nRepeat purchase, loyalty and lifecycle journeys\nAI-led features that make commerce more relevant",
+      "divider": true,
+      "number": "3.3",
+      "theme": "light"
+    }
+  ],
+  "coverBgImage": "C:\\Users\\Riddhi Dumre\\Desktop\\ppt_automation\\extracted_bg_images\\deck_7\\slide_bg_7_1.jpg",
+  "proposalName": "PREMIUM ECOMMERCE BUILT FOR PERFORMANCE",
+  "proposalSubtitle": "We design branded commerce platforms that improve conversion, AOV,repeat purchase and loyalty — through stronger brand expression,intelligent commerce features, content-led merchandising, and integrateddesign-to-tech delivery"
+}

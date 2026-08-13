@@ -1,0 +1,235 @@
+{
+  "presentationTitle": "BOMBAYDC",
+  "clientName": "Enterprise Client",
+  "date": "August 2026",
+  "coverSlide": {
+    "title": "BOMBAYDC",
+    "subtitle": "Reducing Friction in",
+    "createdFor": "Enterprise Client",
+    "createdBy": "Team BOMBAYDC",
+    "date": "August 2026"
+  },
+  "dynamicSlides": [
+    {
+      "layout": "SECTION_STARTER",
+      "number": "1",
+      "title": "Most B2B platforms are functional - but underperforming.",
+      "theme": "green",
+      "tagline": "The issue is rarely the absence of features. It is experience friction across complex workflows."
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "What B2B leaders actually want from the platform",
+      "tagline": "These are business expectations - not design asks.",
+      "leftText": "Adoption is lower than expected\nSales and service teams still work around\nthe platform\nCustomers and partners depend on\nhumans for basic tasks\nDashboards show data, but do not\nsupport decisions\nWhat this creates",
+      "rightText": "Slow deal velocity\nHigher support dependency\nLower self-serve confidence\nPoor ROI from existing systems\nThe pattern\nMany B2B platforms are technically capable, but commercially under-\nleveraged.",
+      "divider": true,
+      "number": "1.1",
+      "theme": "light",
+      "rows": [
+        {
+          "title": "HIGHER ADOPTION",
+          "body": "More users doing more meaningful tasks inside the platform"
+        },
+        {
+          "title": "LOWER SALES FRICTION",
+          "body": "Shorter paths from intent to action across customer and partner journeys"
+        },
+        {
+          "title": "MORE SELF-SERVE",
+          "body": "Fewer routine tasks routed through human teams"
+        },
+        {
+          "title": "BETTER PARTNER PRODUCTIVITY",
+          "body": "Partners can sell, order, and resolve with less support"
+        },
+        {
+          "title": "BETTER ROI FROM CURRENT SYSTEMS",
+          "body": "More value from the existing tech stack without a full rebuild"
+        }
+      ]
+    },
+    {
+      "layout": "ROW_LIST",
+      "title": "Why most B2B platforms fail to deliver those outcomes",
+      "tagline": "The friction sits across workflows, systems, and constraints - not only screens.",
+      "leftText": "Higher adoption\nMore users doing more meaningful tasks inside\nthe platform\nLower sales friction\nShorter paths from intent to action across\ncustomer and partner journeys\nMore self-serve\nFewer routine tasks routed through human\nteams\nBetter partner productivity\nPartners can sell, order, and resolve with less\nsupport\nBetter ROI from current\nsystems\nMore value from the existing tech stack without\na full rebuild",
+      "rightText": "",
+      "divider": true,
+      "number": "1.2",
+      "theme": "dark",
+      "bg_image": "C:\\Users\\Riddhi Dumre\\Desktop\\ppt_automation\\extracted_bg_images\\deck_9\\slide_bg_9_2.jpg",
+      "rows": [
+        {
+          "title": "COMPLEX WORKFLOWS",
+          "body": "Multiple roles, approval paths, pricing rules, and non-linear journeys."
+        },
+        {
+          "title": "FRAGMENTED SYSTEMS",
+          "body": "Sales, onboarding, ordering, service, and account management live across disconnected tools."
+        },
+        {
+          "title": "LEGACY CONSTRAINTS",
+          "body": "Teams cannot always change backend workflows quickly, even when the experience needs to improve."
+        },
+        {
+          "title": "INCONSISTENT UX PATTERNS",
+          "body": "Different modules behave differently, increasing learnability cost and confusion."
+        },
+        {
+          "title": "DECISION OVERLOAD",
+          "body": "Platforms show information, but do not clarify what matters or what to do next."
+        }
+      ]
+    },
+    {
+      "layout": "CARD_GRID",
+      "title": "What those outcomes now demand from the platform",
+      "tagline": "When the business outcome changes, the platform has to change - and so does the way it is built.",
+      "leftText": "Complex workflows\nMultiple roles, approval paths, pricing rules, and non-linear journeys.\nFragmented systems\nSales, onboarding, ordering, service, and account management live across disconnected tools.\nLegacy constraints\nTeams cannot always change backend workflows quickly, even when the experience needs to improve.\nInconsistent UX patterns\nDifferent modules behave differently, increasing learnability cost and confusion.\nDecision overload\nPlatforms show information, but do not clarify what matters or what to do next.",
+      "rightText": "",
+      "divider": true,
+      "number": "1.3",
+      "theme": "light"
+    },
+    {
+      "layout": "SECTION_STARTER",
+      "number": "2",
+      "title": "Enterprise B2B platforms were built for a transactional era.",
+      "theme": "green",
+      "tagline": "Today they need to be more adaptive, intelligent, and performance-led."
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "How we design and build for this new reality",
+      "tagline": "Our model is built to solve the exact platform problems enterprises face today.",
+      "leftText": "",
+      "rightText": "Platform now needs to be...\nClearer for different roles\nTask-oriented across workflows\nBetter at guiding decisions\nAdaptive to context and usage\nEasy to improve continuously\nThis means...\nThe platform must move beyond\ntransactions and become a decision\nand workflow system for the business.\nTherefore...\nIt requires a new product\nmodel - not just a redesign.",
+      "divider": true,
+      "number": "2.1",
+      "theme": "light",
+      "rows": [
+        {
+          "title": "INTELLIGENT PRODUCTS",
+          "body": "Platforms that respond to behavior, reduce friction, support decisions, and make complex workflows easier to navigate."
+        },
+        {
+          "title": "A PARALLEL LIFECYCLE",
+          "body": "Strategy, design, and engineering run together - reducing risk, accelerating learning, and improving alignment."
+        },
+        {
+          "title": "A NEW TEAM MODEL",
+          "body": "Business, behavior, design, data, and engineering come together from day one to build more relevant platforms."
+        }
+      ]
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "From idea to validated product, faster and with less risk",
+      "tagline": "A lifecycle designed for enterprise platforms that need continuous learning and phased evolution.",
+      "leftText": "Then\nStatic interfaces\nFixed workflows\nData-heavy dashboards\nSequential design and build cycles\nLaunch-focused delivery",
+      "rightText": "Now\nAdaptive experiences\nDecision-supportive workflows\nContext-aware surfaces\nParallel product workstreams\nContinuous optimisation\nIntelligence is the new design fabric.",
+      "divider": true,
+      "number": "2.2",
+      "theme": "dark",
+      "bg_image": "C:\\Users\\Riddhi Dumre\\Desktop\\ppt_automation\\extracted_bg_images\\deck_9\\slide_bg_9_3.jpg",
+      "rows": [
+        {
+          "title": "3 Days",
+          "body": "Product concept"
+        },
+        {
+          "title": "Align on problem, users, regulatory realities, scope, and measurable outcomes.",
+          "body": "3 Weeks"
+        },
+        {
+          "title": "Working prototype",
+          "body": "Validate desirability, feasibility, and business viability before committing to full build."
+        },
+        {
+          "title": "3 Months",
+          "body": "Live MVP"
+        },
+        {
+          "title": "Launch with real users and start continuous optimisation using real signals.",
+          "body": "New team structure:\nBusiness Analyst | Behavioural Scientist | AI Product Designer | AI / Full-stack Developer | Analyst"
+        }
+      ]
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "Representative B2B platform case",
+      "tagline": "A real enterprise platform redesign shaped under legacy and workflow constraints.",
+      "leftText": "1. Intelligent products\nPlatforms that respond to behavior, reduce\nfriction, support decisions, and make complex\nworkflows easier to navigate.\n2. A parallel lifecycle\nStrategy, design, and engineering run together -",
+      "rightText": "reducing risk, accelerating learning, and\nimproving alignment.\n3. A new team model\nBusiness, behavior, design, data, and engineering\ncome together from day one to build more\nrelevant platforms.",
+      "divider": true,
+      "number": "2.3",
+      "theme": "light",
+      "rows": [
+        {
+          "title": "1",
+          "body": "SITUATION"
+        },
+        {
+          "title": "A global B2B platform used for onboarding, ordering, service management, and account visibility needed to improve adoption across customers and internal sales teams.",
+          "body": "2"
+        },
+        {
+          "title": "CONSTRAINT",
+          "body": "Core backend workflows could not be changed immediately. Any redesign had to work inside phased rollout and existing architecture realities."
+        },
+        {
+          "title": "3",
+          "body": "INTERVENTION"
+        },
+        {
+          "title": "Started with UI, usability, and heuristic audits. Then redesigned the UI, built a scalable design system, and fixed all UI issues plus around 50% of usability issues not blocked by backend constraints.",
+          "body": "4"
+        },
+        {
+          "title": "WHY IT MATTERS",
+          "body": "Shows how adoption can improve without waiting for full backend transformation."
+        }
+      ]
+    },
+    {
+      "layout": "SECTION_STARTER",
+      "number": "3",
+      "title": "WHY BOMBAYDC",
+      "theme": "green"
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "LET&apos;S BUILD WHAT&apos;S NEXT",
+      "tagline": "Explore our work, sectors, and point of view at www.bombaydc.com",
+      "leftText": "Days\nProduct concept\nAlign on problem, users, scope,\nobjectives, and measurable outcomes.\nWeek\ns\nWorking prototype\nValidate desirability, feasibility, and",
+      "rightText": "business viability before full build.\nMont\nhs\nLive MVP\nLaunch with real users, real signals, and\na clear optimisation roadmap.\nNew team structure\nBusiness Analyst  |  Behavioural Scientist  |  AI Product Designer  |  AI / Full-stack Developer  |  Data Analyst",
+      "divider": true,
+      "number": "3.1",
+      "theme": "light"
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "Representative B2B platform case",
+      "tagline": "A real enterprise platform redesign shaped under legacy and workflow constraints.",
+      "leftText": "Situation\nA global B2B platform used for\nonboarding, ordering, service\nmanagement, and account visibility\nneeded to improve adoption across\ncustomers and internal sales teams.\nConstraint\nCore backend workflows could not be\nchanged immediately. Any redesign\nhad to work inside phased rollout and\nexisting architecture realities.\nIntervention\nStarted with UI, usability, and\nheuristic audits. Then redesigned the\nUI, built a scalable design system,\nand fixed all UI issues plus around\n50% of usability issues not blocked by\nbackend constraints.\nWhy it matters\nShows how adoption can\nimprove without waiting for\nfull backend\ntransformation.",
+      "rightText": "",
+      "divider": true,
+      "number": "3.2",
+      "theme": "dark"
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "Why enterprises work with us",
+      "tagline": "A strategic digital platform firm shaping how enterprises operate in the AI era.",
+      "leftText": "We simplify complex enterprise systems\nWe operate within real-world constraints\nWe combine strategy, UX, and engineering\nWe design for adoption, not just aesthetics\nWe create scalable foundations, not one-off\nredesigns\nTrust signals\n98% on-time delivery\nDedicated staffing\nIn-house technology team\nEnterprise constraints handled\nDesign-to-tech integrated delivery\nB2B platforms can no longer be treated\nas portals.",
+      "rightText": "They are now core systems for revenue,\nservice, and decision-making.\nLet's talk about where friction is holding your platform\nback.",
+      "divider": true,
+      "number": "3.3",
+      "theme": "light"
+    }
+  ],
+  "coverBgImage": "C:\\Users\\Riddhi Dumre\\Desktop\\ppt_automation\\extracted_bg_images\\deck_9\\slide_bg_9_1.jpg",
+  "proposalName": "REDUCING FRICTION IN COMPLEX B2B PLATFORMS",
+  "proposalSubtitle": "A point of view on how enterprise B2B platforms need to evolve in theAI era - and what it takes to build them"
+}

@@ -1,0 +1,273 @@
+{
+  "presentationTitle": "BOMBAYDC",
+  "clientName": "Enterprise Client",
+  "date": "August 2026",
+  "coverSlide": {
+    "title": "BOMBAYDC",
+    "subtitle": "For XYZ Company",
+    "createdFor": "Enterprise Client",
+    "createdBy": "Team BOMBAYDC",
+    "date": "August 2026"
+  },
+  "dynamicSlides": [
+    {
+      "layout": "SECTION_STARTER",
+      "number": "1",
+      "title": "Digital Platforms for the AI Era",
+      "theme": "green",
+      "tagline": "We build intelligent digital platforms that increase adoption, retention, and revenue"
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "Ten years of building digital products at scale.",
+      "tagline": "A decade of design, product and platform delivery with enterprise trust.",
+      "leftText": "revenue.\nWhat that means\n5Cr people\n• Built for B2B, BFSI, commerce and enterprise\ncorporate platforms\n• Focused on large digital systems where adoption\nand business value matter",
+      "rightText": "From design-led\ndigital experiences\nto intelligent,\nadaptive platforms.\nOur next phase is about enterprise-\ngrade products that can think, guide,\nand perform - not just transact.",
+      "divider": true,
+      "number": "1.1",
+      "theme": "light",
+      "rows": [
+        {
+          "title": "10+",
+          "body": "years in business"
+        },
+        {
+          "title": "In business building digital products at scale with long-term enterprise partnership.",
+          "body": "200+"
+        },
+        {
+          "title": "Digital Products",
+          "body": "Digital platforms, enterprise applications, and design systems delivered."
+        },
+        {
+          "title": "80",
+          "body": "People Team"
+        },
+        {
+          "title": "Multidisciplinary team across strategy, behavioural science, AI design, and engineering.",
+          "body": "20"
+        },
+        {
+          "title": "Awards",
+          "body": "Reflects long-term trust and continuous value delivery, not one-off projects."
+        }
+      ]
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "Intelligence is the new design fabric.",
+      "tagline": "Enterprise platforms were built for a transactional era. The AI era demands platforms that can think, adapt, and perform.",
+      "leftText": "A decade of design, product and platform delivery with enterprise trust.\n10+\nyears in business\n200+\ndigital products\npeople team\nawards\n85%",
+      "rightText": "client business\nrepeat\nMumb\nai\nheadquartered\n85% repeat business reflects long-term\ntrust, not one-off project delivery.",
+      "divider": true,
+      "number": "1.2",
+      "theme": "dark",
+      "bg_image": "C:\\Users\\Riddhi Dumre\\Desktop\\ppt_automation\\extracted_bg_images\\deck_11\\slide_bg_11_2.jpg"
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "Better business outcomes are changing what platforms need to do.",
+      "tagline": "Higher adoption, lower friction and better ROI require a new kind of platform – and a new way of building it.",
+      "leftText": "platforms that can think, adapt, and perform.\nThen\n• Static interfaces\n• Fixed journeys\n• Transaction-first design\n• Manual decisions\n• Sequential delivery cycles",
+      "rightText": "Now\n• Adaptive experiences\n• Context-aware journeys\n• Decision-support systems\n• Intelligence inside workflows\n• Continuous optimisation",
+      "divider": true,
+      "number": "1.3",
+      "theme": "light",
+      "rows": [
+        {
+          "title": "OUTCOMES CLIENTS WANT",
+          "body": "• Higher adoption\n• Lower sales &amp; service friction\n• More self-serve behaviour\n• Better partner/customer productivity\n• Higher ROI from existing systems"
+        },
+        {
+          "title": "WHAT THAT MEANS FOR PLATFORMS",
+          "body": "• Role-based, task-first journeys\n• Clearer decisions and next actions\n• Behaviour-aware, adaptive interfaces\n• Connected workflows across systems\n• Built to evolve continuously"
+        },
+        {
+          "title": "BOMBAYDC RESPONSE",
+          "body": "• Intelligent products\n• Parallel strategy, design &amp; engineering\n• 3-day / 3-week / 3-month lifecycle\n• Multidisciplinary product team\n• KPI-led optimisation"
+        }
+      ]
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "HOW WE WORK",
+      "tagline": "A new product design and development lifecycle. Our model runs strategy, design and engineering in parallel workstreams — reducing risk and accelerating delivery.",
+      "leftText": "what platforms need to do.\nHigher adoption, lower friction and better ROI require a new kind of platform -\nand a new way of building it.\nOutcomes clients want\n• Higher adoption\n• Lower sales & service\nfriction\n• More self-serve behaviour\n• Better partner/customer\nproductivity\n• Higher ROI from existing\nsystems\nWhat that means for the\nplatform\n• Role-based, task-first\njourneys",
+      "rightText": "• Clearer decisions and\nnext actions\n• Behavior-aware, adaptive\ninterfaces\n• Connected workflows\nacross systems\n• Built to evolve\ncontinuously\n• Intelligent products\n• Parallel strategy, design &\nengineering\n• 3-day / 3-week / 3-month\nlifecycle\n• A new multidisciplinary\nproduct team\n• KPI-led optimisation",
+      "divider": true,
+      "number": "1.4",
+      "theme": "dark",
+      "rows": [
+        {
+          "title": "3 Days",
+          "body": "Product concept"
+        },
+        {
+          "title": "Align stakeholders on scope, objectives and measurable outcomes.",
+          "body": "3 Weeks"
+        },
+        {
+          "title": "Working prototype",
+          "body": "Create a prototype that validates desirability, feasibility and business viability."
+        },
+        {
+          "title": "3 Months",
+          "body": "Live MVP"
+        }
+      ]
+    },
+    {
+      "layout": "SECTION_STARTER",
+      "number": "2",
+      "title": "SOLUTIONS",
+      "theme": "green",
+      "tagline": "What we build — focused on high-value platforms where design, technology and intelligence converge.",
+      "rows": [
+        {
+          "title": "B2B PLATFORMS",
+          "body": "Sales, partner and customer platforms that reduce friction, increase adoption and accelerate revenue."
+        },
+        {
+          "title": "BFSI PLATFORMS",
+          "body": "Intelligent digital banking and financial journeys built for adoption at scale."
+        },
+        {
+          "title": "COMMERCE PLATFORMS",
+          "body": "Omni-channel e-commerce platforms that adapt to user behaviour and increase revenue."
+        },
+        {
+          "title": "CORPORATE PLATFORMS",
+          "body": "Communicating brand, products and company through enterprise-level websites and internal systems."
+        }
+      ]
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "CAPABILITIES",
+      "tagline": "Strategy to scale, design to adoption, technology to performance. An integrated model spanning strategy, design, engineering, analytics and content.",
+      "leftText": "lifecycle.\nOur model runs strategy, design and engineering in parallel workstreams -\nreducing risk and accelerating delivery.\n3 days\nProduct concept\nAlign stakeholders on scope,\nobjectives and measurable\noutcomes.\nweeks\nWorking prototype\nCreate a prototype that",
+      "rightText": "validates desirability, feasibility\nand business viability.\nmont\nhs\nLive MVP\nShip an MVP with real users\nand begin continuous\nevolution.\nNew team\nstructure\nBusiness Analyst  ·  Behavioural Scientist  ·  AI Product Designer  ·  AI / Full-Stack Developer  ·  Data Analyst",
+      "divider": true,
+      "number": "2.1",
+      "theme": "dark",
+      "bg_image": "C:\\Users\\Riddhi Dumre\\Desktop\\ppt_automation\\extracted_bg_images\\deck_11\\slide_bg_11_3.jpg",
+      "rows": [
+        {
+          "title": "STRATEGY",
+          "body": "Product strategy • User research • Service design • Experience audits"
+        },
+        {
+          "title": "DESIGN",
+          "body": "UX / UI design • Design systems • Prototyping • AI-assisted experiences"
+        },
+        {
+          "title": "TECHNOLOGY",
+          "body": "Full-stack development • Commerce platforms • B2B platforms • MVPs &amp; enterprise rollouts"
+        },
+        {
+          "title": "ANALYTICS",
+          "body": "Behaviour analysis • KPI design • Performance optimisation • Experimentation"
+        },
+        {
+          "title": "CONTENT",
+          "body": "Information architecture • UX writing • Content systems • AI-assisted content ops"
+        }
+      ]
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "SELECTED WORK",
+      "tagline": "Platforms built for adoption, clarity and business value. A snapshot of the kinds of enterprise problems we help solve.",
+      "leftText": "converge.\nB2B Platforms\nSales, partner and customer platforms that reduce friction,\nincrease adoption and accelerate revenue.\nBFSI Platforms\nIntelligent digital banking and financial journeys built for\nadoption at scale.",
+      "rightText": "Commerce\nPlatforms\nOmni-channel e-commerce platforms that adapt to user\nbehaviour and increase revenue.\nCorporate Platforms\nCommunicating the brand, the products and the company\nthrough enterprise-level websites and internal systems.",
+      "divider": true,
+      "number": "2.2",
+      "theme": "dark",
+      "rows": [
+        {
+          "title": "1",
+          "body": "Tata Communications"
+        },
+        {
+          "title": "Reimagined a global B2B platform across onboarding, ordering and service management to support higher adoption under enterprise constraints.",
+          "body": "2"
+        },
+        {
+          "title": "BFSI Platform",
+          "body": "Simplified high-stakes financial journeys for clarity, trust and scalable usage."
+        },
+        {
+          "title": "3",
+          "body": "Commerce Experience"
+        },
+        {
+          "title": "Designed an omni-channel commerce platform focused on conversion, retention and smarter customer journeys.",
+          "body": "4"
+        },
+        {
+          "title": "Corporate Platform",
+          "body": "Built enterprise-grade corporate and internal platforms that communicate brand, product and business value at scale."
+        }
+      ]
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "WHY ENTERPRISES TRUST US",
+      "tagline": "Structured delivery. Enterprise readiness. Design-to-tech integration. We combine premium product thinking with operational discipline.",
+      "leftText": "An integrated model spanning strategy, design, engineering, analytics and\ncontent.\nStrategy\nProduct strategy\nUser research\nService design\nExperience audits\nDesign\nUX / UI design\nDesign systems\nPrototyping\nAI-assisted\nexperiences\nTechnology\nFull-stack\ndevelopment\nCommerce platforms",
+      "rightText": "B2B platforms\nMVPs & enterprise\nrollouts\nAnalytics\nBehaviour analysis\nKPI design\nPerformance\noptimisation\nExperimentation\nContent\nInformation\narchitecture\nUX writing\nContent systems\nAI-assisted content\nops",
+      "divider": true,
+      "number": "2.3",
+      "theme": "light"
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "LET&apos;S BUILD WHAT&apos;S NEXT",
+      "tagline": "Explore our work, sectors, and point of view at www.bombaydc.com",
+      "leftText": "A snapshot of the kinds of enterprise problems we help solve.\nTata\nCommunications\nReimagined a global B2B platform across onboarding,\nordering and service management to support higher adoption\nunder enterprise constraints.\nBFSI platform\nSimplified high-stakes financial journeys for clarity, trust and\nscalable usage.",
+      "rightText": "Commerce\nexperience\nDesigned an omni-channel commerce platform focused on\nconversion, retention and smarter customer journeys.\nCorporate\nplatform\nBuilt enterprise-grade corporate and internal platforms that\ncommunicate brand, product and business value at scale.",
+      "divider": true,
+      "number": "2.4",
+      "theme": "dark"
+    },
+    {
+      "layout": "SECTION_STARTER",
+      "number": "3",
+      "title": "EXECUTION ROADMAP AND VALUE PROOF",
+      "theme": "green"
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "WHY ENTERPRISES TRUST US",
+      "tagline": "Structured delivery. Enterprise",
+      "leftText": "readiness. Design-to-tech integration.\nWe combine premium product thinking with the operational discipline required\nfor complex programmes.\n85% client repeat business rate\n98% on-time delivery\nDedicated staffing\nKPI-led projects\nPerformance-linked pricing",
+      "rightText": "Global awards\nGlobal + local product experts\nEnterprise constraints handled\nDesign-to-tech integrated delivery\nIn-house technology team\nIn-house behavior scientists\nIn-house analytics",
+      "divider": true,
+      "number": "3.1",
+      "theme": "light"
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "SELECTED CLIENTS & TEAM",
+      "tagline": "Trusted by enterprises. Built by global",
+      "leftText": "product experts.\nA local foundation with product talent shaped by global standards and enterprise\ndelivery.\nSelected clients\nTata Communications\nTata Steel\nGodrej\nBlue Star\nJSW\nMahindra\nFinancial services clients",
+      "rightText": "Commerce brands\nGlobal product experts\nCross-functional teams spanning\nproduct strategy, behavior insight, AI-\naware design, engineering and\nanalytics.\n• Premium product thinking\n• Enterprise-grade execution\n• Local + global context\n• Built for complex digital\nsystems",
+      "divider": true,
+      "number": "3.2",
+      "theme": "dark"
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "Let’s build what’s next.",
+      "tagline": "Intelligent digital platforms for the AI era.",
+      "leftText": "Siddesh Pednekar\nPartner & COO",
+      "rightText": "sid@bombaydc.com\n9819981354",
+      "divider": true,
+      "number": "3.3",
+      "theme": "light"
+    }
+  ],
+  "coverBgImage": "C:\\Users\\Riddhi Dumre\\Desktop\\ppt_automation\\extracted_bg_images\\deck_11\\slide_bg_11_1.jpg",
+  "proposalName": "DIGITAL PLATFORMS FOR THE AI ERA",
+  "proposalSubtitle": "A strategic digital platform firm shaping how enterprises operate in the AI era"
+}

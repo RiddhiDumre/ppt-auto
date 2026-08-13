@@ -1,0 +1,192 @@
+{
+  "presentationTitle": "BOMBAYDC PLATFORMS",
+  "clientName": "Enterprise Client",
+  "date": "August 2026",
+  "coverSlide": {
+    "title": "BOMBAYDC PLATFORMS",
+    "subtitle": "Digital Platforms for the AI Era",
+    "createdFor": "Enterprise Client",
+    "createdBy": "Team BOMBAYDC",
+    "date": "August 2026"
+  },
+  "dynamicSlides": [
+    {
+      "layout": "SECTION_STARTER",
+      "number": "1",
+      "title": "Banks can unlock more value from digital across four outcomes.",
+      "theme": "green",
+      "tagline": "ACQUIRE",
+      "rows": [
+        {
+          "title": "• More qualified digital leads • Higher application completion • Lower assisted-sales dependency",
+          "body": "ACTIVATE"
+        },
+        {
+          "title": "• More active digital customers • Higher feature discovery and usage • More completed everyday journeys",
+          "body": "DEEPEN"
+        },
+        {
+          "title": "• More relevant cross-sell and upsell • More products per customer • Greater share of wallet",
+          "body": "SERVE"
+        },
+        {
+          "title": "• More self-service completion • Lower branch / call centre load • Faster resolution and lower cost to serve",
+          "body": "The constraint is no longer lack of features. It is the gap between customer intent, platform behaviour and business outcomes."
+        }
+      ]
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "Despite digital investment, value realization remains uneven.",
+      "tagline": "The symptoms are visible across acquisition, adoption, relationship growth and servicing.",
+      "leftText": "MOST PLATFORMS TODAY",
+      "rightText": "INTELLIGENT PLATFORMS\nShow the same journey to everyone\nAdapt to customer intent and context\nWait for customers to search\nAnticipate the likely next need\nSurface products through campaigns\nRecommend useful actions at relevant moments\nTreat each interaction independently\nCarry context across journeys and channels\nEscalate when self-service fails\nGuide, resolve or route with context\nAI matters when it changes the behaviour of the platform—not merely when it adds a chatbot.",
+      "divider": true,
+      "number": "1.1",
+      "theme": "light",
+      "rows": [
+        {
+          "title": "DIGITAL ACQUISITION",
+          "body": "• High traffic, low conversion\n• Product pages inform but do not guide\n• Application and onboarding drop-offs remain high\n• Assisted sales still needed for clarity"
+        },
+        {
+          "title": "DIGITAL ADOPTION",
+          "body": "• Customers use only a small set of features\n• Everyday tasks take too many steps\n• Feature launches do not automatically create usage\n• Engagement drops after basic transactions"
+        },
+        {
+          "title": "RELATIONSHIP GROWTH",
+          "body": "• Product holding remains shallow\n• Offers feel generic or poorly timed\n• Cross-sell depends on campaigns / RMs\n• Data is available, but not turned into next actions"
+        },
+        {
+          "title": "DIGITAL SERVICING",
+          "body": "• Self-service stops before resolution\n• Customers fall back to call centres, branches and RMs\n• Context is lost across channels\n• Cost to serve stays high"
+        }
+      ]
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "Digital value leaks across the customer lifecycle.",
+      "tagline": "The same platform has to help the bank acquire, activate, deepen and serve customers.",
+      "leftText": "information layer.\nAI-assisted product discovery\nUse needs, context and intent to guide customers towards\nthe right product.\nCalculators and comparisons\nMake choices easier to understand and act on.\nApplication journeys",
+      "rightText": "Reduce breaks between interest, application and\nonboarding.\nAssisted journeys\nBring guidance into the journey before customers drop off.\nIntent-led personalised guidance\nUse intent and context to make the next step clearer and\nmore relevant.",
+      "divider": true,
+      "number": "1.2",
+      "theme": "dark",
+      "bg_image": "C:\\Users\\Riddhi Dumre\\Desktop\\ppt_automation\\extracted_bg_images\\deck_3\\image4.jpeg",
+      "rows": [
+        {
+          "title": "Discover &amp; choose",
+          "body": "Customers struggle to compare and decide."
+        },
+        {
+          "title": "Apply &amp; join",
+          "body": "Applications drop before completion."
+        },
+        {
+          "title": "Activate &amp; use",
+          "body": "Only a few digital features become habits."
+        },
+        {
+          "title": "Deepen relationship",
+          "body": "Relevant cross-sell and upsell do not happen at the right moment."
+        },
+        {
+          "title": "Get help &amp; resolve",
+          "body": "Digital service paths stop before resolution."
+        },
+        {
+          "title": "Retain &amp; grow",
+          "body": "Low relevance weakens primary-bank relationship."
+        }
+      ]
+    },
+    {
+      "layout": "SECTION_STARTER",
+      "number": "2",
+      "title": "Our response: three simple BFSI offerings",
+      "theme": "green",
+      "tagline": "Each offering is tied to a business outcome, not just a design or technology deliverable.",
+      "rows": [
+        {
+          "title": "DIGITAL SALES &amp; ACQUISITION",
+          "body": "• Increase qualified acquisition and application conversion.\n• Pre-login website, product discovery, calculators, onboarding, assisted journeys."
+        },
+        {
+          "title": "DIGITAL ENGAGEMENT &amp; RELATIONSHIP GROWTH",
+          "body": "• Increase adoption, product usage, cross-sell and share of wallet among ETB customers.\n• Mobile banking, internet banking, financial management, feature adoption, next-best actions."
+        },
+        {
+          "title": "INTELLIGENT SERVICING",
+          "body": "• Reduce servicing cost while improving resolution and customer experience.\n• Service Intelligence Stack, self-service, routing, RM and employee tools, automation."
+        }
+      ]
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "From static digital journeys to intelligent platforms",
+      "tagline": "AI becomes valuable when it changes how the platform understands context and responds",
+      "leftText": "Modernise the core digital banking experience around\ncustomer tasks.\nFeature discovery\nMake useful features easier to find and understand.\nFinancial management\nHelp customers manage money, goals and decisions more\nclearly.\nAI-powered next-best actions",
+      "rightText": "Surface timely prompts, actions and product opportunities.\nLife-stage journeys\nConnect products to moments such as salary, family, travel,\nsavings and borrowing.\nIntelligent relationship growth\nTurn behavioural signals into relevant guidance and deeper\nproduct usage.",
+      "divider": true,
+      "number": "2.1",
+      "theme": "light"
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "Why digital acquisition underperforms",
+      "tagline": "The bank may be getting traffic, but the decision journey often does not convert intent into applications.",
+      "leftText": "needs.\nGuided self-service\nMake routine issues easier to complete without assistance.\nContextual routing\nSend the right issue to the right channel with the right\ncontext.\nAI agents and assisted workflows",
+      "rightText": "Use intelligence to help customers and teams resolve faster.\nRM and employee copilots\nSupport assisted teams with better context and\nrecommended next steps.\nService automation\nReduce avoidable manual work and improve consistency.",
+      "divider": true,
+      "number": "2.2",
+      "theme": "dark"
+    },
+    {
+      "layout": "SECTION_STARTER",
+      "number": "3",
+      "title": "BOMBAYDC response: Digital Sales &amp; Acquisition",
+      "theme": "green",
+      "tagline": "Increase qualified acquisition and application conversion.",
+      "rows": [
+        {
+          "title": "PRE-LOGIN PLATFORM",
+          "body": "Make the website a sales and decision platform, not only an information layer."
+        },
+        {
+          "title": "PRODUCT DISCOVERY",
+          "body": "Help customers find the right product based on need, context and intent."
+        },
+        {
+          "title": "CALCULATORS AND COMPARISONS",
+          "body": "Make choices easier to understand and act on."
+        },
+        {
+          "title": "APPLICATION JOURNEYS",
+          "body": "Reduce breaks between interest, application and onboarding."
+        },
+        {
+          "title": "ASSISTED JOURNEYS",
+          "body": "Bring guidance into the journey before customers drop off."
+        },
+        {
+          "title": "PERSONALISED GUIDANCE",
+          "body": "Use context to make the next step clearer and more relevant."
+        }
+      ]
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "Why ETB value remains under-realised",
+      "tagline": "Existing customers may transact digitally, but that does not automatically deepen the relationship.",
+      "leftText": "journeys, recommend actions, assist resolution and measure impact.",
+      "rightText": "",
+      "divider": true,
+      "number": "3.1",
+      "theme": "dark",
+      "bg_image": "C:\\Users\\Riddhi Dumre\\Desktop\\ppt_automation\\extracted_bg_images\\deck_3\\image6.jpeg"
+    }
+  ],
+  "coverBgImage": "C:\\Users\\Riddhi Dumre\\Desktop\\ppt_automation\\extracted_bg_images\\deck_3\\image1.jpeg",
+  "proposalName": "HELPING BANKS TURN DIGITAL INVESTMENT INTO BUSINESS VALUE",
+  "proposalSubtitle": "Increase acquisition. Grow existing customer relationships. Reduce servicing cost."
+}

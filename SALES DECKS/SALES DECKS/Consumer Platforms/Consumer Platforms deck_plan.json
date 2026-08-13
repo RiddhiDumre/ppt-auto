@@ -1,0 +1,389 @@
+{
+  "presentationTitle": "BOMBAYDC",
+  "clientName": "Enterprise Client",
+  "date": "August 2026",
+  "coverSlide": {
+    "title": "BOMBAYDC",
+    "subtitle": "Consumer",
+    "createdFor": "Enterprise Client",
+    "createdBy": "Team BOMBAYDC",
+    "date": "August 2026"
+  },
+  "dynamicSlides": [
+    {
+      "layout": "SECTION_STARTER",
+      "number": "1",
+      "title": "CONSUMER PLATFORMS",
+      "theme": "green",
+      "tagline": "Most consumer platforms do not have a feature problem. They have a value-realisation problem. The constraint is not access to technology. It is how quickly and consistently the platform creates value for the user—and for the business.",
+      "rows": [
+        {
+          "title": "1",
+          "body": "Acquisition without intent"
+        },
+        {
+          "title": "Traffic and installs grow, but too few people arrive with a clear reason to act.",
+          "body": "2"
+        },
+        {
+          "title": "Sign-up without activation",
+          "body": "Users complete onboarding but do not reach the first meaningful outcome quickly."
+        },
+        {
+          "title": "3",
+          "body": "Usage without habit"
+        },
+        {
+          "title": "People try the product, yet do not build a reason to return regularly.",
+          "body": "4"
+        },
+        {
+          "title": "Engagement without value",
+          "body": "Time spent or content consumed does not reliably translate into retention or revenue."
+        }
+      ]
+    },
+    {
+      "layout": "CARD_GRID",
+      "title": "CONSUMER PLATFORMS",
+      "tagline": "Across categories, consumer-platform leaders are trying to improve the same five outcomes.",
+      "leftText": "Acquisition\nwithout intent\nTraffic and installs grow,\nbut too few people arrive\nwith a clear reason to act.\nSign-up without\nactivation\nUsers complete\nonboarding but do not\nreach the first meaningful\noutcome quickly.\nUsage without\nhabit\nPeople try the product, yet\ndo not build a reason to\nreturn regularly.\nEngagement\nwithout value\nTime spent or content\nconsumed does not\nreliably translate into\nretention or revenue.\nThe constraint is not access to technology. It is how quickly and consistently the platform\ncreates value for the user—and for the business.",
+      "rightText": "",
+      "divider": true,
+      "number": "1.1",
+      "theme": "light",
+      "rows": [
+        {
+          "title": "ACQUIRE",
+          "body": "Bring in more relevant users at a sustainable cost."
+        },
+        {
+          "title": "ACTIVATE",
+          "body": "Help users reach the first meaningful value faster."
+        },
+        {
+          "title": "ENGAGE",
+          "body": "Create repeat behaviours around useful moments."
+        },
+        {
+          "title": "RETAIN",
+          "body": "Give users a continuing reason to return and stay."
+        },
+        {
+          "title": "MONETISE",
+          "body": "Convert value into subscriptions, transactions or deeper usage."
+        }
+      ]
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "CONSUMER PLATFORMS",
+      "tagline": "Value leaks at predictable moments in the consumer lifecycle.",
+      "leftText": "Acquire\nBring in more\nrelevant users at\na sustainable\ncost.\nActivate\nHelp users reach\nthe first\nmeaningful value\nfaster.\nEngage\nCreate repeat\nbehaviours\naround useful",
+      "rightText": "moments.\nRetain\nGive users a\ncontinuing\nreason to return\nand stay.\nMonetise\nConvert value\ninto\nsubscriptions,\ntransactions or\ndeeper usage.\nThese outcomes form one connected system: weak activation makes engagement expensive; weak engagement\nmakes retention and monetisation fragile.",
+      "divider": true,
+      "number": "1.2",
+      "theme": "dark",
+      "bg_image": "C:\\Users\\Riddhi Dumre\\Desktop\\ppt_automation\\extracted_bg_images\\deck_4\\slide_bg_4_2.jpg",
+      "rows": [
+        {
+          "title": "DISCOVER",
+          "body": "The proposition is not clear or relevant enough."
+        },
+        {
+          "title": "JOIN",
+          "body": "Onboarding asks for effort before proving value."
+        },
+        {
+          "title": "FIRST VALUE",
+          "body": "The meaningful outcome arrives too late."
+        },
+        {
+          "title": "REPEAT",
+          "body": "The product does not create a useful habit."
+        },
+        {
+          "title": "STAY",
+          "body": "Relevance falls as needs and context change."
+        },
+        {
+          "title": "GROW",
+          "body": "The next paid or deeper action feels generic."
+        }
+      ]
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "Why consumer platforms struggle to create sustained usage.",
+      "tagline": "UNCLEAR PROPOSITION",
+      "leftText": "Discover\nThe proposition is\nnot clear or\nrelevant enough.\nJoin\nOnboarding asks\nfor effort before\nproving value.\nFirst value\nThe meaningful\noutcome arrives\ntoo late.\nRepeat",
+      "rightText": "The product does\nnot create a useful\nhabit.\nStay\nRelevance falls as\nneeds and context\nchange.\nGrow\nThe next paid or\ndeeper action\nfeels generic.\nThe opportunity is to find the highest-value leak, redesign the behaviour around it, and measure whether the business\noutcome moves.",
+      "divider": true,
+      "number": "1.3",
+      "theme": "light",
+      "rows": [
+        {
+          "title": "The product explains features before making the core value unmistakable.",
+          "body": "GENERIC ONBOARDING"
+        },
+        {
+          "title": "Every user gets the same path, regardless of intent or readiness.",
+          "body": "FEATURE-LED STRUCTURE"
+        },
+        {
+          "title": "Navigation reflects the product catalogue—not what the person is trying to achieve.",
+          "body": "VALUE ARRIVES LATE"
+        },
+        {
+          "title": "The platform asks for data, setup or commitment before delivering a useful outcome.",
+          "body": "STATIC EXPERIENCES"
+        },
+        {
+          "title": "The same screens, content and prompts appear despite changing context and behaviour.",
+          "body": "WEAK LEARNING LOOP"
+        }
+      ]
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "Our response: three consumer-platform offerings tied to business outcomes.",
+      "tagline": "CATEGORY",
+      "leftText": "Unclear proposition\nThe product explains features before\nmaking the core value unmistakable.\nGeneric onboarding\nEvery user gets the same path,\nregardless of intent or readiness.\nFeature-led structure\nNavigation reflects the product\ncatalogue—not what the person is\ntrying to achieve.\nValue arrives late",
+      "rightText": "The platform asks for data, setup or\ncommitment before delivering a useful\noutcome.\nStatic experiences\nThe same screens, content and\nprompts appear despite changing\ncontext and behaviour.\nWeak learning loop\nTeams ship features but cannot clearly\nconnect usage signals to the next\nproduct decision.",
+      "divider": true,
+      "number": "1.4",
+      "theme": "dark",
+      "rows": [
+        {
+          "title": "DESCRIPTION",
+          "body": "New Product &amp; Platform Ventures"
+        },
+        {
+          "title": "Create, validate and launch differentiated consumer products. Proposition • Product strategy • Concept • Prototype • MVP",
+          "body": "Adoption &amp; Retention Growth"
+        },
+        {
+          "title": "Increase activation, repeat use, retention and lifetime value. Onboarding • Core journeys • Habits • Lifecycle engagement • Experimentation",
+          "body": "Intelligent Platform Evolution"
+        }
+      ]
+    },
+    {
+      "layout": "THREE_COLUMN",
+      "title": "NEW PRODUCT &amp; PLATFORM VENTURES",
+      "tagline": "A polished launch cannot compensate for a weak product proposition. The opportunity: prove the proposition, the key behaviour and the path to value before scaling the platform.",
+      "leftText": "New Product &\nPlatform Ventures\nCreate, validate and launch\ndifferentiated consumer\nproducts.\nProposition • Product strategy • Concept\n• Prototype • MVP\nAdoption &\nRetention Growth\nIncrease activation, repeat\nuse, retention and lifetime\nvalue.\nOnboarding • Core journeys • Habits •\nLifecycle engagement • Experimentation\nIntelligent Platform\nEvolution\nMake the product more adaptive,\nuseful and commercially effective\nover time.\nPersonalisation • Recommendations • AI\nguidance • Next-best actions • Optimisation",
+      "rightText": "",
+      "divider": true,
+      "number": "1.5",
+      "theme": "light"
+    },
+    {
+      "layout": "SECTION_STARTER",
+      "number": "2",
+      "title": "NEW PRODUCT &amp; PLATFORM VENTURES",
+      "theme": "dark",
+      "bg_image": "C:\\Users\\Riddhi Dumre\\Desktop\\ppt_automation\\extracted_bg_images\\deck_4\\slide_bg_4_3.jpg",
+      "tagline": "BOMBAYDC response: create the smallest credible product that proves the business idea. Business outcome: faster validation, clearer differentiation and lower risk before scale.",
+      "rows": [
+        {
+          "title": "CATEGORY",
+          "body": "DESCRIPTION"
+        },
+        {
+          "title": "Opportunity framing",
+          "body": "Define the unmet need, business model and target behaviour."
+        },
+        {
+          "title": "Proposition design",
+          "body": "Make the reason to choose, use and return unmistakable."
+        },
+        {
+          "title": "Intent-led journeys",
+          "body": "Organise the product around what the consumer is trying to achieve."
+        },
+        {
+          "title": "Prototype validation",
+          "body": "Test comprehension, usefulness and behavioural pull before build."
+        },
+        {
+          "title": "MVP design and build",
+          "body": "Launch a focused product with the core experience and required integrations."
+        },
+        {
+          "title": "Measurement foundation",
+          "body": "Instrument the journeys and signals that matter from day one."
+        }
+      ]
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "ADOPTION &amp; RETENTION GROWTH",
+      "tagline": "Sign-ups and downloads do not become repeat use by themselves. The opportunity: design activation, habit and retention into the product—not as communication added after launch.",
+      "leftText": "product proposition.\nWhat the business experiences\n• Slow movement from idea to validated\nproposition\n• Large design-and-build investment before user\nlearning\n• Products that resemble category competitors\n• Post-launch ambiguity about what to improve",
+      "rightText": "Why it persists\n• The brief begins with a solution, not an unmet need\n• Research, product, design and engineering happen\nsequentially\n• Teams validate usability but not willingness to return\nor pay\n• MVPs become smaller versions of a full product, not\nsharper tests\nThe opportunity: prove the proposition, the key behaviour and the path to value before scaling the platform.",
+      "divider": true,
+      "number": "2.1",
+      "theme": "light"
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "ADOPTION &amp; RETENTION GROWTH",
+      "tagline": "BOMBAYDC response: make the platform useful sooner, easier to return to and harder to replace. Business outcome: higher activation, meaningful engagement, retention and customer lifetime value.",
+      "leftText": "Opportunity framing\nDefine the unmet need, business\nmodel and target behaviour.\nProposition design\nMake the reason to choose, use and\nreturn unmistakable.\nIntent-led journeys\nOrganise the product around what\nthe consumer is trying to achieve.\nPrototype validation",
+      "rightText": "Test comprehension, usefulness and\nbehavioural pull before build.\nMVP design and build\nLaunch a focused product with the\ncore experience and required\nintegrations.\nMeasurement foundation\nInstrument the journeys and signals\nthat matter from day one.\nBusiness outcome: faster validation, clearer differentiation and lower risk before scale.",
+      "divider": true,
+      "number": "2.2",
+      "theme": "dark",
+      "rows": [
+        {
+          "title": "CATEGORY",
+          "body": "DESCRIPTION"
+        },
+        {
+          "title": "Activation redesign",
+          "body": "Shorten the path from sign-up to the first meaningful outcome."
+        },
+        {
+          "title": "Core journey simplification",
+          "body": "Remove friction from the moments that create repeat value."
+        },
+        {
+          "title": "Intent and context",
+          "body": "Adapt entry points and guidance to the user’s immediate goal."
+        },
+        {
+          "title": "Habit loops",
+          "body": "Connect useful triggers, actions and rewards without relying on empty gamification."
+        },
+        {
+          "title": "Lifecycle engagement",
+          "body": "Use milestones, lapses and changing needs to shape the next action."
+        },
+        {
+          "title": "Product experimentation",
+          "body": "Measure behaviour, test interventions and improve continuously."
+        }
+      ]
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "INTELLIGENT PLATFORM EVOLUTION",
+      "tagline": "Static consumer journeys are giving way to platforms that learn and adapt. AI matters when it changes the behaviour of the platform—not merely when it adds a chatbot.",
+      "leftText": "by themselves.\nWhat the business experiences\n• High onboarding drop-off\n• Low use beyond one or two obvious features\n• Engagement falls after the initial need is met\n• Notifications create activity but not durable value\n• Churn remains difficult to explain or reverse",
+      "rightText": "Why it persists\n• Users do not reach first value quickly enough\n• The product does not recognise different intents\n• Feature discovery depends on menus or\ncampaigns\n• Return triggers are generic rather than\ncontextual\n• Teams optimise screens instead of the full\nbehaviour loop\nThe opportunity: design activation, habit and retention into the product—not as communication added after launch.",
+      "divider": true,
+      "number": "2.3",
+      "theme": "light"
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "CONSUMER PLATFORMS",
+      "tagline": "The same growth problems appear differently across six consumer categories. The category changes. The work remains focused on helping people reach value, repeat the behaviour and deepen the relationship.",
+      "leftText": "Activation redesign\nShorten the path from sign-up to the\nfirst meaningful outcome.\nCore journey simplification\nRemove friction from the moments\nthat create repeat value.\nIntent and context\nAdapt entry points and guidance to\nthe user’s immediate goal.\nHabit loops\nConnect useful triggers, actions and",
+      "rightText": "rewards without relying on empty\ngamification.\nLifecycle engagement\nUse milestones, lapses and changing\nneeds to shape the next action.\nProduct experimentation\nMeasure behaviour, test\ninterventions and improve\ncontinuously.\nBusiness outcome: higher activation, meaningful engagement, retention and customer lifetime value.",
+      "divider": true,
+      "number": "2.4",
+      "theme": "dark",
+      "bg_image": "C:\\Users\\Riddhi Dumre\\Desktop\\ppt_automation\\extracted_bg_images\\deck_4\\slide_bg_4_4.jpg",
+      "rows": [
+        {
+          "title": "CATEGORY",
+          "body": "DESCRIPTION"
+        },
+        {
+          "title": "EdTech",
+          "body": "Learner activation • Progress • Completion • Renewal"
+        },
+        {
+          "title": "Wellness",
+          "body": "Habit formation • Adherence • Personalisation • Trust"
+        },
+        {
+          "title": "Travel",
+          "body": "Discovery • Decision confidence • Booking • Trip servicing"
+        },
+        {
+          "title": "Home services",
+          "body": "Matching • Availability • Trust • Repeat booking"
+        },
+        {
+          "title": "Media",
+          "body": "Content discovery • Session depth • Subscription • Churn"
+        },
+        {
+          "title": "Lifestyle",
+          "body": "Inspiration • Community • Commerce • Loyalty"
+        }
+      ]
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "CONSUMER PLATFORMS",
+      "tagline": "Diagnose the leak, prove the experience, then build for scale. Strategy, behaviour, design, engineering and data work together from the beginning—so learning happens before the biggest commitments are made.",
+      "leftText": "platforms that learn and adapt.\nStatic platform\nSame onboarding for everyone\nFixed navigation and journeys\nGeneric content and offers\nRules decided largely in advance\nTeams react after performance declines\nIntelligent platform",
+      "rightText": "Understands intent and context\nAdapts guidance and next steps\nRecommends relevant content or actions\nDetects friction and lapse signals\nImproves through behaviour and outcome\ndata\nAI matters when it changes the behaviour of the platform—not merely when it adds a\nchatbot.",
+      "divider": true,
+      "number": "2.5",
+      "theme": "light",
+      "rows": [
+        {
+          "title": "3 days",
+          "body": "Strategic concept"
+        },
+        {
+          "title": "Frame the business problem, target behaviour, product idea and highest-value journeys.",
+          "body": "3 weeks"
+        },
+        {
+          "title": "Working prototype",
+          "body": "Design and validate the proposition, experience logic and critical moments before full build."
+        },
+        {
+          "title": "3 months",
+          "body": "Focused MVP"
+        }
+      ]
+    },
+    {
+      "layout": "SECTION_STARTER",
+      "number": "3",
+      "title": "LET&apos;S BUILD WHAT&apos;S NEXT",
+      "theme": "green",
+      "tagline": "Explore our work, sectors, and point of view at www.bombaydc.com"
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "The same growth problems appear differently",
+      "tagline": "across six consumer categories.",
+      "leftText": "EdTech\nLearner activation • Progress •\nCompletion • Renewal\nWellness\nHabit formation • Adherence •\nPersonalisation • Trust\nTravel\nDiscovery • Decision confidence •\nBooking • Trip servicing\nHome services",
+      "rightText": "Matching • Availability • Trust •\nRepeat booking\nMedia\nContent discovery • Session depth\n• Subscription • Churn\nLifestyle\nInspiration • Community •\nCommerce • Loyalty\nThe category changes. The work remains focused on helping people reach value, repeat the behaviour and deepen the\nrelationship.",
+      "divider": true,
+      "number": "3.1",
+      "theme": "light"
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "Diagnose the leak, prove the experience, then build",
+      "tagline": "for scale.",
+      "leftText": "3 days\nStrategic concept\nFrame the business problem, target\nbehaviour, product idea and highest-\nvalue journeys.\n3 weeks\nWorking prototype\nDesign and validate the proposition,\nexperience logic and critical",
+      "rightText": "moments before full build.\n3 months\nFocused MVP\nBuild the core product, integrations\nand measurement foundation\nneeded to launch and learn.\nStrategy, behaviour, design, engineering and data work together from the beginning—so learning happens before the\nbiggest commitments are made.",
+      "divider": true,
+      "number": "3.2",
+      "theme": "dark"
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "people choose, use",
+      "tagline": "and return to.",
+      "leftText": "Increase activation. Build habits. Improve retention. Grow revenue.",
+      "rightText": "Digital platforms for the AI era",
+      "divider": true,
+      "number": "3.3",
+      "theme": "light"
+    }
+  ],
+  "coverBgImage": "C:\\Users\\Riddhi Dumre\\Desktop\\ppt_automation\\extracted_bg_images\\deck_4\\slide_bg_4_1.jpg",
+  "proposalName": "CONSUMER PLATFORMS",
+  "proposalSubtitle": "Turning digital products into everyday value"
+}

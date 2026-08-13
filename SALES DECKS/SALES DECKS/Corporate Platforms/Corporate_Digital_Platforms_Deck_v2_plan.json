@@ -1,0 +1,388 @@
+{
+  "presentationTitle": "BOMBAYDC",
+  "clientName": "Enterprise Client",
+  "date": "August 2026",
+  "coverSlide": {
+    "title": "BOMBAYDC",
+    "subtitle": "01",
+    "createdFor": "Enterprise Client",
+    "createdBy": "Team BOMBAYDC",
+    "date": "August 2026"
+  },
+  "dynamicSlides": [
+    {
+      "layout": "SECTION_STARTER",
+      "number": "1",
+      "title": "Most corporate websites are live. But they are not working hard enough.",
+      "theme": "green",
+      "tagline": "They publish information, but often fail to help high-value audiences understand the business, find what matters, or take the next step.",
+      "rows": [
+        {
+          "title": "1",
+          "body": "UNDERSTANDING"
+        },
+        {
+          "title": "What does this company really do?",
+          "body": "2"
+        },
+        {
+          "title": "RELEVANCE",
+          "body": "Which offering is right for me?"
+        },
+        {
+          "title": "3",
+          "body": "TRUST"
+        },
+        {
+          "title": "Why should I believe or choose it?",
+          "body": "4"
+        },
+        {
+          "title": "ACTION",
+          "body": "What should I do next?"
+        }
+      ]
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "OBSERVABLE BUSINESS SYMPTOMS",
+      "tagline": "The problem appears across communication, growth and operations.",
+      "leftText": "They publish information, but often fail to help high-value audiences understand the business, find\nwhat matters, or take the next step.\nUNDERSTANDING\nWhat does this company\nreally do?\nRELEVANCE\nWhich offering is right",
+      "rightText": "for me?\nTRUST\nWhy should I believe or\nchoose it?\nACTION\nWhat should I do next?",
+      "divider": true,
+      "number": "1.1",
+      "theme": "dark",
+      "bg_image": "C:\\Users\\Riddhi Dumre\\Desktop\\ppt_automation\\extracted_bg_images\\deck_6\\slide_bg_6_2.jpg",
+      "rows": [
+        {
+          "title": "THE COMPANY STORY IS HARD TO GRASP",
+          "body": "Different audiences leave with different—or incomplete—understanding."
+        },
+        {
+          "title": "COMPLEX PORTFOLIOS REMAIN HIDDEN",
+          "body": "Products and capabilities are organised around internal structures, not customer intent."
+        },
+        {
+          "title": "TRAFFIC DOES NOT BECOME DEMAND",
+          "body": "Calls to action are generic; lead quality and journey context are lost."
+        },
+        {
+          "title": "TRUST JOURNEYS ARE FRAGMENTED",
+          "body": "Investor, media, ESG, governance and corporate proof live in disconnected sections."
+        },
+        {
+          "title": "TALENT CANNOT SEE THE REAL CULTURE",
+          "body": "Careers pages list jobs but do not help candidates understand fit or possibility."
+        },
+        {
+          "title": "CONTENT BECOMES SLOW AND EXPENSIVE",
+          "body": "Publishing depends on agencies, manual workflows and inconsistent governance."
+        }
+      ]
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "THE UNDERLYING CAUSE",
+      "tagline": "The website is still treated as a redesign project—not an operating platform.",
+      "leftText": "operations.\nThe company story is hard to grasp\nDifferent audiences leave with different—or incomplete—\nunderstanding.\nComplex portfolios remain hidden\nProducts and capabilities are organised around internal structures,\nnot customer intent.\nTraffic does not become demand\nCalls to action are generic; lead quality and journey context are\nlost.",
+      "rightText": "Trust journeys are fragmented\nInvestor, media, ESG, governance and corporate proof live in\ndisconnected sections.\nTalent cannot see the real culture\nCareers pages list jobs but do not help candidates understand fit\nor possibility.\nContent becomes slow and expensive\nPublishing depends on agencies, manual workflows and\ninconsistent governance.",
+      "divider": true,
+      "number": "1.2",
+      "theme": "dark"
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "THE STRATEGIC SHIFT",
+      "tagline": "A modern corporate platform must do five jobs well.",
+      "leftText": "operating platform.\nTHE REDESIGN MINDSET\nLaunch is the finish line.\nNavigation mirrors the organisation.\nContent is written for the launch.\nCMS is treated as a backend.\nAnalytics reports visits after the fact.\nThis creates a platform that is:",
+      "rightText": "STATIC\nOne experience for every audience\nFRAGMENTED\nPages without connected journeys\nMANUAL\nSlow publishing and optimisation\nBLIND\nTraffic data without behavioural meaning",
+      "divider": true,
+      "number": "1.3",
+      "theme": "light",
+      "rows": [
+        {
+          "title": "01 UNDERSTAND",
+          "body": "Recognise audience, intent and context."
+        },
+        {
+          "title": "02 GUIDE",
+          "body": "Make the right story, proof and pathway clearer."
+        },
+        {
+          "title": "03 CONVERT",
+          "body": "Turn interest into enquiries, applications or deeper engagement."
+        },
+        {
+          "title": "04 OPERATE",
+          "body": "Enable teams to publish, govern and reuse content efficiently."
+        },
+        {
+          "title": "05 IMPROVE",
+          "body": "Use behaviour and outcomes to evolve the platform."
+        }
+      ]
+    },
+    {
+      "layout": "ROW_LIST",
+      "title": "THE PLATFORM SCOPE",
+      "tagline": "A modern corporate platform must do five jobs well.",
+      "leftText": "The shift is from publishing pages to continuously improving audience outcomes.\nUNDERSTAND\nRecognise audience,\nintent and context.\nGUIDE\nMake the right story,\nproof and pathway\nclearer.\nCONVERT\nTurn interest into\nenquiries, applications\nor deeper engagement.\nOPERATE\nEnable teams to\npublish, govern and\nreuse content\nefficiently.\nIMPROVE\nUse behaviour and\noutcomes to evolve the\nplatform.",
+      "rightText": "",
+      "divider": true,
+      "number": "1.4",
+      "theme": "dark",
+      "rows": [
+        {
+          "title": "One platform serves five high-value audiences. Each arrives with a different question and should receive a different path.",
+          "body": "PROSPECTS"
+        },
+        {
+          "title": "What can this company help me achieve? Discover products See proof Start a conversation",
+          "body": "CUSTOMERS &amp; PARTNERS"
+        },
+        {
+          "title": "How do I find the right capability or support? Navigate portfolio Access resources Deepen relationship",
+          "body": "INVESTORS &amp; MEDIA"
+        },
+        {
+          "title": "Why is this business credible and valuable? Understand strategy Track performance Access disclosures",
+          "body": "TALENT"
+        },
+        {
+          "title": "Is this a place where I can belong and grow? See culture Explore roles Understand fit",
+          "body": "CONTENT TEAMS"
+        }
+      ]
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "OUR RESPONSE",
+      "tagline": "One platform serves five high-value audiences.",
+      "leftText": "Each arrives with a different question—and should receive a different path.\nPROSPECTS\nWhat can this\ncompany help\nme achieve?\nDiscover products\nSee proof\nStart a conversation\nCUSTOMERS & PARTNERS\nHow do I find the\nright capability or\nsupport?\nNavigate portfolio\nAccess resources\nDeepen relationship\nINVESTORS & MEDIA\nWhy is this\nbusiness credible\nand valuable?",
+      "rightText": "Understand strategy\nTrack performance\nAccess disclosures\nTALENT\nIs this a place\nwhere I can\nbelong and\ngrow?\nSee culture\nExplore roles\nUnderstand fit\nCONTENT TEAMS\nHow do we\ncommunicate\nfaster and\nconsistently?\nCreate and reuse\nGovern quality\nMeasure impact",
+      "divider": true,
+      "number": "1.5",
+      "theme": "dark",
+      "bg_image": "C:\\Users\\Riddhi Dumre\\Desktop\\ppt_automation\\extracted_bg_images\\deck_6\\slide_bg_6_3.jpg",
+      "rows": [
+        {
+          "title": "Three simple Corporate Digital Platform offerings. Together they turn communication, demand and operations into one measurable system.",
+          "body": "CORPORATE COMMUNICATION &amp; TRUST"
+        },
+        {
+          "title": "Clarify the enterprise story and build confidence across brand, corporate, investor, media and talent audiences.",
+          "body": "PRODUCT DISCOVERY &amp; DEMAND"
+        },
+        {
+          "title": "Help audiences find relevant products and capabilities, understand value, and move into qualified action.",
+          "body": "CONTENT OPERATIONS &amp; INTELLIGENCE"
+        }
+      ]
+    },
+    {
+      "layout": "SECTION_STARTER",
+      "number": "2",
+      "title": "INTELLIGENCE LAYER",
+      "theme": "green"
+    },
+    {
+      "layout": "THREE_COLUMN",
+      "title": "Corporate Communication &amp; Trust",
+      "tagline": "Make the enterprise easier to understand—and more credible to every high-value audience.",
+      "leftText": "Together they turn communication, demand and operations into one measurable system.\nCorporate\nCommunication\n& Trust\nClarify the enterprise story and build\nconfidence across brand, corporate,\ninvestor, media and talent audiences.\nProduct Discovery\n& Demand\nHelp audiences find relevant products\nand capabilities, understand value, and\nmove into qualified action.\nContent Operations\n& Intelligence\nModernise CMS, search, workflows,\nanalytics and optimisation so the\nplatform improves continuously.",
+      "rightText": "",
+      "divider": true,
+      "number": "2.1",
+      "theme": "light"
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "Product Discovery &amp; Demand",
+      "tagline": "Turn a complex portfolio into relevant pathways that help buyers understand, evaluate and act.",
+      "leftText": "Not merely when it adds a chatbot.\nSTATIC CORPORATE WEBSITE\nINTELLIGENT CORPORATE PLATFORM\nOne navigation for everyone\n→\nIntent-led pathways\nKeyword search\n→\nAI search that understands questions\nSame story for every visitor\n→",
+      "rightText": "Contextual content and proof\nGeneric calls to action\n→\nRelevant next steps and lead context\nManual content production\n→\nAI-assisted creation, tagging and reuse\nRetrospective traffic reports\n→\nBehaviour signals and continuous optimisation",
+      "divider": true,
+      "number": "2.2",
+      "theme": "dark"
+    },
+    {
+      "layout": "THREE_COLUMN",
+      "title": "Content Operations &amp; Intelligence",
+      "tagline": "Make communication faster to operate, easier to govern, and more intelligent over time.",
+      "leftText": "Make the enterprise easier to understand—and more credible to every high-value audience.\nBUSINESS PROBLEM\nThe corporate story is\nfragmented across business\nunits, regions and audience\nneeds.\nThe result is weak comprehension,\ndiluted differentiation and inconsistent\ntrust.\nPLATFORM RESPONSE\nCorporate narrative system\nA clear hierarchy from enterprise purpose\nto capabilities, proof and relevance.\nTrust journeys\nInvestor relations, governance, ESG, media\nand corporate proof designed as connected\njourneys.\nEmployer brand & careers\nCulture, opportunity, role discovery and\ncandidate action designed as one\nexperience.\nBUSINESS VALUE\nClearer understanding\nStronger brand credibility\nBetter investor and media\naccess\nMore relevant talent\nengagement",
+      "rightText": "",
+      "divider": true,
+      "number": "2.3",
+      "theme": "dark",
+      "bg_image": "C:\\Users\\Riddhi Dumre\\Desktop\\ppt_automation\\extracted_bg_images\\deck_6\\slide_bg_6_4.jpg"
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "CAPABILITIES",
+      "tagline": "Product Discovery & Demand",
+      "leftText": "Turn a complex portfolio into relevant pathways that help buyers understand, evaluate and act.\nBUSINESS PROBLEM",
+      "rightText": "Visitors know their need—\nbut the platform expects\nthem to know the\norganisation.\nProducts remain hidden, journeys break,\nand enquiries arrive without useful\ncontext.\nPLATFORM RESPONSE\nIntent-led discovery\nPathways, guided questions and AI search\norganised around audience needs.\nValue & proof\nUse cases, outcomes, capabilities and\nevidence connected at the point of\ndecision.\nQualified conversion\nContextual calls to action, forms and routing\nthat preserve visitor intent.\nBUSINESS VALUE\nHigher product discovery\nMore relevant engagement\nBetter-quality enquiries\nShorter path to action",
+      "divider": true,
+      "number": "2.4",
+      "theme": "dark",
+      "rows": [
+        {
+          "title": "A corporate platform needs more than design and development. It needs business, communication, product, intelligence and technology working as one system.",
+          "body": "1"
+        },
+        {
+          "title": "PLATFORM STRATEGY",
+          "body": "• Audience and intent mapping\n• Business goals and measurement\n• Platform roadmap and governance"
+        },
+        {
+          "title": "2",
+          "body": "BRAND &amp; CONTENT"
+        },
+        {
+          "title": "• Corporate narrative • Information architecture • Content design and operating model",
+          "body": "3"
+        },
+        {
+          "title": "EXPERIENCE &amp; AI",
+          "body": "• Product discovery\n• Personalised journeys\n• AI search and guided interaction"
+        },
+        {
+          "title": "4",
+          "body": "TECHNOLOGY &amp; DATA"
+        }
+      ]
+    },
+    {
+      "layout": "THREE_COLUMN",
+      "title": "A NEW PROJECT LIFECYCLE",
+      "tagline": "Align quickly. Prove the experience. Launch a working platform.",
+      "leftText": "Make communication faster to operate, easier to govern, and more intelligent over time.\nBUSINESS PROBLEM\nThe site launches once,\nwhile the enterprise\nchanges every day.\nTeams struggle with slow publishing,\nduplicated content, weak governance and\nanalytics that do not guide action.\nPLATFORM RESPONSE\nCMS & design system\nStructured content, reusable components\nand multi-market governance.\nAI content operations\nDrafting, tagging, summarising, translation\nand reuse within clear human controls.\nAnalytics & optimisation\nAudience, search, journey and conversion\nsignals linked to a continuous improvement\ncadence.\nBUSINESS VALUE\nFaster publishing\nLower content effort\nStronger consistency\nContinuous improvement",
+      "rightText": "",
+      "divider": true,
+      "number": "2.5",
+      "theme": "light",
+      "rows": [
+        {
+          "title": "3 DAYS",
+          "body": "Platform direction\nAlign on audiences, business outcomes, content challenges, intelligence opportunities and technical constraints."
+        },
+        {
+          "title": "3 WEEKS",
+          "body": "Experience prototype\nPrototype the narrative, discovery, high-value journeys, AI search and content-operating model."
+        },
+        {
+          "title": "3 MONTHS",
+          "body": "Launchable platform\nDesign, engineer, integrate, migrate, instrument and release a focused first version."
+        }
+      ]
+    },
+    {
+      "layout": "SECTION_STARTER",
+      "number": "3",
+      "title": "MEASURING THE PLATFORM",
+      "theme": "green",
+      "rows": [
+        {
+          "title": "Success is not a prettier homepage. It is better audience and operating outcomes. Define the measures before design begins. Instrument them before launch. Review them after release.",
+          "body": "UNDERSTANDING"
+        },
+        {
+          "title": "Message comprehension Priority-content engagement Trust and proof interaction",
+          "body": "DISCOVERY"
+        },
+        {
+          "title": "Search success Product-path completion Relevant content depth",
+          "body": "ACTION"
+        },
+        {
+          "title": "Qualified enquiries Application completion Investor, media or talent actions",
+          "body": "OPERATIONS"
+        },
+        {
+          "title": "Publishing cycle time Content reuse Governance and quality",
+          "body": "LEARNING"
+        }
+      ]
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "WHERE THIS CREATES THE MOST VALUE",
+      "tagline": "development.",
+      "leftText": "It needs business, communication, product, intelligence and technology working as one system.\nPLATFORM STRATEGY\nAudience and intent mapping\nBusiness goals and\nmeasurement\nPlatform roadmap and\ngovernance\nBRAND & CONTENT\nCorporate narrative\nInformation architecture\nContent design and operating",
+      "rightText": "model\nEXPERIENCE & AI\nProduct discovery\nPersonalised journeys\nAI search and guided\ninteraction\nTECHNOLOGY & DATA\nCMS and design systems\nIntegrations and performance\nAnalytics and\nexperimentation",
+      "divider": true,
+      "number": "3.1",
+      "theme": "dark",
+      "bg_image": "C:\\Users\\Riddhi Dumre\\Desktop\\ppt_automation\\extracted_bg_images\\deck_6\\slide_bg_6_5.jpg",
+      "rows": [
+        {
+          "title": "The strongest opportunities are enterprise communication transformations—not isolated website redesigns. Transformation-led. Complex. Enterprise-scale.",
+          "body": "A new corporate narrative"
+        },
+        {
+          "title": "The business has changed, but the market still sees the old company.",
+          "body": "A complex product portfolio"
+        },
+        {
+          "title": "Customers struggle to understand what is relevant or how offerings connect.",
+          "body": "Multiple brands, markets or audiences"
+        },
+        {
+          "title": "Communication must scale without losing consistency or local relevance.",
+          "body": "A major corporate moment"
+        },
+        {
+          "title": "Transformation, rebrand, listing, merger, expansion or category creation raises the stakes.",
+          "body": "A content-operations bottleneck"
+        },
+        {
+          "title": "Publishing is slow, duplicated, fragmented or heavily dependent on external teams.",
+          "body": "A platform-modernisation need"
+        }
+      ]
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "LET&apos;S BUILD WHAT&apos;S NEXT",
+      "tagline": "Explore our work, sectors, and point of view at www.bombaydc.com",
+      "leftText": "platform.\n3 DAYS\nPlatform direction\nAlign on audiences, business outcomes,\ncontent challenges, intelligence\nopportunities and technical constraints.\n3 WEEKS\nExperience prototype",
+      "rightText": "Prototype the narrative, discovery,\nhigh-value journeys, AI search and\ncontent-operating model.\n3 MONTHS\nLaunchable platform\nDesign, engineer, integrate, migrate,\ninstrument and release a focused first\nversion.",
+      "divider": true,
+      "number": "3.2",
+      "theme": "dark"
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "MEASURING THE PLATFORM",
+      "tagline": "Success is not a prettier homepage. It is better audience and",
+      "leftText": "operating outcomes.\nUNDERSTANDING\nMessage comprehension\nPriority-content\nengagement\nTrust and proof\ninteraction\nDISCOVERY\nSearch success\nProduct-path completion\nRelevant content depth\nACTION\nQualified enquiries",
+      "rightText": "Application completion\nInvestor, media or talent\nactions\nOPERATIONS\nPublishing cycle time\nContent reuse\nGovernance and quality\nLEARNING\nJourney drop-offs\nAudience behaviour\nExperiment impact\nDefine the measures before design begins. Instrument them before launch. Review them after release.",
+      "divider": true,
+      "number": "3.3",
+      "theme": "light"
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "WHERE THIS CREATES THE MOST VALUE",
+      "tagline": "The strongest opportunities are enterprise communication",
+      "leftText": "transformations—not isolated website redesigns.\nA new corporate narrative\nThe business has changed, but the market still sees the old company.\nA complex product portfolio\nCustomers struggle to understand what is relevant or how offerings\nconnect.\nMultiple brands, markets or audiences\nCommunication must scale without losing consistency or local relevance.\nA major corporate moment",
+      "rightText": "Transformation, rebrand, listing, merger, expansion or category creation\nraises the stakes.\nA content-operations bottleneck\nPublishing is slow, duplicated, fragmented or heavily dependent on\nexternal teams.\nA platform-modernisation need\nCMS, search, analytics, performance and integrations constrain future\nambition.\nTransformation-led. Complex. Enterprise-scale.",
+      "divider": true,
+      "number": "3.4",
+      "theme": "dark"
+    },
+    {
+      "layout": "CARD_GRID",
+      "title": "THE OPPORTUNITY",
+      "tagline": "Move the conversation from",
+      "leftText": "“we need a new website”\nto “we need a modern\ncommunication platform.”\nA corporate digital platform\nshould help every audience:\nUnderstand\nDiscover\nDecide\nAct\n— while helping the enterprise learn and improve.\nDigital Platforms for the AI Era.",
+      "rightText": "",
+      "divider": true,
+      "number": "3.5",
+      "theme": "light"
+    }
+  ],
+  "coverBgImage": "C:\\Users\\Riddhi Dumre\\Desktop\\ppt_automation\\extracted_bg_images\\deck_6\\slide_bg_6_1.jpg",
+  "proposalName": "CORPORATE DIGITAL PLATFORMS FOR THE AI ERA",
+  "proposalSubtitle": "Turning corporate communication into a platform for understanding, discovery, demand and continuous improvement."
+}

@@ -1,0 +1,297 @@
+{
+  "presentationTitle": "BOMBAYDC",
+  "clientName": "Enterprise Client",
+  "date": "August 2026",
+  "coverSlide": {
+    "title": "BOMBAYDC",
+    "subtitle": "Corporate Brand Platforms",
+    "createdFor": "Enterprise Client",
+    "createdBy": "Team BOMBAYDC",
+    "date": "August 2026"
+  },
+  "dynamicSlides": [
+    {
+      "layout": "SECTION_STARTER",
+      "number": "1",
+      "title": "Corporate Brand Platforms for the AI Era",
+      "theme": "green",
+      "tagline": "Narrative-led architecture • Premium design • CMS &amp; governance • Integrated design-to-tech delivery",
+      "rows": [
+        {
+          "title": "What enterprises need today",
+          "body": "Brand clarity, stakeholder trust, modular content, stronger product communication, careers storytelling, and a CMS that scales."
+        },
+        {
+          "title": "What most corporate sites still feel like",
+          "body": "Static information destinations with weak narrative hierarchy, generic expression, fragmented content and slow publishing workflows."
+        },
+        {
+          "title": "What the platform now needs to become",
+          "body": "A structured brand and communication system—one that expresses the business clearly and evolves with ease."
+        }
+      ]
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "Most enterprise corporate websites are informative, but not effective.",
+      "tagline": "The result: A site that feels complete on paper, but underperforms as a brand, trust, and communication system.",
+      "leftText": "They contain information, but often fall short on narrative clarity, brand expression, multi-audience trust, and content governance.\nInformation without hierarchy\nContent exists, but users struggle to understand\nthe company story, strategic priorities, or where\nto go next.\nBrand expression feels generic\nThe visual and verbal system does not fully reflect\nthe enterprise’s ambition, differentiation, or\nstature.\nContent is hard to scale\nPublishing is slow, stakeholders are fragmented,\nand CMS structures break under the weight of\nevolving teams and needs.\nThe result\nA site that feels complete on paper, but underperforms as a brand, trust, and\ncommunication system.",
+      "rightText": "What enterprises now expect\nClearer narrative, stronger product and offering communication, careers\nstorytelling, investor confidence, and easier governance through CMS.",
+      "divider": true,
+      "number": "1.1",
+      "theme": "light",
+      "rows": [
+        {
+          "title": "Information without hierarchy",
+          "body": "Content exists, but users struggle to understand the company story, strategic priorities, or where to go next."
+        },
+        {
+          "title": "Brand expression feels generic",
+          "body": "The visual and verbal system does not fully reflect the enterprise’s ambition, differentiation, or stature."
+        },
+        {
+          "title": "Content is hard to scale",
+          "body": "Publishing is slow, stakeholders are fragmented, and CMS structures break under the weight of evolving teams and needs."
+        },
+        {
+          "title": "They contain information, but often fall short on narrative clarity, brand expression, multi-audience trust, and content governance.",
+          "body": "What enterprises now expect: Clearer narrative, stronger product and offering communication, careersstorytelling, investor confidence, and easier governance through CMS"
+        }
+      ]
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "What enterprises actually want from corporate platforms",
+      "tagline": "The business case is not “launch a new website.” It is to improve how the enterprise is understood, trusted, and managed digitally. Corporate platforms are now expected to align brand, business, trust, and content operations in one coherent system.",
+      "leftText": "Clearer communication of products and offerings\nGreater trust with customers, talent, investors and\nmedia\nBetter lead and inquiry quality\nStronger employer brand and hiring support\nFaster publishing and easier governance through\nCMS",
+      "rightText": "Corporate platforms are now expected to align brand, business, trust, and content operations in one coherent system.",
+      "divider": true,
+      "number": "1.2",
+      "theme": "dark",
+      "bg_image": "C:\\Users\\Riddhi Dumre\\Desktop\\ppt_automation\\extracted_bg_images\\deck_5\\slide_bg_5_2.jpg",
+      "rows": [
+        {
+          "title": "STRONGER BRAND PERCEPTION",
+          "body": "Align digital touchpoints to project a cohesive, premium corporate identity."
+        },
+        {
+          "title": "CLEARER COMMUNICATION OF PRODUCTS AND OFFERINGS",
+          "body": "Ensure complex enterprise capabilities are easy to discover and understand."
+        },
+        {
+          "title": "GREATER TRUST WITH CUSTOMERS, TALENT, INVESTORS AND MEDIA",
+          "body": "Build credibility through transparent, consistent and accessible corporate information."
+        },
+        {
+          "title": "BETTER LEAD AND INQUIRY QUALITY",
+          "body": "Guide high-value prospects to the right conversion points with intent-driven journeys."
+        },
+        {
+          "title": "STRONGER EMPLOYER BRAND AND HIRING SUPPORT",
+          "body": "Attract top-tier talent by showcasing culture, impact and career opportunities effectively."
+        },
+        {
+          "title": "FASTER PUBLISHING AND EASIER GOVERNANCE THROUGH CMS",
+          "body": "Empower marketing and comms teams to manage content securely and at scale."
+        }
+      ]
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "Why most corporate websites underperform",
+      "tagline": "The issue is rarely lack of content. It is lack of structure, clarity, and system thinking.",
+      "leftText": "Weak narrative architecture\nThe site mirrors the organisation chart rather\nthan the audience journey, so the company story\nfeels diluted.\nConfusing product & offering structure\nProducts, solutions, sectors, and capabilities are\ndifficult to parse—especially for new visitors.\nToo many stakeholders, fragmented\ncontent\nInvestors, HR, brand, marketing, corporate\ncomms, leadership, and business teams all\nshape the platform.",
+      "rightText": "Generic visual language\nEven large enterprises often end up with sites\nthat feel templated, cautious, and\ninterchangeable.\nCMS rigidity and publishing friction\nTeams struggle to update, localise, govern, and\nscale without breaking structure or design\nquality.\nSections treated as silos\nCareers, innovation, investor relations, media,\nand contact flows live independently instead of\nreinforcing the brand story.",
+      "divider": true,
+      "number": "1.3",
+      "theme": "light",
+      "rows": [
+        {
+          "title": "WEAK NARRATIVE ARCHITECTURE",
+          "body": "The site mirrors the organisation chart rather than the audience journey, so the company story feels diluted."
+        },
+        {
+          "title": "CONFUSING PRODUCT &amp; OFFERING STRUCTURE",
+          "body": "Products, solutions, sectors, and capabilities are difficult to parse—especially for new visitors."
+        },
+        {
+          "title": "TOO MANY STAKEHOLDERS, FRAGMENTED CONTENT",
+          "body": "Investors, HR, brand, marketing, corporate comms, leadership, and business teams all shape the platform."
+        },
+        {
+          "title": "GENERIC VISUAL LANGUAGE",
+          "body": "Even large enterprises often end up with sites that feel templated, cautious, and interchangeable."
+        },
+        {
+          "title": "CMS RIGIDITY AND PUBLISHING FRICTION",
+          "body": "Teams struggle to update, localise, govern, and scale without breaking structure or design quality."
+        },
+        {
+          "title": "SECTIONS TREATED AS SILOS",
+          "body": "Careers, innovation, investor relations, media, and contact flows live independently instead of reinforcing the brand story."
+        }
+      ]
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "What this now demands from the platform",
+      "tagline": "When enterprise sites need to do more than inform, the platform itself has to change. A modern corporate platform is no longer a static information destination. It is the digital expression layer of the enterprise—where brand, business, credibility, products, talent, and communication all come together.",
+      "leftText": "A\nA narrative system\nThe platform must communicate who the\ncompany is, what it offers, why it matters, and\nwhere it is headed—clearly and coherently.\nB\nA trust layer for multiple\naudiences\nCustomers, talent, investors, media, partners,",
+      "rightText": "and internal stakeholders all need confidence\nfrom the same platform.\nC\nA modular content engine\nReusable modules, flexible page patterns, and\nstructured CMS design must support continuous\npublishing without sacrificing quality.\nA modern corporate platform is no longer a static information destination. It is the digital expression layer of the enterprise—where\nbrand, business, credibility, products, talent, and communication all come together.",
+      "divider": true,
+      "number": "1.4",
+      "theme": "dark",
+      "rows": [
+        {
+          "title": "A narrative system",
+          "body": "The platform must communicate who the company is, what it offers, why it matters, and where it is headed—clearly and coherently."
+        },
+        {
+          "title": "A trust layer for multiple audiences",
+          "body": "Customers, talent, investors, media, partners, and internal stakeholders all need confidence from the same platform."
+        },
+        {
+          "title": "A modular content engine",
+          "body": "Reusable modules, flexible page patterns, and structured CMS design must support continuous publishing without sacrificing quality."
+        }
+      ]
+    },
+    {
+      "layout": "SECTION_STARTER",
+      "number": "2",
+      "title": "Corporate websites were built as static information destinations.",
+      "theme": "green",
+      "tagline": "This is why both the platform and the way it is built must evolve."
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "What the platform needs to cover",
+      "tagline": "A modern enterprise corporate platform must work across multiple communication layers, audiences, and content needs.",
+      "leftText": "platforms.\nThis is why both the platform and the way it is built must evolve.\nThen",
+      "rightText": "Now\nStatic pages and fixed templates\nInformation-first structure\nSiloed sections and stakeholders\nInfrequent updates and heavy dependencies\nCMS treated as backend tooling\nNarrative-led, modular experience systems\nBrand expression with business clarity\nConnected multi-audience communication\nContinuous publishing and easier iteration\nCMS and governance as strategic enablers",
+      "divider": true,
+      "number": "2.1",
+      "theme": "dark",
+      "bg_image": "C:\\Users\\Riddhi Dumre\\Desktop\\ppt_automation\\extracted_bg_images\\deck_5\\slide_bg_5_4.jpg",
+      "rows": [
+        {
+          "title": "BRAND &amp; COMPANY NARRATIVE",
+          "body": "PRODUCTS &amp; OFFERINGS"
+        },
+        {
+          "title": "INDUSTRIES / SOLUTIONS",
+          "body": "INNOVATION &amp; THOUGHT LEADERSHIP"
+        },
+        {
+          "title": "CAREERS &amp; CULTURE",
+          "body": "INVESTOR RELATIONS"
+        },
+        {
+          "title": "NEWS &amp; MEDIA",
+          "body": "CONTACT &amp; INQUIRY FLOWS"
+        },
+        {
+          "title": "GLOBAL / REGIONAL PAGES",
+          "body": "CMS &amp; GOVERNANCE"
+        }
+      ]
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "How BombayDC builds modern corporate brand platforms",
+      "tagline": "We bring together narrative architecture, premium design, scalable CMS thinking, and integrated delivery. The job is not to launch a better website. It is to build a clearer, stronger, more scalable digital communication system.",
+      "leftText": "Brand & company narrative\nProducts & offerings\nIndustries / solutions\nInnovation & thought leadership\nCareers & culture",
+      "rightText": "Investor relations\nNews & media\nContact & inquiry flows\nGlobal / regional pages\nCMS & governance",
+      "divider": true,
+      "number": "2.2",
+      "theme": "dark",
+      "rows": [
+        {
+          "title": "CATEGORY",
+          "body": "DESCRIPTION"
+        },
+        {
+          "title": "Narrative-led architecture",
+          "body": "We define the structure, story, and content hierarchy so the enterprise communicates clearly across audiences."
+        },
+        {
+          "title": "High-quality brand expression",
+          "body": "We create premium visual systems that reflect the company’s ambition, positioning, and level of maturity."
+        },
+        {
+          "title": "Modular CMS-driven systems",
+          "body": "We design reusable modules and content patterns that help teams publish with speed and consistency."
+        },
+        {
+          "title": "Integrated design + technology delivery",
+          "body": "The final platform preserves the intended quality, flexibility, and performance—without losing fidelity in implementation."
+        },
+        {
+          "title": "AI-era readiness",
+          "body": "We can design for smarter search, content discovery, personalization, and content operations as the platform evolves."
+        }
+      ]
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "CMS and governance shape how the platform evolves",
+      "tagline": "For enterprise corporate platforms, publishing flexibility and governance are as important as the front-end experience.",
+      "leftText": "We define the structure, story, and content hierarchy so the enterprise\ncommunicates clearly across audiences.\nHigh-quality brand expression\nWe create premium visual systems that reflect the company’s ambition,\npositioning, and level of maturity.\nModular CMS-driven systems\nWe design reusable modules and content\npatterns that help teams publish with speed and\nconsistency.",
+      "rightText": "Integrated design + technology delivery\nThe final platform preserves the intended quality,\nflexibility, and performance—without losing\nfidelity in implementation.\nAI-era readiness\nWe can design for smarter search, content\ndiscovery, personalization, and content\noperations as the platform evolves.\nThe job is not to launch a better website. It is to build a clearer, stronger, more scalable digital communication system.",
+      "divider": true,
+      "number": "2.3",
+      "theme": "light"
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "What this approach unlocks",
+      "tagline": "A stronger corporate platform improves how the enterprise is understood, trusted, and managed over time.",
+      "leftText": "What enterprises need\n• Reusable modules and page patterns\n• Structured content for multiple teams\n• Multi-market / multi-business scalability\n• Publishing control and approvals\n• Faster updates without breaking design quality\nEditorial system\nModules\nTemplates\nNavigation patterns",
+      "rightText": "Metadata\nComponent library\nGovernance system\nRoles and permissions\nApproval workflows\nRegional / BU ownership\nContent quality rules\nDesign consistency over time\nA good CMS is not just editable. It is structured enough to scale and flexible enough to keep communication moving.",
+      "divider": true,
+      "number": "2.4",
+      "theme": "dark",
+      "bg_image": "C:\\Users\\Riddhi Dumre\\Desktop\\ppt_automation\\extracted_bg_images\\deck_5\\slide_bg_5_3.jpg"
+    },
+    {
+      "layout": "SECTION_STARTER",
+      "number": "3",
+      "title": "Why enterprises trust BombayDC",
+      "theme": "green",
+      "tagline": "Brand sensitivity, platform depth, and integrated execution matter more in corporate platforms than they first appear. BombayDC helps enterprises translate complexity into digital clarity—without reducing stature, quality, or control."
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "LET&apos;S BUILD WHAT&apos;S NEXT",
+      "tagline": "Explore our work, sectors, and point of view at www.bombaydc.com",
+      "leftText": "Business impact\n• Stronger brand clarity\n• Better stakeholder trust\n• Clearer product and offering communication\n• Better lead and inquiry quality",
+      "rightText": "Operational impact\n• Stronger employer brand and careers storytelling\n• Faster publishing with lower content ops friction\n• A platform that scales with the business\nThe best corporate platforms align brand expression, business clarity, and content operations in one system.",
+      "divider": true,
+      "number": "3.1",
+      "theme": "light"
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "Why enterprises trust BombayDC",
+      "tagline": "Brand sensitivity, platform depth, and integrated execution matter more in corporate platforms than they first appear.",
+      "leftText": "Built for enterprise delivery\n10 years in business\n200 digital products delivered\n80-person team\n85% repeat client business\nIntegrated strategy, design, tech, analytics, and content",
+      "rightText": "Built for enterprise quality\n98% on-time delivery\nDedicated staffing model\nIn-house technology capability\nEnterprise constraints handled\nDesign-to-tech fidelity preserved",
+      "divider": true,
+      "number": "3.2",
+      "theme": "dark"
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "should do more than inform.",
+      "tagline": "They should express the brand, build trust, and scale communication with",
+      "leftText": "ease.\nLet’s build a corporate\nplatform that reflects the",
+      "rightText": "strength of the business\nbehind it.\nCorporate Brand Platforms POV",
+      "divider": true,
+      "number": "3.3",
+      "theme": "light"
+    }
+  ],
+  "coverBgImage": "C:\\Users\\Riddhi Dumre\\Desktop\\ppt_automation\\extracted_bg_images\\deck_5\\slide_bg_5_1.jpg",
+  "proposalName": "CORPORATE BRAND PLATFORMS FOR THE AI ERA",
+  "proposalSubtitle": "Enterprise websites that strengthen brand, build trust, and scale through content systems."
+}

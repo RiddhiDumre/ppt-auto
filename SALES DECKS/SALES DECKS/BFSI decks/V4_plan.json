@@ -1,0 +1,446 @@
+{
+  "presentationTitle": "BFSI PITCH",
+  "clientName": "Enterprise Client",
+  "date": "August 2026",
+  "coverSlide": {
+    "title": "BFSI PITCH",
+    "subtitle": "Helping banks turn digital",
+    "createdFor": "Enterprise Client",
+    "createdBy": "Team BOMBAYDC",
+    "date": "August 2026"
+  },
+  "dynamicSlides": [
+    {
+      "layout": "SECTION_STARTER",
+      "number": "1",
+      "title": "Banks can unlock more value from digital across four outcomes.",
+      "theme": "green",
+      "tagline": "The constraint is no longer lack of features. It is the gap between customer intent, platform behaviour and business outcomes.",
+      "rows": [
+        {
+          "title": "1",
+          "body": "Acquire"
+        },
+        {
+          "title": "• More qualified digital leads • Higher application completion • Lower assisted-sales dependency",
+          "body": "2"
+        },
+        {
+          "title": "Activate",
+          "body": "• More active digital customers\n• Higher feature discovery and usage\n• More completed everyday journeys"
+        },
+        {
+          "title": "3",
+          "body": "Deepen"
+        },
+        {
+          "title": "• More relevant cross-sell and up sell • More products per customer • Greater share of wallet",
+          "body": "4"
+        },
+        {
+          "title": "Serve",
+          "body": "• More self-service completion\n• Lower branch / call centre load\n• Faster resolution and lower cost to serve"
+        }
+      ]
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "Despite digital investment, value realization remains uneven.",
+      "tagline": "The symptoms are visible across acquisition, adoption, relationship growth and servicing.",
+      "leftText": "Acquire\nMore qualified digital leads\nHigher application completion\nLower assisted-sales\ndependency\nActivate\nMore active digital customers\nHigher feature discovery and\nusage\nMore completed everyday\njourneys",
+      "rightText": "Deepen\nMore relevant cross-sell and\nupsell\nMore products per customer\nGreater share of wallet\nServe\nMore self-service completion\nLower branch / call centre load\nFaster resolution and lower\ncost to serve\nThe constraint is no longer lack of features. It is the gap between customer intent, platform behaviour and business outcomes.",
+      "divider": true,
+      "number": "1.1",
+      "theme": "light",
+      "rows": [
+        {
+          "title": "1",
+          "body": "Digital acquisition"
+        },
+        {
+          "title": "• High traffic, low conversion • Product pages inform but do not guide • Application and onboarding drop-offs remain high • Assisted sales still needed for clarity",
+          "body": "2"
+        },
+        {
+          "title": "Digital adoption",
+          "body": "• Customers use only a small set of features\n• Everyday tasks take too many steps\n• Feature launches do not automatically create usage\n• Engagement drops after basic transactions"
+        },
+        {
+          "title": "3",
+          "body": "Relationship growth"
+        },
+        {
+          "title": "• Product holding remains shallow • Offers feel generic or poorly timed • Cross-sell depends on campaigns / RMs • Data is available, but not turned into next actions",
+          "body": "4"
+        },
+        {
+          "title": "Digital servicing",
+          "body": "• Self-service stops before resolution\n• Customers fall back to call centres, branches and RMs\n• Context is lost across channels\n• Cost to serve stays high"
+        }
+      ]
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "Digital value leaks across the customer lifecycle.",
+      "tagline": "The same platform has to help the bank acquire, activate, deepen and serve customers.",
+      "leftText": "The symptoms are visible across acquisition, adoption, relationship growth and servicing.\nDigital acquisition\nHigh traffic, low conversion\nProduct pages inform but do not\nguide\nApplication and onboarding\ndrop-offs remain high\nAssisted sales still needed for\nclarity\nDigital adoption\nCustomers use only a small set of\nfeatures\nEveryday tasks take too many\nsteps\nFeature launches do not\nautomatically create usage",
+      "rightText": "Engagement drops after basic\ntransactions\nRelationship growth\nProduct holding remains shallow\nOffers feel generic or poorly timed\nCross-sell depends on campaigns\n/ RMs\nData is available, but not turned\ninto next actions\nDigital servicing\nSelf-service stops before\nresolution\nCustomers fall back to call\ncentres, branches and RMs\nContext is lost across channels\nCost to serve stays high",
+      "divider": true,
+      "number": "1.2",
+      "theme": "dark",
+      "bg_image": "C:\\Users\\Riddhi Dumre\\Desktop\\ppt_automation\\extracted_bg_images\\deck_2\\slide_bg_2_2.jpg",
+      "rows": [
+        {
+          "title": "DISCOVER &amp; CHOOSE",
+          "body": "Customers struggle to compare and decide"
+        },
+        {
+          "title": "APPLY &amp; JOIN",
+          "body": "Applications drop before completion"
+        },
+        {
+          "title": "ACTIVATE &amp; USE",
+          "body": "Only a few digital features become habits"
+        },
+        {
+          "title": "DEEPEN RELATIONSHIP",
+          "body": "Relevant cross-sell and upsell do not happen at the right moment"
+        },
+        {
+          "title": "GET HELP &amp; RESOLVE",
+          "body": "Digital service paths stop before resolution"
+        },
+        {
+          "title": "RETAIN &amp; GROW",
+          "body": "Low relevance weakens primary-bank relationship"
+        }
+      ]
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "Our response: three simple BFSI offerings",
+      "tagline": "Each offering is tied to a business outcome, not just a design or technology deliverable.",
+      "leftText": "Discover &\nchoose\nCustomers struggle to\ncompare and decide\nAcquire\nApply & join\nApplications drop before\ncompletion\nAcquire\nActivate & use\nOnly a few digital\nfeatures become habits\nActivate\nDeepen",
+      "rightText": "relationship\nRelevant cross-sell and\nupsell do not happen at\nthe right moment\nDeepen\nGet help & resolve\nDigital service paths stop\nbefore resolution\nServe\nRetain & grow\nLow relevance weakens\nprimary-bank relationship\nDeepen\noutcome.",
+      "divider": true,
+      "number": "1.3",
+      "theme": "light",
+      "rows": [
+        {
+          "title": "DIGITAL SALES &amp; ACQUISITION",
+          "body": "• Increase qualified acquisition and application conversion.\n• Pre-login website, product discovery, calculators, onboarding, assisted journeys"
+        },
+        {
+          "title": "DIGITAL ENGAGEMENT &amp; RELATIONSHIP GROWTH",
+          "body": "• Increase adoption, product usage, cross-sell and share of wallet among ETB customers.\n• Mobile banking, internet banking, financial management, feature adoption, next-best actions"
+        },
+        {
+          "title": "INTELLIGENT SERVICING",
+          "body": "• Reduce servicing cost while improving resolution and customer experience.\n• Service Intelligence Stack, self-service, routing, RM and employee tools, automation"
+        }
+      ]
+    },
+    {
+      "layout": "THREE_COLUMN",
+      "title": "Why digital acquisition underperforms",
+      "tagline": "The bank may be getting traffic, but the decision journey often does not convert intent into applications.",
+      "leftText": "Digital Sales & Acquisition\nIncrease qualified acquisition and application\nconversion.\nPre-login website, product discovery, calculators, onboarding,\nassisted journeys\nDigital Engagement &\nRelationship Growth\nIncrease adoption, product usage, cross-sell and\nshare of wallet among ETB customers.\nMobile banking, internet banking, financial management,\nfeature adoption, next-best actions\nIntelligent Servicing\nReduce servicing cost while improving resolution\nand customer experience.\nService Intelligence Stack, self-service, routing, RM and\nemployee tools, automation",
+      "rightText": "",
+      "divider": true,
+      "number": "1.4",
+      "theme": "dark"
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "BOMBAYDC response: Digital Sales &amp; Acquisition",
+      "tagline": "Business outcome: Increase qualified acquisition and application conversion.",
+      "leftText": "What the bank experiences\n• Low-quality or low-converting leads\n• Customers struggle to compare products\n• Application and onboarding drop-offs",
+      "rightText": "Why it persists\n• Product pages inform, but do not guide\n• Journeys are organised around products, not customer decisions\n• Assisted support begins too late in the journey\nThe opportunity: turn digital channels into clearer, more guided acquisition journeys.",
+      "divider": true,
+      "number": "1.5",
+      "theme": "light",
+      "rows": [
+        {
+          "title": "PRE-LOGIN PLATFORM",
+          "body": "Make the website a sales and decision platform, not only an information layer."
+        },
+        {
+          "title": "PRODUCT DISCOVERY",
+          "body": "Help customers find the right product based on need, context and intent."
+        },
+        {
+          "title": "CALCULATORS AND COMPARISONS",
+          "body": "Make choices easier to understand and act on."
+        },
+        {
+          "title": "APPLICATION JOURNEYS",
+          "body": "Reduce breaks between interest, application and onboarding."
+        },
+        {
+          "title": "ASSISTED JOURNEYS",
+          "body": "Bring guidance into the journey before customers drop off."
+        },
+        {
+          "title": "PERSONALISED GUIDANCE",
+          "body": "Use context to make the next step clearer and more relevant."
+        }
+      ]
+    },
+    {
+      "layout": "SECTION_STARTER",
+      "number": "2",
+      "title": "Why ETB value remains under-realised",
+      "theme": "dark",
+      "bg_image": "C:\\Users\\Riddhi Dumre\\Desktop\\ppt_automation\\extracted_bg_images\\deck_2\\slide_bg_2_3.jpg",
+      "tagline": "Existing customers may transact digitally, but that does not automatically deepen the relationship."
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "Why digital adoption remains low",
+      "tagline": "Business outcome:",
+      "leftText": "Increase qualified acquisition and application conversion.\nPre-login platform\nMake the website a sales and decision platform, not\nonly an information layer.\nProduct discovery\nHelp customers find the right product based on\nneed, context and intent.\nCalculators and comparisons\nMake choices easier to understand and act on.",
+      "rightText": "Application journeys\nReduce breaks between interest, application and\nonboarding.\nAssisted journeys\nBring guidance into the journey before customers\ndrop off.\nPersonalised guidance\nUse context to make the next step clearer and more\nrelevant.",
+      "divider": true,
+      "number": "2.1",
+      "theme": "light"
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "BOMBAYDC response: Digital Engagement &amp; Relationship Growth",
+      "tagline": "Business outcome: Increase adoption, engagement, product usage, cross-sell and share of wallet among ETB customers.",
+      "leftText": "What the bank experiences\n• Low usage beyond basic transactions\n• Weak discovery of relevant products and features\n• Cross-sell often feels generic or poorly timed",
+      "rightText": "Why it persists\n• Digital journeys are built around product silos\n• Customer data exists, but is not translated into action\n• The platform does not recognise important customer moments\nThe opportunity: make digital banking a relationship-growth channel, not only a transaction channel.",
+      "divider": true,
+      "number": "2.2",
+      "theme": "dark",
+      "rows": [
+        {
+          "title": "MOBILE AND INTERNET BANKING",
+          "body": "Modernise the core digital banking experience around customer tasks."
+        },
+        {
+          "title": "FEATURE DISCOVERY",
+          "body": "Make useful features easier to find and understand."
+        },
+        {
+          "title": "FINANCIAL MANAGEMENT",
+          "body": "Help customers manage money, goals and decisions more clearly."
+        },
+        {
+          "title": "NEXT-BEST ACTIONS",
+          "body": "Surface timely prompts, actions and product opportunities."
+        },
+        {
+          "title": "LIFE-STAGE JOURNEYS",
+          "body": "Connect products to moments such as salary, family, travel, savings and borrowing."
+        },
+        {
+          "title": "RELATIONSHIP GROWTH",
+          "body": "Move from generic offers to relevant guidance and deeper product usage."
+        }
+      ]
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "Why servicing still leaks to assisted channels",
+      "tagline": "Digital channels often answer the easy part, but customers still move to human channels for clarity and completion.",
+      "leftText": "What the bank experiences\n• Customers use only a fraction of the platform\n• New features launch but do not get adopted\n• Engagement drops after onboarding",
+      "rightText": "Why it persists\n• Interfaces are feature-heavy and difficult to navigate\n• Journeys are organised around products rather than tasks\n• Post-login guidance is limited and often not contextual\nThe opportunity: design adoption into the platform instead of hoping users discover value on their own.",
+      "divider": true,
+      "number": "2.3",
+      "theme": "light"
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "BOMBAYDC response: Intelligent Servicing",
+      "tagline": "Business outcome: Reduce servicing cost while improving resolution and customer experience.",
+      "leftText": "Business outcome:\nIncrease adoption, engagement, product usage, cross-sell and share of wallet among ETB customers.\nMobile and internet banking\nModernise the core digital banking experience\naround customer tasks.\nFeature discovery\nMake useful features easier to find and understand.\nFinancial management\nHelp customers manage money, goals and\ndecisions more clearly.",
+      "rightText": "Next-best actions\nSurface timely prompts, actions and product\nopportunities.\nLife-stage journeys\nConnect products to moments such as salary,\nfamily, travel, savings and borrowing.\nRelationship growth\nMove from generic offers to relevant guidance and\ndeeper product usage.",
+      "divider": true,
+      "number": "2.4",
+      "theme": "dark",
+      "bg_image": "C:\\Users\\Riddhi Dumre\\Desktop\\ppt_automation\\extracted_bg_images\\deck_2\\slide_bg_2_4.jpg",
+      "rows": [
+        {
+          "title": "CATEGORY",
+          "body": "DESCRIPTION"
+        },
+        {
+          "title": "Service Intelligence Stack",
+          "body": "A layer that helps identify, guide, route and resolve service needs."
+        },
+        {
+          "title": "Guided self-service",
+          "body": "Make routine issues easier to complete without assistance."
+        },
+        {
+          "title": "Contextual routing",
+          "body": "Send the right issue to the right channel with the right context."
+        },
+        {
+          "title": "AI-assisted workflows",
+          "body": "Use intelligence to help customers and teams resolve faster."
+        },
+        {
+          "title": "RM and employee tools",
+          "body": "Support assisted teams with better context and next steps."
+        },
+        {
+          "title": "Service automation",
+          "body": "Reduce avoidable manual work and improve consistency."
+        }
+      ]
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "What BOMBAYDC brings together",
+      "tagline": "The work requires more than design alone. We combine the disciplines needed to move from business problem to working product.",
+      "leftText": "What the bank experiences\n• High cost to serve\n• Repeat calls, branch visits and RM dependency\n• Slow or unclear resolution",
+      "rightText": "Why it persists\n• Customers do not know the correct service path\n• Digital journeys stop before resolution\n• Context is lost across channels and systems\nThe opportunity: make digital servicing capable of guiding, routing and resolving more needs.",
+      "divider": true,
+      "number": "2.5",
+      "theme": "light",
+      "rows": [
+        {
+          "title": "CATEGORY",
+          "body": "DESCRIPTION"
+        },
+        {
+          "title": "Product strategy",
+          "body": "Connect business goals, customer needs and product decisions."
+        },
+        {
+          "title": "Behaviour science",
+          "body": "Understand what users do, where they hesitate and what helps them act."
+        },
+        {
+          "title": "Experience design",
+          "body": "Make complex banking journeys clear, useful and trustworthy."
+        },
+        {
+          "title": "Design engineering",
+          "body": "Move quickly from concept to working product within real constraints."
+        },
+        {
+          "title": "Data and intelligence",
+          "body": "Use signals to guide journeys, personalise actions and measure value."
+        },
+        {
+          "title": "Content and communication",
+          "body": "Make choices, products and actions easier for customers to understand."
+        }
+      ]
+    },
+    {
+      "layout": "SECTION_STARTER",
+      "number": "3",
+      "title": "How we move from diagnosis to implementation",
+      "theme": "green",
+      "rows": [
+        {
+          "title": "Focused interventions reduce risk and create momentum inside real banking constraints. Typical rhythm: 3 days to align on a concept, 3 weeks to validate a prototype, 3 months to launch a focused MVP.",
+          "body": "CATEGORY"
+        },
+        {
+          "title": "DESCRIPTION",
+          "body": "Diagnose"
+        },
+        {
+          "title": "Find friction, value leakage and priority journeys.",
+          "body": "Redesign"
+        },
+        {
+          "title": "Define the target experience and business logic.",
+          "body": "Validate"
+        },
+        {
+          "title": "Prototype with users and stakeholders.",
+          "body": "Build"
+        },
+        {
+          "title": "Launch a focused MVP or phased transformation.",
+          "body": "Measure"
+        }
+      ]
+    },
+    {
+      "layout": "THREE_COLUMN",
+      "title": "Relevant experience and proof",
+      "tagline": "BOMBAYDC has worked on complex banking and enterprise platforms where clarity, trust, adoption and constraints matter.",
+      "leftText": "Reduce servicing cost while improving resolution and customer experience.\nService Intelligence Stack\nA layer that helps identify, guide, route and resolve\nservice needs.\nGuided self-service\nMake routine issues easier to complete without\nassistance.\nContextual routing\nSend the right issue to the right channel with the\nright context.\nAI-assisted workflows\nUse intelligence to help customers and teams\nresolve faster.\nRM and employee tools\nSupport assisted teams with better context and next\nsteps.\nService automation\nReduce avoidable manual work and improve\nconsistency.",
+      "rightText": "",
+      "divider": true,
+      "number": "3.1",
+      "theme": "light",
+      "rows": [
+        {
+          "title": "1",
+          "body": "Banking experience"
+        },
+        {
+          "title": "Mobile banking, internet banking, onboarding and servicing journeys.",
+          "body": "2"
+        },
+        {
+          "title": "Enterprise constraints",
+          "body": "Legacy systems, stakeholder complexity, phased rollouts, compliance and risk."
+        },
+        {
+          "title": "3",
+          "body": "Design to build"
+        },
+        {
+          "title": "Strategy, UX, UI, design systems, engineering and product delivery.",
+          "body": "4"
+        },
+        {
+          "title": "Outcome lens",
+          "body": "Work anchored to adoption, conversion, engagement, servicing and business value."
+        }
+      ]
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "LET&apos;S BUILD WHAT&apos;S NEXT",
+      "tagline": "Explore our work, sectors, and point of view at www.bombaydc.com",
+      "leftText": "Connect business goals, customer needs and\nproduct decisions.\nBehaviour science\nUnderstand what users do, where they hesitate and\nwhat helps them act.\nExperience design\nMake complex banking journeys clear, useful and\ntrustworthy.\nDesign engineering",
+      "rightText": "Move quickly from concept to working product within\nreal constraints.\nData and intelligence\nUse signals to guide journeys, personalise actions\nand measure value.\nContent and communication\nMake choices, products and actions easier for\ncustomers to understand.",
+      "divider": true,
+      "number": "3.2",
+      "theme": "dark"
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "How we move from diagnosis to implementation",
+      "tagline": "Focused interventions reduce risk and create momentum inside real banking constraints.",
+      "leftText": "Diagnose\nFind friction, value leakage and\npriority journeys.\nRedesign\nDefine the target experience and\nbusiness logic.\nValidate\nPrototype with users and\nstakeholders.",
+      "rightText": "Build\nLaunch a focused MVP or phased\ntransformation.\nMeasure\nTrack adoption, conversion,\nservicing or relationship impact.\nTypical rhythm:\n3 days to align on a concept, 3 weeks to validate a prototype, 3 months to launch a focused MVP.",
+      "divider": true,
+      "number": "3.3",
+      "theme": "light"
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "Relevant experience and proof",
+      "tagline": "Banking experience",
+      "leftText": "Mobile banking, internet banking, onboarding and servicing journeys.\nEnterprise constraints\nLegacy systems, stakeholder complexity, phased rollouts, compliance and risk.\nDesign to build",
+      "rightText": "Strategy, UX, UI, design systems, engineering and product delivery.\nOutcome lens\nWork anchored to adoption, conversion, engagement, servicing and business value.",
+      "divider": true,
+      "number": "3.4",
+      "theme": "dark"
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "Where is digital value leaking most in",
+      "tagline": "your bank?",
+      "leftText": "Acquisition • Engagement and relationship growth • Servicing",
+      "rightText": "Let us identify the highest-value journeys to fix first.",
+      "divider": true,
+      "number": "3.5",
+      "theme": "light"
+    }
+  ],
+  "coverBgImage": "C:\\Users\\Riddhi Dumre\\Desktop\\ppt_automation\\extracted_bg_images\\deck_2\\slide_bg_2_1.jpg",
+  "proposalName": "Helping banks turn digital investment into business value",
+  "proposalSubtitle": "Helping banks turn digital investment into business value Increase acquisition. Grow existing customer relationships. Reduce servicing cost."
+}

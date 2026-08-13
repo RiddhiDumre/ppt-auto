@@ -1,0 +1,287 @@
+{
+  "presentationTitle": "BFSI POV",
+  "clientName": "Enterprise Client",
+  "date": "August 2026",
+  "coverSlide": {
+    "title": "BFSI POV",
+    "subtitle": "BFSI Platforms for the AI Era",
+    "createdFor": "Enterprise Client",
+    "createdBy": "Team BOMBAYDC",
+    "date": "August 2026"
+  },
+  "dynamicSlides": [
+    {
+      "layout": "SECTION_STARTER",
+      "number": "1",
+      "title": "Most BFSI platforms are functionally strong, but experience-poor.",
+      "theme": "green"
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "What BFSI institutions actually want from digital platforms",
+      "tagline": "HIGHER ADOPTION",
+      "leftText": "Transactions work\nCustomers can transact, but\nfeature depth and daily usage\noften remain lower than\nexpected.\nJourneys are\nfragmented\nOnboarding, servicing,\npayments, investments, and\nsupport often feel like separate\nsystems.\nDigital servicing still\nleaks\nUsers fall back to RM, branch,",
+      "rightText": "call center, or assisted channels\nfor clarity and completion.\nInterfaces expect effort\nMany platforms still depend on\nusers figuring out what to do,\nwhen to do it, and why it matters.\nThe result\n•\nDigital investment rises, but usage, trust, and self-serve behaviour do not scale proportionately.\n•\nProduct teams add features, while customers still struggle with confidence, clarity, and completion.\n•\nThe platform remains transactional, instead of becoming a trusted decision and servicing layer.",
+      "divider": true,
+      "number": "1.1",
+      "theme": "light",
+      "rows": [
+        {
+          "title": "More customers actively use the platform for core and secondary financial tasks.",
+          "body": "BETTER ONBOARDING COMPLETION"
+        },
+        {
+          "title": "Reduce abandonment in KYC, setup, activation, and first-value journeys.",
+          "body": "LOWER SERVICING DEPENDENCY"
+        },
+        {
+          "title": "Move more routine assistance into the platform and reduce assisted channel load.",
+          "body": "HIGHER FEATURE USAGE"
+        },
+        {
+          "title": "Increase use of under-adopted capabilities such as bill pay, autopay, investment, rewards, and tools.",
+          "body": "STRONGER TRUST"
+        },
+        {
+          "title": "Make digital journeys feel clear, credible, and confidence-building at scale.",
+          "body": "MORE VALUE FROM DIGITAL INVESTMENTS"
+        }
+      ]
+    },
+    {
+      "layout": "ROW_LIST",
+      "title": "Why most BFSI platforms underperform",
+      "tagline": "The challenge is not only technology. It is friction.",
+      "leftText": "Higher adoption\nMore customers actively use the\nplatform for core and secondary\nfinancial tasks.\nBetter onboarding\ncompletion\nReduce abandonment in KYC,\nsetup, activation, and first-value\njourneys.\nLower servicing\ndependency\nMove more routine assistance into\nthe platform and reduce assisted\nchannel load.\nHigher feature usage\nIncrease use of under-adopted\ncapabilities such as bill pay,\nautopay, investment, rewards, and\ntools.\nStronger trust\nMake digital journeys feel clear,\ncredible, and confidence-building\nat scale.\nMore value from digital\ninvestments\nImprove ROI from existing\nplatforms without waiting for full\nbackend reinvention.",
+      "rightText": "",
+      "divider": true,
+      "number": "1.2",
+      "theme": "dark",
+      "bg_image": "C:\\Users\\Riddhi Dumre\\Desktop\\ppt_automation\\extracted_bg_images\\deck_1\\slide_bg_1_2.jpg"
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "What this now demands from the platform",
+      "tagline": "When the business outcome changes, the platform has to change. And when the platform has to change, the way it is designed and built must change too.",
+      "leftText": "is friction.\n•\nFragmented journeys across products, channels,\nand service surfaces\n•\nLegacy architecture and backend constraints\nthat limit structural change\n•\nFeature-heavy interfaces with low clarity and\nhigh cognitive load\n•\nCompliance, security, and trust requirements\nthat increase complexity\n•\nData-rich platforms that show information but\ndo not guide action",
+      "rightText": "What this feels like for the user\n•\nToo much information, not enough guidance\n•\nUnclear next steps in onboarding and\nservicing journeys\n•\nMultiple screens to complete simple, high-\nfrequency tasks\n•\nDigital channels that still feel less\ntrustworthy than human assistance\nPlatforms feel functional, but\nunderperform on adoption, confidence,\nand value.",
+      "divider": true,
+      "number": "1.3",
+      "theme": "light",
+      "rows": [
+        {
+          "title": "CLEARER",
+          "body": "Information hierarchy, language, and flows must reduce uncertainty and mental effort."
+        },
+        {
+          "title": "MORE TRUST-BUILDING",
+          "body": "Journeys must reinforce confidence through transparency, reassurance, and contextual clarity."
+        },
+        {
+          "title": "MORE TASK-ORIENTED",
+          "body": "Users should be able to complete financial actions quickly, not navigate product silos."
+        },
+        {
+          "title": "DECISION-SUPPORTIVE",
+          "body": "The platform should help users know what matters, what to do next, and why."
+        },
+        {
+          "title": "ADAPTIVE",
+          "body": "Different users, goals, and moments should trigger different guidance, prompts, and surfaces."
+        },
+        {
+          "title": "EASIER TO EVOLVE",
+          "body": "Improvements must be testable and phased within enterprise constraints, not only through big-bang rewrites."
+        }
+      ]
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "The shift",
+      "tagline": "BFSI platforms were built for a transactional era. The AI era demands platforms that are more intelligent, adaptive, and trusted.",
+      "leftText": "has to change.\nClearer\nInformation hierarchy, language,\nand flows must reduce\nuncertainty and mental effort.\nMore trust-building\nJourneys must reinforce\nconfidence through transparency,\nreassurance, and contextual\nclarity.\nMore task-oriented\nUsers should be able to complete\nfinancial actions quickly, not\nnavigate product silos.\nDecision-supportive\nThe platform should help users",
+      "rightText": "know what matters, what to do\nnext, and why.\nAdaptive\nDifferent users, goals, and\nmoments should trigger different\nguidance, prompts, and surfaces.\nEasier to evolve\nImprovements must be testable\nand phased within enterprise\nconstraints, not only through big-\nbang rewrites.\nAnd when the platform has to change, the way it is designed and built must change too.",
+      "divider": true,
+      "number": "1.4",
+      "theme": "dark",
+      "bg_image": "C:\\Users\\Riddhi Dumre\\Desktop\\ppt_automation\\extracted_bg_images\\deck_1\\slide_bg_1_3.jpg"
+    },
+    {
+      "layout": "SECTION_STARTER",
+      "number": "2",
+      "title": "BEAM: a practical model for behavior-aware banking experiences",
+      "theme": "green",
+      "tagline": "A simple framework for turning signals into useful actions inside the platform.",
+      "rows": [
+        {
+          "title": "B",
+          "body": "Behaviour"
+        },
+        {
+          "title": "• Capture user actions, habits, drop-offs, and transaction patterns across journeys.",
+          "body": "E"
+        },
+        {
+          "title": "Evaluation",
+          "body": "• Interpret what those signals mean in context: intent, hesitation, risk, or opportunity."
+        },
+        {
+          "title": "A",
+          "body": "Action"
+        },
+        {
+          "title": "• Trigger timely prompts, nudges, prioritisation, assistance, or adaptive flows inside the product.",
+          "body": "M"
+        },
+        {
+          "title": "Measurement",
+          "body": "• Track whether the intervention improved completion, adoption, servicing efficiency, or usage."
+        },
+        {
+          "title": "Illustrative use cases",
+          "body": "• Repeated bill payment behaviour -&gt; surface autopay setup\n• Failed onboarding patterns -&gt; simplify or route to assisted completion\n• Dormant savings behaviour -&gt; surface goal or investment nudges\n• Underused salary account benefits -&gt; highlight relevant tools and actions"
+        }
+      ]
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "How BombayDC responds",
+      "tagline": "We changed how we design and build products because modern BFSI platforms must guide, adapt, and build trust at scale.",
+      "leftText": "Then\n•\nStatic interfaces and fixed journeys\n•\nProduct-led navigation structures\n•\nData-heavy dashboards with low interpretive\nhelp\n•\nSequential strategy-design-tech handoffs\n•\nPeriodic launches instead of continuous\noptimization",
+      "rightText": "Now\n•\nAdaptive experiences and contextual guidance\n•\nUser-centric task flows across product\nboundaries\n•\nDecision-supportive systems and next-best\nactions\n•\nParallel workstreams for faster validation\n•\nContinuous platform evolution inside\nenterprise constraints",
+      "divider": true,
+      "number": "2.1",
+      "theme": "dark",
+      "bg_image": "C:\\Users\\Riddhi Dumre\\Desktop\\ppt_automation\\extracted_bg_images\\deck_1\\slide_bg_1_5.jpg",
+      "rows": [
+        {
+          "title": "INTELLIGENT PRODUCTS",
+          "body": "• Reduce friction &amp; guide decisions\n• Respond to user intent &amp; context\n• Make complex financial systems simple"
+        },
+        {
+          "title": "NEW PRODUCT LIFECYCLE",
+          "body": "• Parallel strategy, design &amp; engineering\n• 3-day / 3-week / 3-month model\n• Reduce risk &amp; evolve continuously"
+        },
+        {
+          "title": "NEW TEAM STRUCTURE",
+          "body": "• Business Analyst &amp; Behavioural Scientist\n• AI Product Designer &amp; Full-stack Dev\n• Data Analyst working from day one"
+        }
+      ]
+    },
+    {
+      "layout": "ACRONYM_GRID",
+      "title": "From idea to validated product, faster and with less risk",
+      "tagline": "3 Days",
+      "leftText": "A simple framework for turning signals into useful actions inside the platform.\nB\nBehaviour\nCapture user actions,\nhabits, drop-offs, and\ntransaction patterns\nacross journeys.\nE\nEvaluation\nInterpret what those\nsignals mean in context:\nintent, hesitation, risk, or\nopportunity.\nA\nAction\nTrigger timely prompts,\nnudges, prioritisation,\nassistance, or adaptive\nflows inside the product.\nM\nMeasurem\nent\nTrack whether the\nintervention improved\ncompletion, adoption,\nservicing efficiency, or\nusage.\nIllustrative use\ncases\n•\nRepeated bill payment behaviour -> surface autopay setup\n•\nFailed onboarding patterns -> simplify or route to assisted completion\n•\nDormant savings behaviour -> surface goal or investment nudges\n•\nUnderused salary account benefits -> highlight relevant tools and actions",
+      "rightText": "",
+      "divider": true,
+      "number": "2.2",
+      "theme": "dark",
+      "rows": [
+        {
+          "title": "Product concept",
+          "body": "Align on problem, users, regulatory realities, scope, and measurable outcomes."
+        },
+        {
+          "title": "3 Weeks",
+          "body": "Working prototype"
+        },
+        {
+          "title": "Validate desirability, feasibility, and business viability before committing to full build.",
+          "body": "3 Months"
+        },
+        {
+          "title": "Live MVP",
+          "body": "Launch with real users and start continuous optimisation using real signals."
+        }
+      ]
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "AI-era opportunities in BFSI",
+      "tagline": "Intelligence should be embedded inside the workflow, not bolted on as a side assistant.",
+      "leftText": "1. Intelligent products\nPlatforms that reduce friction, guide\ndecisions, respond to behaviour, and make\ncomplex systems feel simpler and more\ntrustworthy.\n2. A new product lifecycle\nStrategy, design, and engineering in parallel",
+      "rightText": "workstreams to reduce risk, test faster, and\nevolve platforms continuously.\n3. A new team structure\nBusiness analyst, behavioural scientist, AI\nproduct designer, AI/full-stack developer, and\nanalyst working together from day one.\nThe result: safer, faster platform evolution inside real enterprise constraints.",
+      "divider": true,
+      "number": "2.3",
+      "theme": "light",
+      "rows": [
+        {
+          "title": "NEXT-BEST ACTION GUIDANCE",
+          "body": "Highlight the most relevant next step in servicing, onboarding, or renewal."
+        },
+        {
+          "title": "CONTEXT-AWARE NUDGES",
+          "body": "Prompt bill payments, autopay setup, or savings behaviour at the right moment."
+        },
+        {
+          "title": "ADAPTIVE DASHBOARDS",
+          "body": "Reorder and simplify information based on user behaviour and context."
+        },
+        {
+          "title": "SMARTER ONBOARDING",
+          "body": "Detect hesitation or failure patterns and guide users to completion."
+        },
+        {
+          "title": "AI-ASSISTED SERVICE FLOWS",
+          "body": "Reduce support dependency through guided, contextual issue resolution."
+        },
+        {
+          "title": "PERSONALISED INSIGHTS",
+          "body": "Translate data into actionable prompts and explainable recommendations."
+        }
+      ]
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "Why BFSI teams work with BombayDC",
+      "tagline": "with less risk",
+      "leftText": "3 Days\nProduct\nconcept\nAlign on problem, users,\nregulatory realities, scope,\nand measurable outcomes.\n3 Weeks\nWorking\nprototype\nValidate desirability,",
+      "rightText": "feasibility, and business\nviability before committing\nto full build.\nMonths\nLive MVP\nLaunch with real users and\nstart continuous\noptimisation using real\nsignals.\nNew team structure: Business Analyst  |  Behavioural Scientist  |  AI Product Designer  |  AI / Full-stack Developer  |  Analyst",
+      "divider": true,
+      "number": "2.4",
+      "theme": "dark",
+      "bg_image": "C:\\Users\\Riddhi Dumre\\Desktop\\ppt_automation\\extracted_bg_images\\deck_1\\slide_bg_1_4.jpg"
+    },
+    {
+      "layout": "SECTION_STARTER",
+      "number": "3",
+      "title": "LET&apos;S BUILD WHAT&apos;S NEXT",
+      "theme": "green",
+      "tagline": "Explore our work, sectors, and point of view at www.bombaydc.com"
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "AI-era opportunities in BFSI",
+      "tagline": "Intelligence should be embedded inside the workflow, not bolted on as a side assistant.",
+      "leftText": "Next-best action\nguidance\nHighlight the most relevant next\nstep in servicing, onboarding,\nrepayment, renewal, or financial\nplanning.\nContext-aware nudges\nPrompt bill payments, autopay\nsetup, saving behaviour, or\nfeature activation at the right\nmoment.\nAdaptive dashboards\nReorder, simplify, and prioritise\ninformation based on behaviour",
+      "rightText": "and context.\nSmarter onboarding\nassistance\nDetect hesitation or failure\npatterns and help users complete\ncritical journeys.\nAI-assisted service flows\nReduce support dependency\nthrough guided issue resolution\nand contextual help.\nPersonalised insights\nTranslate data into useful\nprompts, reminders, and\nexplainable recommendations.",
+      "divider": true,
+      "number": "3.1",
+      "theme": "light"
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "Why BFSI teams work with BombayDC",
+      "tagline": "",
+      "leftText": "•\nWe simplify complex digital systems without pretending every\nproblem needs a greenfield rebuild.\n•\nWe design for adoption, trust, and clarity — not just visual\nmodernization.\n•\nWe operate inside real constraints: legacy architectures,\nphased rollouts, risk, and compliance.\n•\nWe combine strategy, product design, engineering, analytics,\nand behaviour thinking in one model.\n•\nWe create scalable foundations that support future intelligence\nand continuous optimisation.",
+      "rightText": "Relevant proof points\n•\nEnterprise platform redesign\nexperience across complex\nworkflows and multi-role\nsystems\n•\nAudit-led engagements that\nturn platform friction into a\nphased transformation\nroadmap\n•\nDesign systems and UX\nmodernization inside real\ntechnical constraints\nPositioning:\nA strategic digital platform\nfirm shaping how enterprises\noperate in the AI era.",
+      "divider": true,
+      "number": "3.2",
+      "theme": "dark"
+    },
+    {
+      "layout": "TWO_COLUMN",
+      "title": "Building BFSI platforms for the AI era requires more than",
+      "tagline": "better interfaces.",
+      "leftText": "It requires systems that guide, adapt, and build trust at scale.\nLet's discuss where friction is limiting",
+      "rightText": "adoption",
+      "divider": true,
+      "number": "3.3",
+      "theme": "light"
+    }
+  ],
+  "coverBgImage": "C:\\Users\\Riddhi Dumre\\Desktop\\ppt_automation\\extracted_bg_images\\deck_1\\slide_bg_1_1.jpg",
+  "proposalName": "BFSI Platforms for the AI Era",
+  "proposalSubtitle": "Designing intelligent banking and financial platforms built for adoption, trust, and scale."
+}

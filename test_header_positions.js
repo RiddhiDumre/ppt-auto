@@ -1,6 +1,29 @@
-const AdmZip = require('C:\\Users\\Riddhi Dumre\\Desktop\\ppt_automation\\node_modules\\adm-zip');
+const fs = require('fs');
+const path = require('path');
 
-function testDeck(deckPath, deckName) {
+function loadModule(name) {
+    try {
+        return require(name);
+    } catch (e) {
+        try {
+            return require(path.join(__dirname, 'node_modules', name));
+        } catch (e2) {
+            return require(`C:\\Users\\Riddhi Dumre\\Desktop\\ppt_automation\\node_modules\\${name}`);
+        }
+    }
+}
+const AdmZip = loadModule('adm-zip');
+
+const BASE_DIR = __dirname;
+const OUT_DIR = path.join(BASE_DIR, 'SALES DECKS', 'new MD');
+
+function testDeck(deckFileName, deckName) {
+    const deckPath = path.join(OUT_DIR, deckFileName);
+    if (!fs.existsSync(deckPath)) {
+        console.log(`\nSkipping ${deckName} (file not found at ${deckPath})`);
+        return;
+    }
+
     const zip = new AdmZip(deckPath);
     const entries = zip.getEntries()
         .filter(e => e.entryName.startsWith('ppt/slides/slide') && e.entryName.endsWith('.xml'))
@@ -14,7 +37,6 @@ function testDeck(deckPath, deckName) {
         const xml = zip.readAsText(entries[sIdx]);
         const label = sIdx === 0 ? 'Cover' : sIdx === 1 ? 'Short Content (Slide 2)' : `Long Content (Slide ${sIdx+1})`;
 
-        // Parse all xfrm off/ext elements and associated text
         const spBlocks = [...xml.matchAll(/<p:sp>([\s\S]*?)<\/p:sp>/g)].map(m => m[1]);
         const cxnBlocks = [...xml.matchAll(/<p:cxnSp>([\s\S]*?)<\/p:cxnSp>/g)].map(m => m[1]);
 
@@ -33,7 +55,6 @@ function testDeck(deckPath, deckName) {
             return m ? { w: parseFloat((parseInt(m[1])/914400).toFixed(2)), h: parseFloat((parseInt(m[2])/914400).toFixed(2)) } : null;
         };
 
-        // Find header divider line (line shapes with height=0)
         [...spBlocks, ...cxnBlocks].forEach(b => {
             if (b.includes('<a:t>')) return;
             const off = parseOff(b); const ext = parseExt(b);
@@ -43,8 +64,6 @@ function testDeck(deckPath, deckName) {
             }
         });
 
-        // Find slide index (small number text in left-most position near y=0.57)
-        // Find title (large text near y=0.57 but right of x=1.0)
         spBlocks.forEach(b => {
             if (!b.includes('<a:t>')) return;
             const off = parseOff(b); const ext = parseExt(b);
@@ -53,13 +72,12 @@ function testDeck(deckPath, deckName) {
             const sz = b.match(/sz="(\d+)"/);
             const fontSize = sz ? parseInt(sz[1]) / 100 : 0;
 
-            if (off.y >= 0.50 && off.y <= 0.65 && off.x < 1.0) {
+            if (off.y >= 0.50 && off.y <= 0.68 && off.x < 1.0) {
                 slideIndex = { txt, x: off.x, y: off.y };
             }
-            if (off.y >= 0.50 && off.y <= 0.65 && off.x >= 1.5 && fontSize >= 16) {
+            if (off.y >= 0.50 && off.y <= 0.68 && off.x >= 1.5 && fontSize >= 16) {
                 titleBlock = { txt: txt.substring(0, 60), x: off.x, y: off.y };
             }
-            // Track content area min/max Y
             if (off.y >= 1.55 && off.y <= 5.10) {
                 if (off.y < contentMinY) contentMinY = off.y;
                 if (ext && off.y + ext.h > contentMaxY) contentMaxY = off.y + ext.h;
@@ -68,7 +86,6 @@ function testDeck(deckPath, deckName) {
 
         console.log(`\n[${label}]`);
         if (sIdx === 0) {
-            // Cover: just confirm no block engine shapes were added (no content area shapes)
             const coverShapes = spBlocks.filter(b => {
                 const off = parseOff(b);
                 return off && off.y > 1.40;
@@ -88,6 +105,6 @@ function testDeck(deckPath, deckName) {
     });
 }
 
-testDeck("C:\\Users\\Riddhi Dumre\\Desktop\\Presentation Automation\\SALES DECKS\\new MD\\V4_BDC_Styled.pptx", "V4 (BFSI Platform Pitch)");
-testDeck("C:\\Users\\Riddhi Dumre\\Desktop\\Presentation Automation\\SALES DECKS\\new MD\\Intro deck_BDC_Styled.pptx", "Intro Deck");
-testDeck("C:\\Users\\Riddhi Dumre\\Desktop\\Presentation Automation\\SALES DECKS\\new MD\\BombayDC_Enterprise_Platforms_POV_BDC_Styled.pptx", "Enterprise Platforms POV");
+testDeck("V4_BDC_Styled.pptx", "V4 (BFSI Platform Pitch)");
+testDeck("Intro deck_BDC_Styled.pptx", "Intro Deck");
+testDeck("BombayDC_Enterprise_Platforms_POV_BDC_Styled.pptx", "Enterprise Platforms POV");

@@ -32,5 +32,16 @@ When generating or formatting presentation plans (`*_plan.json`) and updating th
   - **2-Line Titles**: If a title wraps to 2 lines, do NOT display the tagline/subtitle above the divider line. Relocate the tagline to `y: 1.60 in` below the divider line as the first content element, and push all subsequent content down by `+0.35 in`.
   - **Fixed Header Divider**: The horizontal line divider MUST ALWAYS stay anchored at `y: 1.35 in`.
   - **Minimum Vertical Gap**: Maintain a minimum vertical gap of `0.10 in` between adjacent shapes in the same column.
-  - **Slide Margin Protection**: Clamp all content shapes so their bottom edge NEVER exceeds `y: 5.10 in` to prevent text cropping or slide edge cut-offs.
+  - **Slide Margin Protection**: Clamp all content shapes so their bottom edge NEVER exceeds `y: 5.08 in` to prevent text cropping or slide edge cut-offs.
+
+## 5. Thick Card Header Box Guidelines
+- **Card Pill / Header Box Height**: MUST ALWAYS be **`h = 0.50 in`** (`CARD_PILL_H = 0.50`) with substantial solid visual weight.
+- **Card Pill Text Styling**: Formatted as **10.5pt Bold (`Inter Medium`)**, text vertically centered with `valign: "middle"` and `align: "center"` in `#FFFFFF` on green (`#034E48`) or dark (`#1C1C1E`) boxes.
+- **Text Starting Offset**: Card body text MUST start at `pillY + 0.58 in` (`CARD_TEXT_OFFSET = 0.58`) to leave clean whitespace below the header box.
+- **Row 2 Positioning**: Row 2 card pills must be placed below Row 1 text at `r2Y = Math.min(3.45, Math.max(3.20, r1Y + CARD_PILL_H + maxR1TextH + 0.22))`.
+- **Bottom Footnote Clearance**: Bottom notes on card slides must be anchored below Row 2 text at `bottomNoteY = Math.min(4.85, Math.max(4.00, r2Y + CARD_TEXT_OFFSET + maxR2TextH + 0.14))`.
+
+## 6. Cross-Machine Reproducibility & Fonts
+- **Required Font**: All slides MUST use the **`Inter`** font family (`Inter`, `Inter Medium`, `Inter Bold`). Any machine generating or viewing decks must have the Inter font family installed to avoid font fallback differences.
+- **Relative Path Resolution**: Never hardcode user profiles or machine-specific directories; always use `__dirname` and portable relative paths.
 

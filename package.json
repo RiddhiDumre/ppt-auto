@@ -1,0 +1,15 @@
+{
+  "name": "ppt-auto",
+  "version": "1.0.0",
+  "description": "BombayDC Standardized Presentation Automation Engine",
+  "main": "build_standardized_decks.js",
+  "scripts": {
+    "build": "node build_standardized_decks.js",
+    "audit": "node audit_both_dirs.js",
+    "test": "node test_header_positions.js"
+  },
+  "dependencies": {
+    "adm-zip": "^0.6.0",
+    "pptxgenjs": "^4.0.1"
+  }
+}

@@ -1,11 +1,24 @@
 const fs = require('fs');
 const path = require('path');
-const AdmZip = require('C:\\Users\\Riddhi Dumre\\Desktop\\ppt_automation\\node_modules\\adm-zip');
 
+function loadModule(name) {
+    try {
+        return require(name);
+    } catch (e) {
+        try {
+            return require(path.join(__dirname, 'node_modules', name));
+        } catch (e2) {
+            return require(`C:\\Users\\Riddhi Dumre\\Desktop\\ppt_automation\\node_modules\\${name}`);
+        }
+    }
+}
+const AdmZip = loadModule('adm-zip');
+
+const BASE_DIR = __dirname;
 const DIRS = [
-    "C:\\Users\\Riddhi Dumre\\Desktop\\Presentation Automation\\SALES DECKS\\new MD",
-    "C:\\Users\\Riddhi Dumre\\Desktop\\Presentation Automation\\new MD"
-];
+    path.join(BASE_DIR, 'SALES DECKS', 'new MD'),
+    path.join(BASE_DIR, 'new MD')
+].filter(d => fs.existsSync(d));
 
 DIRS.forEach(DIR => {
     console.log(`\n========================================`);

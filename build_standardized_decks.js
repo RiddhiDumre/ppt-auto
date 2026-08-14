@@ -1,12 +1,29 @@
 const fs = require('fs');
 const path = require('path');
-const pptxgen = require('C:\\Users\\Riddhi Dumre\\Desktop\\ppt_automation\\node_modules\\pptxgenjs');
-const AdmZip = require('C:\\Users\\Riddhi Dumre\\Desktop\\ppt_automation\\node_modules\\adm-zip');
+function loadModule(name) {
+    try {
+        return require(name);
+    } catch (e) {
+        try {
+            return require(path.join(__dirname, 'node_modules', name));
+        } catch (e2) {
+            return require(`C:\\Users\\Riddhi Dumre\\Desktop\\ppt_automation\\node_modules\\${name}`);
+        }
+    }
+}
+const pptxgen = loadModule('pptxgenjs');
+const AdmZip = loadModule('adm-zip');
 
-const REF_DIR = "C:\\Users\\Riddhi Dumre\\Desktop\\BombayDC_Decks_With_BG_Images";
-const OUT_DIR_1 = "C:\\Users\\Riddhi Dumre\\Desktop\\Presentation Automation\\SALES DECKS\\new MD";
-const OUT_DIR_2 = "C:\\Users\\Riddhi Dumre\\Desktop\\Presentation Automation\\new MD";
-const MEDIA_EXTRACT_DIR = "C:\\Users\\Riddhi Dumre\\Desktop\\ppt_automation\\extracted_all_media";
+const BASE_DIR = __dirname;
+const REF_DIR = fs.existsSync(path.join(BASE_DIR, '..', 'BombayDC_Decks_With_BG_Images'))
+    ? path.join(BASE_DIR, '..', 'BombayDC_Decks_With_BG_Images')
+    : (fs.existsSync("C:\\Users\\Riddhi Dumre\\Desktop\\BombayDC_Decks_With_BG_Images")
+        ? "C:\\Users\\Riddhi Dumre\\Desktop\\BombayDC_Decks_With_BG_Images"
+        : path.join(BASE_DIR, 'source_decks'));
+
+const OUT_DIR_1 = path.join(BASE_DIR, 'SALES DECKS', 'new MD');
+const OUT_DIR_2 = path.join(BASE_DIR, 'new MD');
+const MEDIA_EXTRACT_DIR = path.join(BASE_DIR, 'extracted_all_media');
 
 [OUT_DIR_1, OUT_DIR_2, MEDIA_EXTRACT_DIR].forEach(dir => {
     if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
@@ -26,29 +43,41 @@ const fileMap = {
     "11_Intro_Deck.pptx": "Intro deck_BDC_Styled.pptx"
 };
 
-const bgMappingsPath = "C:\\Users\\Riddhi Dumre\\Desktop\\ppt_automation\\deck_bg_mappings.json";
+const bgMappingsPath = fs.existsSync(path.join(BASE_DIR, 'deck_bg_mappings.json'))
+    ? path.join(BASE_DIR, 'deck_bg_mappings.json')
+    : "C:\\Users\\Riddhi Dumre\\Desktop\\ppt_automation\\deck_bg_mappings.json";
 const bgMappings = fs.existsSync(bgMappingsPath) ? JSON.parse(fs.readFileSync(bgMappingsPath, 'utf8')) : {};
-const coverBgMapPath = "C:\\Users\\Riddhi Dumre\\Desktop\\ppt_automation\\cover_bg_map.json";
+
+const coverBgMapPath = fs.existsSync(path.join(BASE_DIR, 'cover_bg_map.json'))
+    ? path.join(BASE_DIR, 'cover_bg_map.json')
+    : "C:\\Users\\Riddhi Dumre\\Desktop\\ppt_automation\\cover_bg_map.json";
 const coverBgMap = fs.existsSync(coverBgMapPath) ? JSON.parse(fs.readFileSync(coverBgMapPath, 'utf8')) : {};
 
 // LOAD BDC DECK (COPY) EXACT CLOSING SLIDE
-const refDeckZip = new AdmZip("C:\\Users\\Riddhi Dumre\\Desktop\\Presentation Automation\\BDC Deck (Copy).pptx");
-const refSlideEntries = refDeckZip.getEntries().filter(e => e.entryName.startsWith('ppt/slides/slide') && e.entryName.endsWith('.xml'));
-refSlideEntries.sort((a, b) => parseInt(a.entryName.match(/slide(\d+)\.xml/)[1]) - parseInt(b.entryName.match(/slide(\d+)\.xml/)[1]));
-const closingSlideEntry = refSlideEntries[refSlideEntries.length - 1];
-const closingSlideXml = refDeckZip.readAsText(closingSlideEntry);
+const refDeckPath = fs.existsSync(path.join(BASE_DIR, 'BDC Deck (Copy).pptx'))
+    ? path.join(BASE_DIR, 'BDC Deck (Copy).pptx')
+    : "C:\\Users\\Riddhi Dumre\\Desktop\\Presentation Automation\\BDC Deck (Copy).pptx";
+const refDeckZip = fs.existsSync(refDeckPath) ? new AdmZip(refDeckPath) : null;
+const refSlideEntries = refDeckZip ? refDeckZip.getEntries().filter(e => e.entryName.startsWith('ppt/slides/slide') && e.entryName.endsWith('.xml')) : [];
+if (refSlideEntries.length > 0) {
+    refSlideEntries.sort((a, b) => parseInt(a.entryName.match(/slide(\d+)\.xml/)[1]) - parseInt(b.entryName.match(/slide(\d+)\.xml/)[1]));
+}
+const closingSlideEntry = refSlideEntries.length > 0 ? refSlideEntries[refSlideEntries.length - 1] : null;
+const closingSlideXml = (refDeckZip && closingSlideEntry) ? refDeckZip.readAsText(closingSlideEntry) : "";
 
-const closingSlideRelPath = `ppt/slides/_rels/${path.basename(closingSlideEntry.entryName)}.rels`;
-const closingSlideRelEntry = refDeckZip.getEntries().find(e => e.entryName === closingSlideRelPath);
+const closingSlideRelPath = closingSlideEntry ? `ppt/slides/_rels/${path.basename(closingSlideEntry.entryName)}.rels` : "";
+const closingSlideRelEntry = refDeckZip ? refDeckZip.getEntries().find(e => e.entryName === closingSlideRelPath) : null;
 
 const closingMediaDir = path.join(MEDIA_EXTRACT_DIR, "BDC_Deck_Copy_Closing");
 if (!fs.existsSync(closingMediaDir)) fs.mkdirSync(closingMediaDir, { recursive: true });
-refDeckZip.getEntries().filter(e => e.entryName.startsWith('ppt/media/')).forEach(m => {
-    fs.writeFileSync(path.join(closingMediaDir, path.basename(m.entryName)), m.getData());
-});
+if (refDeckZip) {
+    refDeckZip.getEntries().filter(e => e.entryName.startsWith('ppt/media/')).forEach(m => {
+        fs.writeFileSync(path.join(closingMediaDir, path.basename(m.entryName)), m.getData());
+    });
+}
 
 const closingRelMap = {};
-if (closingSlideRelEntry) {
+if (closingSlideRelEntry && refDeckZip) {
     const relXml = refDeckZip.readAsText(closingSlideRelEntry);
     const relMatches = [...relXml.matchAll(/<Relationship[\s\S]*?\/>/g)];
     relMatches.forEach(rel => {
@@ -1018,7 +1047,7 @@ async function processDeck(refFileName, outFileName) {
                 }
             } catch (e) {}
         }
-        searchAndCopy("C:\\Users\\Riddhi Dumre\\Desktop\\Presentation Automation");
+        searchAndCopy(BASE_DIR);
     }
 
     const baseName = outFileName.replace('_BDC_Styled.pptx', '');

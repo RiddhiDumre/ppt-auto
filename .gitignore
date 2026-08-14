@@ -1,1 +1,10 @@
+node_modules/
+extracted_all_media/
+*.log
+.DS_Store
+inspect_*.js
+dump_*.js
+debug_*.js
+trace_*.js
 *.pptx
+!BDC Deck (Copy).pptx

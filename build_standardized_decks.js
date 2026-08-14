@@ -302,8 +302,8 @@ async function processDeck(refFileName, outFileName) {
                 headerRuns.push({
                     text: displaySublineAbove,
                     options: {
-                        color: isDarkThemeSlide ? "B4B4B4" : "6A6A6B",
-                        fontSize: 9.0,
+                        color: isDarkThemeSlide ? "B0B0B4" : "5A5A5E",
+                        fontSize: 9.5,
                         bold: false,
                         fontFace: "Inter",
                         paraSpaceBefore: 2
@@ -327,8 +327,8 @@ async function processDeck(refFileName, outFileName) {
             pptSlide.addText([{
                 text: headerSublineText,
                 options: {
-                    color: isDarkThemeSlide ? "ECE9E4" : "555555",
-                    fontSize: 9.0,
+                    color: isDarkThemeSlide ? "D0D0D4" : "4A4A4E",
+                    fontSize: 9.5,
                     bold: false,
                     fontFace: "Inter",
                     paraSpaceAfter: 3
@@ -350,6 +350,8 @@ async function processDeck(refFileName, outFileName) {
         const allCardPills = [];
         const cardRowMap = {};
         const renderedCardBoxes = new Set();
+        const rowLayoutMap = {};
+        const rowLineYMap = {};
 
         shapes.forEach(shapeObj => {
             const offMatch = shapeObj.xml.match(/<a:off x="(\d+)" y="(\d+)"\/>/);
@@ -394,39 +396,65 @@ async function processDeck(refFileName, outFileName) {
 
             const baseCardStartY = hasTopIntro ? (2.05 + movedSublineShift) : (1.65 + movedSublineShift);
 
+            const CARD_PILL_H = 0.50;
+            const CARD_TEXT_OFFSET = 0.58;
+
             if (pillRows.length === 1) {
                 const r1Y = baseCardStartY;
                 pillRows[0].pills.forEach(p => {
-                    cardRowMap[`${p.x.toFixed(2)}_${p.y.toFixed(2)}`] = { cardX: p.x, cardY: r1Y, textY: r1Y + 0.42 };
+                    cardRowMap[`${p.x.toFixed(2)}_${p.y.toFixed(2)}`] = { cardX: p.x, cardY: r1Y, textY: r1Y + CARD_TEXT_OFFSET };
                 });
             } else if (pillRows.length >= 2) {
                 const r1Y = baseCardStartY;
-                let maxR1TextH = 0.50;
+                let maxR1TextH = 0.40;
                 shapes.forEach(sh => {
                     const offM = sh.xml.match(/<a:off x="(\d+)" y="(\d+)"\/>/);
                     const extM = sh.xml.match(/<a:ext cx="(\d+)" cy="(\d+)"\/>/);
                     if (!offM || !extM || !sh.xml.includes('<a:t>')) return;
                     const py = parseFloat((parseInt(offM[2]) / 914400).toFixed(3));
                     const pw = parseFloat((parseInt(extM[1]) / 914400).toFixed(3));
-                    if (py > pillRows[0].y + 0.20 && py < pillRows[1].y) {
+                    if (py > pillRows[0].y + 0.10 && py <= (pillRows[1] ? pillRows[1].y + 0.10 : 3.20) && pw < 4.0) {
                         const estH = calculateTextShapeHeight(sh.xml, pw);
                         if (estH > maxR1TextH) maxR1TextH = estH;
                     }
                 });
 
-                const r2Y = parseFloat(Math.min(3.35, Math.max(3.15, r1Y + maxR1TextH + 0.48)).toFixed(2));
+                const r2Y = parseFloat(Math.min(3.45, Math.max(3.20, r1Y + CARD_PILL_H + maxR1TextH + 0.22)).toFixed(2));
                 pillRows[0].pills.forEach(p => {
-                    cardRowMap[`${p.x.toFixed(2)}_${p.y.toFixed(2)}`] = { cardX: p.x, cardY: r1Y, textY: r1Y + 0.40 };
+                    cardRowMap[`${p.x.toFixed(2)}_${p.y.toFixed(2)}`] = { cardX: p.x, cardY: r1Y, textY: r1Y + CARD_TEXT_OFFSET };
                 });
                 pillRows[1].pills.forEach(p => {
-                    cardRowMap[`${p.x.toFixed(2)}_${p.y.toFixed(2)}`] = { cardX: p.x, cardY: r2Y, textY: r2Y + 0.40 };
+                    cardRowMap[`${p.x.toFixed(2)}_${p.y.toFixed(2)}`] = { cardX: p.x, cardY: r2Y, textY: r2Y + CARD_TEXT_OFFSET };
+                });
+
+                let maxR2TextH = 0.40;
+                shapes.forEach(sh => {
+                    const offM = sh.xml.match(/<a:off x="(\d+)" y="(\d+)"\/>/);
+                    const extM = sh.xml.match(/<a:ext cx="(\d+)" cy="(\d+)"\/>/);
+                    if (!offM || !extM || !sh.xml.includes('<a:t>')) return;
+                    const py = parseFloat((parseInt(offM[2]) / 914400).toFixed(3));
+                    const pw = parseFloat((parseInt(extM[1]) / 914400).toFixed(3));
+                    if (py > pillRows[1].y + 0.10 && pw < 4.0) {
+                        const estH = calculateTextShapeHeight(sh.xml, pw);
+                        if (estH > maxR2TextH) maxR2TextH = estH;
+                    }
+                });
+
+                const bottomNoteY = Math.min(4.85, Math.max(4.00, r2Y + CARD_TEXT_OFFSET + maxR2TextH + 0.14));
+                shapes.forEach(sh => {
+                    const offM = sh.xml.match(/<a:off x="(\d+)" y="(\d+)"\/>/);
+                    const extM = sh.xml.match(/<a:ext cx="(\d+)" cy="(\d+)"\/>/);
+                    if (!offM || !extM || !sh.xml.includes('<a:t>')) return;
+                    const py = parseFloat((parseInt(offM[2]) / 914400).toFixed(3));
+                    const pw = parseFloat((parseInt(extM[1]) / 914400).toFixed(3));
+                    if (py >= 3.20 && pw >= 5.0) {
+                        rowLayoutMap[py.toFixed(2)] = { finalY: parseFloat(bottomNoteY.toFixed(2)) };
+                    }
                 });
             }
         }
 
         // PRE-PASS 3: Timeline & Row-List Layout Engine (Strictly for Timeline / Row-List layouts)
-        const rowLayoutMap = {};
-        const rowLineYMap = {};
 
         const hasCategoryHeader = shapes.some(s => {
             if (!s.xml.includes('<a:t>')) return false;
@@ -565,20 +593,15 @@ async function processDeck(refFileName, outFileName) {
             });
         }
 
-        function resolveVerticalCollision(proposedX, proposedY, proposedW, proposedH, minGap = 0.06) {
+        function resolveVerticalCollision(proposedX, proposedY, proposedW, proposedH, minGap = 0.10) {
             let adjustedY = proposedY;
-            let maxPrevBottom = -1;
             for (const prev of occupiedBoxes) {
                 const hOverlap = (proposedX < prev.x + prev.w - 0.06) && (proposedX + proposedW > prev.x + 0.06);
                 if (hOverlap) {
-                    if (prev.bottom > maxPrevBottom) maxPrevBottom = prev.bottom;
                     if (adjustedY < prev.bottom + minGap) {
                         adjustedY = parseFloat((prev.bottom + minGap).toFixed(3));
                     }
                 }
-            }
-            if (maxPrevBottom > 1.35 && (proposedY - maxPrevBottom > 0.30)) {
-                adjustedY = parseFloat((maxPrevBottom + 0.12).toFixed(3));
             }
             return adjustedY;
         }
@@ -748,15 +771,15 @@ async function processDeck(refFileName, outFileName) {
                 if (!isClosingSlide) {
                     const isHeaderLine = (lineY <= 1.36);
                     lnColor = isDarkThemeSlide
-                        ? (isHeaderLine ? "4A4A4E" : "2C2C2E")
-                        : (isHeaderLine ? "C8C8CC" : "E0E0E3");
+                        ? (isHeaderLine ? "555558" : "38383C")
+                        : (isHeaderLine ? "B0B0B4" : "D4D4D8");
                 }
 
                 pptSlide.addShape(pres.shapes.LINE, {
                     x, y: lineY, 
                     w: isVertical ? 0 : w, 
                     h: isVertical ? h : 0,
-                    line: { color: lnColor, width: finalWidth, transparency: isClosingSlide ? 0 : 40 }
+                    line: { color: lnColor, width: finalWidth, transparency: isClosingSlide ? 0 : 20 }
                 });
 
                 if (!isVertical && lineY > 1.36) {
@@ -769,13 +792,14 @@ async function processDeck(refFileName, outFileName) {
             const isCardPillShape = (origHasFill && w < 4.0 && ["034E48", "1C1C1E", "333333", "222222", "1E1E1E", "4DB89A", "2A2A2C"].includes(shapeBgFill.toUpperCase())) ||
                                     allCardPills.some(p => Math.abs(p.x - origX) < 0.35 && Math.abs(p.y - origY) < 0.35);
 
+            const CARD_PILL_HEIGHT = 0.50;
             if (isCardPillShape && !isClosingSlide) {
                 if (isDarkThemeSlide) {
                     shapeBgFill = "1C1C1E";
                 } else {
                     shapeBgFill = "034E48";
                 }
-                if (h < 0.38) h = 0.38;
+                if (h < CARD_PILL_HEIGHT) h = CARD_PILL_HEIGHT;
             }
 
             if (shapeBgFill && shapeBgFill !== "none" && isCardPillShape) {
@@ -784,11 +808,11 @@ async function processDeck(refFileName, outFileName) {
                     renderedCardBoxes.add(boxPosKey);
 
                     pptSlide.addShape(pres.shapes.RECTANGLE, {
-                        x, y, w, h: 0.38,
+                        x, y, w, h: CARD_PILL_HEIGHT,
                         fill: { color: shapeBgFill },
                         line: { color: shapeBgFill, width: 0 }
                     });
-                    recordOccupiedBox({ x, y, w, h: 0.38, txt: "[CARD PILL]" });
+                    recordOccupiedBox({ x, y, w, h: CARD_PILL_HEIGHT, txt: "[CARD PILL]" });
                 }
             }
 
@@ -855,7 +879,7 @@ async function processDeck(refFileName, outFileName) {
                                 fontSize = 18.8;
                                 color = isDarkContext ? "FFFFFF" : "1A1A1A";
                             } else if (fontSize >= 10.0 || isColumnCategoryTitle || isBottomSectionHeader || (cleanTxt === cleanTxt.toUpperCase() && cleanTxt.length < 50 && !isBullet && !cleanTxt.includes('.')) || cleanTxt.endsWith(':')) {
-                                fontSize = 10.0;
+                                fontSize = 10.5;
                                 isBold = true;
                                 if (isDarkContext) {
                                     color = isDarkCardBg ? "4DB89A" : "FFFFFF";
@@ -863,11 +887,11 @@ async function processDeck(refFileName, outFileName) {
                                     color = "034E48";
                                 }
                             } else {
-                                fontSize = (pMatches.length >= 4) ? 8.2 : 8.8;
+                                fontSize = (pMatches.length >= 4) ? 8.5 : 9.0;
                                 if (isDarkContext) {
-                                    color = isDarkCardBg ? "E8E8EC" : "8A8A8E";
+                                    color = isDarkCardBg ? "E8E8EC" : "A0A0A6";
                                 } else {
-                                    color = "1D1D1F";
+                                    color = "2C2C2E";
                                 }
                             }
                         }
@@ -884,8 +908,8 @@ async function processDeck(refFileName, outFileName) {
                                     bold: isHugeTitle ? false : isBold,
                                     fontFace: isHugeTitle ? "Inter" : (isClosingSlide ? (isBold ? "Inter Bold" : "Inter") : (isBold ? "Inter Medium" : "Inter")),
                                     breakLine: pIdx < pMatches.length - 1,
-                                    paraSpaceAfter: isBullet ? 1.0 : (pMatches.length > 5 ? 0.8 : 2.0),
-                                    paraSpaceBefore: (!isBullet && pIdx > 0 && cleanTxt.length > 5) ? (pMatches.length > 5 ? 0.8 : 1.5) : 0
+                                    paraSpaceAfter: isBullet ? 2.0 : (pMatches.length > 5 ? 1.5 : 3.0),
+                                    paraSpaceBefore: (!isBullet && pIdx > 0 && cleanTxt.length > 5) ? (pMatches.length > 5 ? 1.5 : 2.5) : 0
                                 }
                             });
                         }
@@ -898,7 +922,7 @@ async function processDeck(refFileName, outFileName) {
 
                         let finalY = y;
                         let estH = calculateTextShapeHeight(spXml, w, maxFontSize);
-                        let finalH = isHeaderOnPill ? 0.38 : parseFloat(Math.max(0.20, estH).toFixed(2));
+                        let finalH = isHeaderOnPill ? 0.50 : parseFloat(Math.max(0.20, estH).toFixed(2));
 
                         if (sIdx === 0) {
                             if (cleanTxtForCheck.includes("CONFIDENTIAL") || cleanTxtForCheck.includes("PROPRIETARY")) {
@@ -925,8 +949,8 @@ async function processDeck(refFileName, outFileName) {
                                 }
                             }
                         } else if (!isClosingSlide) {
-                            if (!isRowMapElement && !rowLayoutMap[origY.toFixed(2)]) {
-                                finalY = resolveVerticalCollision(x, finalY, w, finalH, 0.06);
+                            if (!isRowMapElement || (matchedCardInfo && !matchedCardInfo.isHeader)) {
+                                finalY = resolveVerticalCollision(x, finalY, w, finalH, 0.08);
                             }
                         }
 
@@ -950,9 +974,9 @@ async function processDeck(refFileName, outFileName) {
                         if (maxFontSize >= 40) {
                             textOpts.lineSpacingMultiple = 1.0;
                         } else if (maxFontSize >= 16) {
-                            textOpts.lineSpacingMultiple = 1.15;
+                            textOpts.lineSpacingMultiple = 1.18;
                         } else {
-                            textOpts.lineSpacingMultiple = (textRuns.length > 4 || finalH > 1.2) ? 1.15 : 1.20;
+                            textOpts.lineSpacingMultiple = (textRuns.length > 4 || finalH > 1.2) ? 1.22 : 1.28;
                         }
 
                         pptSlide.addText(textRuns, textOpts);

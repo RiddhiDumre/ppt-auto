@@ -628,7 +628,7 @@ async function processDeck(refFileName, outFileName) {
                 if (headerTitleText && cleanTxtForCheck.length > 10 && headerTitleText.includes(cleanTxtForCheck.toUpperCase())) return;
 
                 // Skip full-width header sublines / taglines (prevent duplicate rendering & text overlapping!)
-                if (origY >= 0.75 && origY <= 1.70 && w >= 5.0 && fontSize < 14 && fontSize > 0) return;
+                if (origY >= 0.75 && origY <= 1.30 && w >= 5.0 && fontSize < 14 && fontSize > 0) return;
                 if (headerSublineText && cleanTxtForCheck === headerSublineText) return;
                 if (headerSublineText && cleanTxtForCheck.length > 8 && (headerSublineText.includes(cleanTxtForCheck) || cleanTxtForCheck.includes(headerSublineText.substring(0, 15)))) return;
             }

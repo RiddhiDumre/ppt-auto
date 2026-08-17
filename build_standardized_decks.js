@@ -1027,55 +1027,14 @@ async function processDeck(refFileName, outFileName) {
         console.log(`  Slide ${sNum}/${slideEntries.length} processed.`);
     }
 
+    // OUTPUT ONLY TO new MD — no syncing to any other folders
     const outPath1 = path.join(OUT_DIR_1, outFileName);
     const outPath2 = path.join(OUT_DIR_2, outFileName);
     await pres.writeFile({ fileName: outPath1 });
     if (OUT_DIR_1 !== OUT_DIR_2) {
         fs.copyFileSync(outPath1, outPath2);
     }
-
-    // IMPROVED SYNC: Match by filename list AND by any *_BDC_Styled.pptx that exists in new MD
-    function syncToAllLocations(targetNames, sourcePath) {
-        const lowerTargets = targetNames.map(n => n.toLowerCase());
-        function searchAndCopy(dir) {
-            try {
-                const items = fs.readdirSync(dir, { withFileTypes: true });
-                for (const item of items) {
-                    const fullPath = path.join(dir, item.name);
-                    if (item.isDirectory()) {
-                        // Skip the output dirs themselves to avoid self-copy
-                        if (fullPath === OUT_DIR_1 || fullPath === OUT_DIR_2) continue;
-                        searchAndCopy(fullPath);
-                    } else if (item.isFile() && item.name.toLowerCase().endsWith('_bdc_styled.pptx')) {
-                        // Match by known name variants OR if a same-named file exists in new MD (catches renamed copies)
-                        const nameMatches = lowerTargets.includes(item.name.toLowerCase());
-                        const sourceForThisName = path.join(OUT_DIR_1, item.name);
-                        const newMdHasSameName = fs.existsSync(sourceForThisName);
-                        const actualSource = nameMatches ? sourcePath : (newMdHasSameName ? sourceForThisName : null);
-                        if (actualSource && fullPath !== actualSource && fullPath !== outPath2) {
-                            try {
-                                fs.copyFileSync(actualSource, fullPath);
-                                console.log(`  Synced update to: ${fullPath}`);
-                            } catch (e) {
-                                console.error(`  Failed to sync to ${fullPath}:`, e.message);
-                            }
-                        }
-                    }
-                }
-            } catch (e) {}
-        }
-        searchAndCopy(BASE_DIR);
-    }
-
-    const baseName = outFileName.replace('_BDC_Styled.pptx', '');
-    const syncNames = [
-        outFileName,
-        refFileName,
-        baseName + '.pptx',
-        baseName + ' (1).pptx',
-        baseName.replace(' (1)', '') + '.pptx'
-    ];
-    syncToAllLocations(syncNames, outPath1);
+    console.log(`  Written to: ${outPath1}`);
 }
 
 async function main() {
@@ -1083,7 +1042,7 @@ async function main() {
         const outFileName = fileMap[refFileName];
         await processDeck(refFileName, outFileName);
     }
-    console.log(`\n🎉 All 11 presentation decks rebuilt with STANDARDIZED GAPS & CUT/OVERLAP PREVENTION!`);
+    console.log(`\n🎉 All 11 presentation decks rebuilt. Files are in: SALES DECKS/new MD/ and new MD/`);
 }
 
 main().catch(console.error);

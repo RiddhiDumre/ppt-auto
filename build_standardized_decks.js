@@ -553,7 +553,7 @@ async function processDeck(refFileName, outFileName) {
                     return py >= 3.8 && (clean.startsWith("New team structure:") || clean.startsWith("Illustrative use cases") || clean.startsWith("The result:") || clean.startsWith("What enterprises now expect:") || clean.startsWith("85% client repeat") || clean.startsWith("What the platform"));
                 });
 
-                const startY = (hasCategoryHeader ? 1.92 : (hasTopIntroText ? 2.08 : 1.68)) + movedSublineShift;
+                const startY = (hasTopIntroText ? 2.08 : 1.68) + movedSublineShift; // CATEGORY/DESCRIPTION headers are skipped in render, so no reserved space needed
                 const maxClusterEndY = (bottomShapes.length > 0) ? (3.75 + movedSublineShift) : (4.75 + movedSublineShift);
                 const totalAvailH = maxClusterEndY - startY;
                 const gapBetweenRows = 0.03;
@@ -663,6 +663,12 @@ async function processDeck(refFileName, outFileName) {
 
             const rawTxtForCheck = [...spXml.matchAll(/<a:t>([^<]+)<\/a:t>/g)].map(m => m[1]).join(' ').replace(/\s+/g, ' ').trim();
             const cleanTxtForCheck = decodeXmlEntities(rawTxtForCheck);
+
+            // FIX: Cover slide — skip header-bar text shapes (BOMBAYDC / bombaydc.com already in background image)
+            if (sIdx === 0 && spXml.includes('<a:t>') && origY < 0.65) return;
+
+            // FIX: Skip CATEGORY / DESCRIPTION table-header labels everywhere (layout engine handles spacing; we don't render them)
+            if (!isClosingSlide && (cleanTxtForCheck === "CATEGORY" || cleanTxtForCheck === "DESCRIPTION")) return;
 
             if (!isClosingSlide && sIdx > 0 && spXml.includes('<a:t>')) {
                 const szMatch = spXml.match(/sz="(\d+)"/);
@@ -908,7 +914,8 @@ async function processDeck(refFileName, outFileName) {
                                 fontSize = 18.8;
                                 color = isDarkContext ? "FFFFFF" : "1A1A1A";
                             } else if (fontSize >= 10.0 || isColumnCategoryTitle || isBottomSectionHeader || (cleanTxt === cleanTxt.toUpperCase() && cleanTxt.length < 50 && !isBullet && !cleanTxt.includes('.')) || cleanTxt.endsWith(':')) {
-                                fontSize = 10.5;
+                                // FIX: Card-box header text reduced from 10.5 → 9.0 pt to prevent overflow in 0.50in pill boxes
+                                fontSize = isCardPillShape ? 9.0 : 10.5;
                                 isBold = true;
                                 if (isDarkContext) {
                                     color = isDarkCardBg ? "4DB89A" : "FFFFFF";
@@ -975,6 +982,8 @@ async function processDeck(refFileName, outFileName) {
                                 } else {
                                     finalY = coverTitleBottomY > 0 ? parseFloat((coverTitleBottomY + 0.08).toFixed(2)) : 2.50;
                                     finalH = 0.50;
+                                    // FIX: Update coverTitleBottomY after EVERY element so successive items don't all land on the same Y
+                                    coverTitleBottomY = parseFloat((finalY + finalH).toFixed(2));
                                 }
                             }
                         } else if (!isClosingSlide) {

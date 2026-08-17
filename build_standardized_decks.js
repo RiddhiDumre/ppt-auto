@@ -1034,6 +1034,7 @@ async function processDeck(refFileName, outFileName) {
         fs.copyFileSync(outPath1, outPath2);
     }
 
+    // IMPROVED SYNC: Match by filename list AND by any *_BDC_Styled.pptx that exists in new MD
     function syncToAllLocations(targetNames, sourcePath) {
         const lowerTargets = targetNames.map(n => n.toLowerCase());
         function searchAndCopy(dir) {
@@ -1042,11 +1043,18 @@ async function processDeck(refFileName, outFileName) {
                 for (const item of items) {
                     const fullPath = path.join(dir, item.name);
                     if (item.isDirectory()) {
+                        // Skip the output dirs themselves to avoid self-copy
+                        if (fullPath === OUT_DIR_1 || fullPath === OUT_DIR_2) continue;
                         searchAndCopy(fullPath);
-                    } else if (item.isFile() && lowerTargets.includes(item.name.toLowerCase())) {
-                        if (fullPath !== sourcePath && fullPath !== outPath2) {
+                    } else if (item.isFile() && item.name.toLowerCase().endsWith('_bdc_styled.pptx')) {
+                        // Match by known name variants OR if a same-named file exists in new MD (catches renamed copies)
+                        const nameMatches = lowerTargets.includes(item.name.toLowerCase());
+                        const sourceForThisName = path.join(OUT_DIR_1, item.name);
+                        const newMdHasSameName = fs.existsSync(sourceForThisName);
+                        const actualSource = nameMatches ? sourcePath : (newMdHasSameName ? sourceForThisName : null);
+                        if (actualSource && fullPath !== actualSource && fullPath !== outPath2) {
                             try {
-                                fs.copyFileSync(sourcePath, fullPath);
+                                fs.copyFileSync(actualSource, fullPath);
                                 console.log(`  Synced update to: ${fullPath}`);
                             } catch (e) {
                                 console.error(`  Failed to sync to ${fullPath}:`, e.message);

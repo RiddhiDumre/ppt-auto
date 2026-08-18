@@ -872,6 +872,12 @@ async function processDeck(refFileName, outFileName) {
             const isCardPillShape = (origHasFill && w < 4.0 && ["034E48", "1C1C1E", "333333", "222222", "1E1E1E", "4DB89A", "2A2A2C"].includes(shapeBgFill.toUpperCase())) ||
                                     allCardPills.some(p => Math.abs(p.x - origX) < 0.35 && Math.abs(p.y - origY) < 0.35);
 
+            // Detect single-letter acronym boxes (B, E, A, M etc.) — preserve original height
+            const spFirstTxt = [...spXml.matchAll(/<a:t>([^<]+)<\/a:t>/g)].map(m => m[1]).join('').trim();
+            const spFirstSzM = spXml.match(/sz="(\d+)"/);
+            const spFirstFs = spFirstSzM ? parseInt(spFirstSzM[1]) / 100 : 0;
+            const isAcronymLetter = isCardPillShape && spFirstTxt.length <= 2 && spFirstFs >= 36;
+
             const CARD_PILL_HEIGHT = 0.50;
             if (isCardPillShape && !isClosingSlide) {
                 // Always use green (034E48) — on dark slides 1C1C1E is invisible against 121212 background
@@ -879,18 +885,31 @@ async function processDeck(refFileName, outFileName) {
                 if (h < CARD_PILL_HEIGHT) h = CARD_PILL_HEIGHT;
             }
 
+            // Draw card pill rectangles — use full original height for acronym letter boxes
             if (shapeBgFill && shapeBgFill !== "none" && isCardPillShape) {
                 const boxPosKey = `${Math.round(x * 10)}_${Math.round(y * 10)}`;
                 if (!renderedCardBoxes.has(boxPosKey)) {
                     renderedCardBoxes.add(boxPosKey);
-
+                    const pillDrawH = isAcronymLetter ? h : CARD_PILL_HEIGHT;
                     pptSlide.addShape(pres.shapes.RECTANGLE, {
-                        x, y, w, h: CARD_PILL_HEIGHT,
+                        x, y, w, h: pillDrawH,
                         fill: { color: shapeBgFill },
                         line: { color: shapeBgFill, width: 0 }
                     });
-                    recordOccupiedBox({ x, y, w, h: CARD_PILL_HEIGHT, txt: "[CARD PILL]" });
+                    recordOccupiedBox({ x, y, w, h: pillDrawH, txt: "[CARD PILL]" });
                 }
+            }
+
+            // Draw wide section-header banners (e.g. "Illustrative use cases" with dark fill, w>=4.0)
+            if (!isClosingSlide && hasTxBody && origHasFill &&
+                ["034E48", "1C1C1E"].includes(shapeBgFill.toUpperCase()) && w >= 4.0 && h <= 0.55) {
+                const bannerH = Math.max(h, 0.28);
+                pptSlide.addShape(pres.shapes.RECTANGLE, {
+                    x, y, w, h: bannerH,
+                    fill: { color: "034E48" },
+                    line: { color: "034E48", width: 0 }
+                });
+                recordOccupiedBox({ x, y, w, h: bannerH, txt: "[SECTION BANNER]" });
             }
 
             if (hasTxBody) {
@@ -967,7 +986,8 @@ async function processDeck(refFileName, outFileName) {
                             } else {
                                 fontSize = 10.0; // Unified standard body text font size (10pt)
                                 if (isDarkContext) {
-                                    color = isDarkCardBg ? "E8E8EC" : "A0A0A6";
+                                    // White text on any dark background; no teal on banners
+                                    color = "FFFFFF";
                                 } else {
                                     color = "2C2C2E";
                                 }
@@ -1000,7 +1020,11 @@ async function processDeck(refFileName, outFileName) {
 
                         let finalY = y;
                         let estH = calculateTextShapeHeight(spXml, w, maxFontSize);
-                        let finalH = isHeaderOnPill ? 0.50 : parseFloat(Math.max(0.20, estH).toFixed(2));
+                        // Acronym letters (B/E/A/M): use original shape height, not 0.50in pill height
+                        const isAcronymTextBox = maxFontSize >= 36 && cleanTxtForCheck.trim().length <= 2;
+                        let finalH = isAcronymTextBox ? h
+                                   : isHeaderOnPill ? 0.50
+                                   : parseFloat(Math.max(0.20, estH).toFixed(2));
 
                         if (sIdx === 0) {
                             if (cleanTxtForCheck.includes("CONFIDENTIAL") || cleanTxtForCheck.includes("PROPRIETARY")) {

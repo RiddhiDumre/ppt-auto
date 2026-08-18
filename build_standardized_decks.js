@@ -100,6 +100,32 @@ function decodeXmlEntities(str) {
         .trim();
 }
 
+// AUTO-DETECT slide background colour from source PPTX XML
+// Returns the hex colour string (e.g. "034E48") or null if not found
+function detectSlideBg(slideXml) {
+    const bgMatch = slideXml.match(/<p:bg>[\s\S]*?<\/p:bg>/);
+    if (!bgMatch) return null;
+    const solidClr = bgMatch[0].match(/a:srgbClr val="([^"]+)"/i);
+    if (solidClr) return solidClr[1].toUpperCase();
+    // Theme colour references
+    const schemeClr = bgMatch[0].match(/a:schemeClr val="([^"]+)"/i);
+    if (schemeClr) {
+        const s = schemeClr[1].toLowerCase();
+        if (s === 'dk1' || s === 'dk2') return '121212';
+        if (s === 'lt1' || s === 'lt2') return 'ECE9E4';
+    }
+    return null;
+}
+
+// Returns true when hex colour luminance < 128 (perceptual threshold)
+function isColorDark(hex) {
+    if (!hex || hex.length < 6) return false;
+    const r = parseInt(hex.substring(0, 2), 16);
+    const g = parseInt(hex.substring(2, 4), 16);
+    const b = parseInt(hex.substring(4, 6), 16);
+    return (r * 299 + g * 587 + b * 114) / 1000 < 128;
+}
+
 function calculateTextShapeHeight(spXml, w, customFontSize = null) {
     const txBodyMatch = spXml.match(/<p:txBody>[\s\S]*?<\/p:txBody>/) || spXml.match(/<a:txBody>[\s\S]*?<\/a:txBody>/);
     if (!txBodyMatch) return 0.25;
@@ -211,9 +237,20 @@ async function processDeck(refFileName, outFileName) {
         const sNum = sIdx + 1;
         const isClosingSlide = (sIdx === slideEntries.length - 1);
         const darkSlidesList = (deckBgInfo && deckBgInfo.dark_slides) ? deckBgInfo.dark_slides : [];
-        const isDarkThemeSlide = sIdx === 0 || isClosingSlide || darkSlidesList.includes(sNum);
+        // Start with config-based flag; will be overridden by XML detection below
+        let isDarkThemeSlide = sIdx === 0 || isClosingSlide || darkSlidesList.includes(sNum);
         
         const xml = isClosingSlide ? closingSlideXml : zip.readAsText(sEntry);
+
+        // AUTO-DETECT background from source XML — overrides the hardcoded dark_slides list
+        let detectedBgColor = null;
+        if (!isClosingSlide && sIdx > 0) {
+            const detected = detectSlideBg(xml);
+            if (detected) {
+                detectedBgColor = detected;
+                isDarkThemeSlide = isColorDark(detected);
+            }
+        }
 
         let relMap = {};
         if (isClosingSlide) {
@@ -273,7 +310,8 @@ async function processDeck(refFileName, outFileName) {
         } else if (sIdx === 0 && coverBgMap[refFileName] && fs.existsSync(coverBgMap[refFileName])) {
             pptSlide.background = { path: coverBgMap[refFileName] };
         } else {
-            const bgColor = isDarkThemeSlide ? "121212" : "ECE9E4";
+            // Use detected source colour if available; otherwise fall back to normalised light/dark
+            const bgColor = detectedBgColor || (isDarkThemeSlide ? "121212" : "ECE9E4");
             pptSlide.background = { color: bgColor };
         }
 

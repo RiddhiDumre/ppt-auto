@@ -868,11 +868,8 @@ async function processDeck(refFileName, outFileName) {
 
             const CARD_PILL_HEIGHT = 0.50;
             if (isCardPillShape && !isClosingSlide) {
-                if (isDarkThemeSlide) {
-                    shapeBgFill = "1C1C1E";
-                } else {
-                    shapeBgFill = "034E48";
-                }
+                // Always use green (034E48) — on dark slides 1C1C1E is invisible against 121212 background
+                shapeBgFill = "034E48";
                 if (h < CARD_PILL_HEIGHT) h = CARD_PILL_HEIGHT;
             }
 

@@ -376,7 +376,7 @@ async function processDeck(refFileName, outFileName) {
                     text: displaySublineAbove,
                     options: {
                         color: isDarkThemeSlide ? "B0B0B4" : "5A5A5E",
-                        fontSize: toEvenPt(9.5),
+                        fontSize: 8.0,
                         bold: false,
                         fontFace: "Inter",
                         paraSpaceBefore: 2
@@ -401,7 +401,7 @@ async function processDeck(refFileName, outFileName) {
                 text: headerSublineText,
                 options: {
                     color: isDarkThemeSlide ? "D0D0D4" : "4A4A4E",
-                    fontSize: toEvenPt(9.5),
+                    fontSize: 8.0,
                     bold: false,
                     fontFace: "Inter",
                     paraSpaceAfter: 3

@@ -126,6 +126,12 @@ function isColorDark(hex) {
     return (r * 299 + g * 587 + b * 114) / 1000 < 128;
 }
 
+// Round any font size to the nearest EVEN whole number
+// e.g. 8.5→8, 9.0→10, 9.5→10, 10.5→10, 18.8→18, 36→36
+function toEvenPt(n) {
+    return Math.round(n / 2) * 2;
+}
+
 function calculateTextShapeHeight(spXml, w, customFontSize = null) {
     const txBodyMatch = spXml.match(/<p:txBody>[\s\S]*?<\/p:txBody>/) || spXml.match(/<a:txBody>[\s\S]*?<\/a:txBody>/);
     if (!txBodyMatch) return 0.25;
@@ -355,7 +361,7 @@ async function processDeck(refFileName, outFileName) {
                     text: headerTitleText,
                     options: {
                         color: isDarkThemeSlide ? "FFFFFF" : "1A1A1A",
-                        fontSize: 18.8,
+                        fontSize: toEvenPt(18.8),
                         bold: false,
                         fontFace: "Inter Medium",
                         breakLine: displaySublineAbove ? true : false,
@@ -370,7 +376,7 @@ async function processDeck(refFileName, outFileName) {
                     text: displaySublineAbove,
                     options: {
                         color: isDarkThemeSlide ? "B0B0B4" : "5A5A5E",
-                        fontSize: 9.5,
+                        fontSize: toEvenPt(9.5),
                         bold: false,
                         fontFace: "Inter",
                         paraSpaceBefore: 2
@@ -395,7 +401,7 @@ async function processDeck(refFileName, outFileName) {
                 text: headerSublineText,
                 options: {
                     color: isDarkThemeSlide ? "D0D0D4" : "4A4A4E",
-                    fontSize: 9.5,
+                    fontSize: toEvenPt(9.5),
                     bold: false,
                     fontFace: "Inter",
                     paraSpaceAfter: 3
@@ -976,7 +982,7 @@ async function processDeck(refFileName, outFileName) {
                                 text: (isBullet ? "• " : "") + cleanTxt,
                                 options: {
                                     color: finalRunColor,
-                                    fontSize,
+                                    fontSize: toEvenPt(fontSize),
                                     bold: isHugeTitle ? false : isBold,
                                     fontFace: isHugeTitle ? "Inter" : (isClosingSlide ? (isBold ? "Inter Bold" : "Inter") : (isBold ? "Inter Medium" : "Inter")),
                                     breakLine: pIdx < pMatches.length - 1,

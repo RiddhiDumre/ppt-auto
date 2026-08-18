@@ -834,20 +834,24 @@ async function processDeck(refFileName, outFileName) {
             const isLine = (shapeTag === '<p:cxnSp>' || spPrXml.includes('prst="line"') || h === 0 || w === 0) && !hasTxBody;
 
             // Constrain 2-column side-by-side widths when there is a side-by-side column OR image at the same vertical position (TEXT SHAPES ONLY)
-            if (!isClosingSlide && !isLine && hasTxBody && x >= 1.8 && x < 4.0 && w > 4.5 && origY > 1.4) {
-                const hasRightColOrPic = shapes.some(otherSh => {
-                    const oOff = otherSh.xml.match(/<a:off x="(\d+)" y="(\d+)"\/>/);
-                    const oExt = otherSh.xml.match(/<a:ext cx="(\d+)" cy="(\d+)"\/>/);
-                    if (!oOff || !oExt) return false;
-                    const ox = parseFloat((parseInt(oOff[1]) / 914400).toFixed(3));
-                    const oy = parseFloat((parseInt(oOff[2]) / 914400).toFixed(3));
-                    const ow = parseFloat((parseInt(oExt[1]) / 914400).toFixed(3));
-                    const isRightCol = (ox >= 5.0 && ow < 4.5 && Math.abs(oy - origY) < 0.20 && otherSh.xml.includes('<a:t>'));
-                    const isRightPic = (otherSh.tag === '<p:pic>' && ox >= 5.5);
-                    return isRightCol || isRightPic;
-                });
-                if (hasRightColOrPic) {
-                    w = 3.90;
+            if (!isClosingSlide && !isLine && hasTxBody && origY > 1.4) {
+                if (x >= 1.8 && x < 5.0 && w > 4.0) {
+                    const hasRightColOrPic = shapes.some(otherSh => {
+                        if (otherSh === shapeObj) return false;
+                        const oOff = otherSh.xml.match(/<a:off x="(\d+)" y="(\d+)"\/>/);
+                        if (!oOff) return false;
+                        const ox = parseFloat((parseInt(oOff[1]) / 914400).toFixed(3));
+                        const oy = parseFloat((parseInt(oOff[2]) / 914400).toFixed(3));
+                        const isRightCol = (ox >= 5.0 && Math.abs(oy - origY) < 0.40 && otherSh.xml.includes('<a:t>'));
+                        const isRightPic = (otherSh.tag === '<p:pic>' && ox >= 5.0);
+                        return isRightCol || isRightPic;
+                    });
+                    if (hasRightColOrPic) {
+                        w = 3.75;
+                    }
+                }
+                if (x >= 5.0 && x + w > 9.84) {
+                    w = parseFloat((9.84 - x).toFixed(3));
                 }
             }
 

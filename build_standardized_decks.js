@@ -821,8 +821,20 @@ async function processDeck(refFileName, outFileName) {
                 }
             }
 
-            // Constrain 2-column side-by-side widths when there is a side-by-side column OR image at the same vertical position
-            if (!isClosingSlide && x >= 1.8 && x < 4.0 && w > 4.5 && origY > 1.4) {
+            const hasTxBody = spXml.includes('<a:t>');
+            const spPrMatch = spXml.match(/<p:spPr>[\s\S]*?<\/p:spPr>/);
+            const spPrXml = spPrMatch ? spPrMatch[0] : "";
+            const fillMatch = spPrXml.match(/<a:solidFill>[\s\S]*?<a:srgbClr val="([^"]+)"/);
+            let shapeBgFill = fillMatch ? fillMatch[1] : null;
+
+            if (!isClosingSlide && shapeBgFill && ["1A3632", "224B12", "4DB89A", "0A3B36", "08322D", "0D524A", "004B44", "024E48", "034D47"].includes(shapeBgFill.toUpperCase())) {
+                shapeBgFill = "034E48";
+            }
+
+            const isLine = (shapeTag === '<p:cxnSp>' || spPrXml.includes('prst="line"') || h === 0 || w === 0) && !hasTxBody;
+
+            // Constrain 2-column side-by-side widths when there is a side-by-side column OR image at the same vertical position (TEXT SHAPES ONLY)
+            if (!isClosingSlide && !isLine && hasTxBody && x >= 1.8 && x < 4.0 && w > 4.5 && origY > 1.4) {
                 const hasRightColOrPic = shapes.some(otherSh => {
                     const oOff = otherSh.xml.match(/<a:off x="(\d+)" y="(\d+)"\/>/);
                     const oExt = otherSh.xml.match(/<a:ext cx="(\d+)" cy="(\d+)"\/>/);
@@ -853,18 +865,6 @@ async function processDeck(refFileName, outFileName) {
                 return;
             }
 
-            const spPrMatch = spXml.match(/<p:spPr>[\s\S]*?<\/p:spPr>/);
-            const spPrXml = spPrMatch ? spPrMatch[0] : "";
-            const fillMatch = spPrXml.match(/<a:solidFill>[\s\S]*?<a:srgbClr val="([^"]+)"/);
-            let shapeBgFill = fillMatch ? fillMatch[1] : null;
-
-            if (!isClosingSlide && shapeBgFill && ["1A3632", "224B12", "4DB89A", "0A3B36", "08322D", "0D524A", "004B44", "024E48", "034D47"].includes(shapeBgFill.toUpperCase())) {
-                shapeBgFill = "034E48";
-            }
-
-            const hasTxBody = spXml.includes('<a:t>');
-            const isLine = (shapeTag === '<p:cxnSp>' || spPrXml.includes('prst="line"') || h === 0 || w === 0) && !hasTxBody;
-
             if (isLine && (w > 0 || h > 0)) {
                 const isVertical = (w === 0 || (h > 0 && w < 0.1));
                 const lnColorMatch = spPrXml.match(/<a:ln[\s\S]*?<a:srgbClr val="([^"]+)"/);
@@ -878,7 +878,8 @@ async function processDeck(refFileName, outFileName) {
                 if (!isClosingSlide && !isVertical && origY >= 0.90 && origY <= 1.50) {
                     lineY = SPACING.HEADER_DIVIDER_Y;
                 } else if (!isClosingSlide && !isVertical && origY > 1.50 && origY < 1.90 && hasCategoryHeader) {
-                    lineY = 1.84 + movedSublineShift;
+                    // Skip obsolete CATEGORY header line (1.850 in source) because CATEGORY header was skipped
+                    return;
                 } else if (!isClosingSlide && !isVertical && rowLineYMap[origY.toFixed(2)] !== undefined) {
                     lineY = rowLineYMap[origY.toFixed(2)];
                 } else if (!isClosingSlide && !isVertical && origY >= 2.80 && origY <= 3.00 && w < 4.0 && !isTimelineOrRowListSlide) {

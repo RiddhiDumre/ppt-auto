@@ -143,11 +143,11 @@ function calculateTextShapeHeight(spXml, w, customFontSize = null) {
     pMatches.forEach(p => {
         const pXml = p[0];
         const szMatch = pXml.match(/sz="(\d+)"/);
-        let fontSize = customFontSize ? customFontSize : (szMatch ? parseFloat((parseInt(szMatch[1]) / 100).toFixed(1)) : 10.0);
+        let fontSize = customFontSize ? customFontSize : (szMatch ? parseFloat((parseInt(szMatch[1]) / 100).toFixed(1)) : 8.0);
         
         if (fontSize >= 40) fontSize = 48.0;
         else if (fontSize >= 16) fontSize = 18.0;
-        else fontSize = 10.0;
+        else fontSize = 8.0;
         
         const isBullet = pXml.includes('<a:buChar') || pXml.includes('<a:buAutoNum');
         const rawTxt = [...pXml.matchAll(/<a:t>([^<]+)<\/a:t>/g)].map(m => m[1]).join('');
@@ -984,7 +984,7 @@ async function processDeck(refFileName, outFileName) {
                                     color = "034E48";
                                 }
                             } else {
-                                fontSize = 10.0; // Unified standard body text font size (10pt)
+                                fontSize = 8.0; // Standard body text font size (8pt)
                                 if (isDarkContext) {
                                     // White text on any dark background; no teal on banners
                                     color = "FFFFFF";

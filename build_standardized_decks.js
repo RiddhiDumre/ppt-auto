@@ -117,6 +117,21 @@ function detectSlideBg(slideXml) {
     return null;
 }
 
+// ==========================================
+// 1. STANDARDIZED SPACING TOKENS (INCHES)
+// ==========================================
+const SPACING = {
+    XS: 0.05,       // Tight cluster (e.g. number + label, pill text offset)
+    SM: 0.08,       // Between category/header and immediate body/divider
+    MD: 0.12,       // Between list items/bullets within a block
+    LG: 0.20,       // Between sibling blocks / grid rows
+    XL: 0.30,       // Between major vertical sections
+    CONTENT_START_Y: 1.60, // Standard start Y for slide content
+    CONTENT_MAX_BOTTOM: 5.08, // Maximum Y bottom boundary
+    HEADER_DIVIDER_Y: 1.35, // Fixed header line divider
+    CARD_PILL_H: 0.50, // Standard card pill height
+};
+
 // Returns true when hex colour luminance < 128 (perceptual threshold)
 function isColorDark(hex) {
     if (!hex || hex.length < 6) return false;
@@ -127,23 +142,49 @@ function isColorDark(hex) {
 }
 
 // Round any font size to the nearest EVEN whole number
-// e.g. 8.5→8, 9.0→10, 9.5→10, 10.5→10, 18.8→18, 36→36
 function toEvenPt(n) {
     return Math.round(n / 2) * 2;
 }
 
+// Word-wrap and line measurement for Inter font
+function measureParagraphHeight(text, widthInches, fontSizePt, isBullet, paraSpaceAfterPt = 2.0) {
+    if (!text || text.trim().length === 0) return 0;
+    const effectiveWidth = Math.max(0.4, isBullet ? widthInches - 0.16 : widthInches);
+    // Character width estimate for Inter font: ~0.52 * (fontSize / 72)
+    const avgCharWidth = (fontSizePt / 72) * 0.52;
+    const charsPerLine = Math.max(1, Math.floor(effectiveWidth / avgCharWidth));
+    
+    // Compute wrapped line count with word boundary wrapping
+    const words = text.trim().split(/\s+/);
+    let lineCount = 1;
+    let currentLineLen = 0;
+    words.forEach(word => {
+        if (currentLineLen + word.length + 1 > charsPerLine) {
+            lineCount++;
+            currentLineLen = word.length;
+        } else {
+            currentLineLen += word.length + 1;
+        }
+    });
+    
+    const lineHeight = (fontSizePt / 72) * 1.22;
+    const spaceAfter = paraSpaceAfterPt / 72;
+    return (lineCount * lineHeight) + spaceAfter;
+}
+
 function calculateTextShapeHeight(spXml, w, customFontSize = null) {
     const txBodyMatch = spXml.match(/<p:txBody>[\s\S]*?<\/p:txBody>/) || spXml.match(/<a:txBody>[\s\S]*?<\/a:txBody>/);
-    if (!txBodyMatch) return 0.25;
+    if (!txBodyMatch) return 0.20;
     
     const pMatches = [...txBodyMatch[0].matchAll(/<a:p>[\s\S]*?<\/a:p>/g)];
     let totalH = 0.02;
     const pCount = pMatches.length;
 
-    pMatches.forEach(p => {
+    pMatches.forEach((p, pIdx) => {
         const pXml = p[0];
         const szMatch = pXml.match(/sz="(\d+)"/);
         let fontSize = customFontSize ? customFontSize : (szMatch ? parseFloat((parseInt(szMatch[1]) / 100).toFixed(1)) : 8.0);
+        fontSize = toEvenPt(fontSize);
         
         if (fontSize >= 40) fontSize = 48.0;
         else if (fontSize >= 16) fontSize = 18.0;
@@ -159,13 +200,8 @@ function calculateTextShapeHeight(spXml, w, customFontSize = null) {
             return;
         }
 
-        const charsPerLine = Math.max(1, Math.floor(w * (fontSize <= 8.0 ? 17.5 : 15.5)));
-        const lines = Math.max(1, Math.ceil(rawTxt.length / charsPerLine));
-        
-        const lineHeight = (fontSize / 72) * 1.16;
-        const paraSpace = (isBullet ? 1.0 : (pCount > 4 ? 0.8 : 1.5)) / 72;
-        
-        totalH += (lines * lineHeight) + paraSpace;
+        const spaceAfter = isBullet ? 2.0 : (pIdx === pCount - 1 ? 0 : 3.0);
+        totalH += measureParagraphHeight(rawTxt, w, fontSize, isBullet, spaceAfter);
     });
     
     return Math.max(parseFloat(totalH.toFixed(2)), 0.20);
@@ -467,10 +503,8 @@ async function processDeck(refFileName, outFileName) {
                 return (py >= 1.50 && py <= 1.95 && pw >= 5.0);
             });
 
-            const baseCardStartY = hasTopIntro ? (2.05 + movedSublineShift) : (1.65 + movedSublineShift);
-
-            const CARD_PILL_H = 0.50;
-            const CARD_TEXT_OFFSET = 0.58;
+            const baseCardStartY = hasTopIntro ? (SPACING.CONTENT_START_Y + 0.45 + movedSublineShift) : (SPACING.CONTENT_START_Y + SPACING.XS + movedSublineShift);
+            const CARD_TEXT_OFFSET = SPACING.CARD_PILL_H + SPACING.SM;
 
             if (pillRows.length === 1) {
                 const r1Y = baseCardStartY;
@@ -492,7 +526,8 @@ async function processDeck(refFileName, outFileName) {
                     }
                 });
 
-                const r2Y = parseFloat(Math.min(3.45, Math.max(3.20, r1Y + CARD_PILL_H + maxR1TextH + 0.22)).toFixed(2));
+                // Row 2 placed additively based on measured Row 1 text height + standard row gap
+                const r2Y = parseFloat(Math.min(3.45, Math.max(3.20, r1Y + SPACING.CARD_PILL_H + maxR1TextH + SPACING.LG)).toFixed(2));
                 pillRows[0].pills.forEach(p => {
                     cardRowMap[`${p.x.toFixed(2)}_${p.y.toFixed(2)}`] = { cardX: p.x, cardY: r1Y, textY: r1Y + CARD_TEXT_OFFSET };
                 });
@@ -513,7 +548,8 @@ async function processDeck(refFileName, outFileName) {
                     }
                 });
 
-                const bottomNoteY = Math.min(4.85, Math.max(4.00, r2Y + CARD_TEXT_OFFSET + maxR2TextH + 0.14));
+                // Footnote placed additively with SPACING.MD gap below tallest Row 2 content
+                const bottomNoteY = Math.min(SPACING.CONTENT_MAX_BOTTOM - 0.25, Math.max(4.00, r2Y + CARD_TEXT_OFFSET + maxR2TextH + SPACING.MD));
                 shapes.forEach(sh => {
                     const offM = sh.xml.match(/<a:off x="(\d+)" y="(\d+)"\/>/);
                     const extM = sh.xml.match(/<a:ext cx="(\d+)" cy="(\d+)"\/>/);
@@ -610,10 +646,10 @@ async function processDeck(refFileName, outFileName) {
                     return py >= 3.8 && (clean.startsWith("New team structure:") || clean.startsWith("Illustrative use cases") || clean.startsWith("The result:") || clean.startsWith("What enterprises now expect:") || clean.startsWith("85% client repeat") || clean.startsWith("What the platform"));
                 });
 
-                const startY = (hasTopIntroText ? 2.08 : 1.68) + movedSublineShift; // CATEGORY/DESCRIPTION headers are skipped in render, so no reserved space needed
-                const maxClusterEndY = (bottomShapes.length > 0) ? (3.75 + movedSublineShift) : (4.75 + movedSublineShift);
+                const startY = (hasTopIntroText ? (SPACING.CONTENT_START_Y + 0.48) : (SPACING.CONTENT_START_Y + SPACING.SM)) + movedSublineShift;
+                const maxClusterEndY = (bottomShapes.length > 0) ? (3.75 + movedSublineShift) : (SPACING.CONTENT_MAX_BOTTOM - 0.30 + movedSublineShift);
                 const totalAvailH = maxClusterEndY - startY;
-                const gapBetweenRows = 0.03;
+                const gapBetweenRows = SPACING.XS;
                 const uniformRowH = parseFloat(((totalAvailH / clusters.length) - gapBetweenRows).toFixed(2));
 
                 let curY = startY;
@@ -646,7 +682,7 @@ async function processDeck(refFileName, outFileName) {
                     return parseInt(offA[2]) - parseInt(offB[2]);
                 });
 
-                let bY = Math.min(4.35, Math.max(3.90, curY + 0.06));
+                let bY = Math.min(SPACING.CONTENT_MAX_BOTTOM - 0.70, Math.max(3.90, curY + SPACING.SM));
                 bottomShapes.forEach(sh => {
                     const offM = sh.xml.match(/<a:off x="(\d+)" y="(\d+)"\/>/);
                     const py = parseFloat((parseInt(offM[2]) / 914400).toFixed(3));
@@ -679,7 +715,7 @@ async function processDeck(refFileName, outFileName) {
             });
         }
 
-        function resolveVerticalCollision(proposedX, proposedY, proposedW, proposedH, minGap = 0.10) {
+        function resolveVerticalCollision(proposedX, proposedY, proposedW, proposedH, minGap = SPACING.SM) {
             let adjustedY = proposedY;
             for (const prev of occupiedBoxes) {
                 const hOverlap = (proposedX < prev.x + prev.w - 0.06) && (proposedX + proposedW > prev.x + 0.06);
@@ -840,7 +876,7 @@ async function processDeck(refFileName, outFileName) {
 
                 let lineY = y;
                 if (!isClosingSlide && !isVertical && origY >= 0.90 && origY <= 1.50) {
-                    lineY = FIXED_DIVIDER_Y;
+                    lineY = SPACING.HEADER_DIVIDER_Y;
                 } else if (!isClosingSlide && !isVertical && origY > 1.50 && origY < 1.90 && hasCategoryHeader) {
                     lineY = 1.84 + movedSublineShift;
                 } else if (!isClosingSlide && !isVertical && rowLineYMap[origY.toFixed(2)] !== undefined) {
@@ -848,16 +884,16 @@ async function processDeck(refFileName, outFileName) {
                 } else if (!isClosingSlide && !isVertical && origY >= 2.80 && origY <= 3.00 && w < 4.0 && !isTimelineOrRowListSlide) {
                     lineY = 2.915 + movedSublineShift;
                 } else if (!isClosingSlide && !isVertical && origY > 1.50) {
-                    let prevBottomInCol = 1.35;
+                    let prevBottomInCol = SPACING.HEADER_DIVIDER_Y;
                     for (const prev of occupiedBoxes) {
                         if (x < prev.x + prev.w && x + w > prev.x) {
                             if (prev.bottom > prevBottomInCol) prevBottomInCol = prev.bottom;
                         }
                     }
-                    if (prevBottomInCol > 1.35 && (lineY - prevBottomInCol > 0.30)) {
-                        lineY = parseFloat((prevBottomInCol + 0.10).toFixed(3));
+                    if (prevBottomInCol > SPACING.HEADER_DIVIDER_Y && (lineY - prevBottomInCol > SPACING.XL)) {
+                        lineY = parseFloat((prevBottomInCol + SPACING.SM).toFixed(3));
                     } else {
-                        lineY = resolveVerticalCollision(x, lineY, w, 0.05, 0.05);
+                        lineY = resolveVerticalCollision(x, lineY, w, 0.05, SPACING.XS);
                     }
                 }
 
@@ -891,7 +927,7 @@ async function processDeck(refFileName, outFileName) {
             const spFirstFs = spFirstSzM ? parseInt(spFirstSzM[1]) / 100 : 0;
             const isAcronymLetter = isCardPillShape && spFirstTxt.length <= 2 && spFirstFs >= 36;
 
-            const CARD_PILL_HEIGHT = 0.50;
+            const CARD_PILL_HEIGHT = SPACING.CARD_PILL_H;
             if (isCardPillShape && !isClosingSlide) {
                 // Always use green (034E48) — on dark slides 1C1C1E is invisible against 121212 background
                 shapeBgFill = "034E48";
@@ -940,23 +976,15 @@ async function processDeck(refFileName, outFileName) {
                         
                         let fontSize = szMatch ? parseFloat((parseInt(szMatch[1]) / 100).toFixed(1)) : 8.55;
                         
-                        const clrMatch = pXml.match(/<a:srgbClr val="([^"]+)"/);
-                        const isDarkBg = isDarkThemeSlide;
-                        const isDarkCardBg = shapeBgFill && ["034E48", "1C1C1E", "1A3632", "0A3B36", "08322D", "0D524A", "004B44", "024E48"].includes(shapeBgFill.toUpperCase());
-                        const isDarkContext = isDarkBg || isDarkCardBg;
+                        const isDarkCardBg = ["034E48", "1C1C1E", "333333", "222222", "1E1E1E"].includes((shapeBgFill || "").toUpperCase());
+                        const isDarkContext = isDarkThemeSlide || isDarkCardBg;
+                        let color = isDarkContext ? "FFFFFF" : "1D1D1F";
 
-                        let color = clrMatch ? clrMatch[1] : (isDarkContext ? "ECE9E4" : "1D1D1F");
-
-                        const greenVariants = ["224B12", "1A3632", "4DB89A", "0A3B36", "08322D", "0D524A", "004B44", "024E48", "034D47", "2C5E3B", "1B5E20", "2E7D32", "355E3B", "1E4620", "3E8D86"];
-                        if (color && greenVariants.includes(color.toUpperCase())) {
-                            color = isDarkContext ? "4DB89A" : "034E48";
-                        } else if (isDarkContext) {
-                            if (!color || ["1D1D1F", "1E1E1E", "000000", "444444", "555555", "333333", "666666", "034E48"].includes(color.toUpperCase())) {
-                                color = "ECE9E4";
-                            }
-                        } else {
-                            if (color && ["FFFFFF", "ECE9E4", "F5F5F5", "FAFAFA", "F0F0F0", "EEEEEE", "E0E0E0"].includes(color.toUpperCase())) {
-                                color = "1D1D1F";
+                        const clrMatch = pXml.match(/<a:solidFill>[\s\S]*?<a:srgbClr val="([^"]+)"/) || pXml.match(/<a:rPr[\s\S]*?<a:srgbClr val="([^"]+)"/);
+                        if (clrMatch) {
+                            const cVal = clrMatch[1].toUpperCase();
+                            if (cVal === "4DB89A" || cVal === "034E48" || cVal === "0A3B36" || cVal === "08322D") {
+                                color = isDarkContext ? "4DB89A" : "034E48";
                             }
                         }
 
@@ -998,7 +1026,6 @@ async function processDeck(refFileName, outFileName) {
                             } else {
                                 fontSize = 8.0; // Standard body text font size (8pt)
                                 if (isDarkContext) {
-                                    // White text on any dark background; no teal on banners
                                     color = "FFFFFF";
                                 } else {
                                     color = "2C2C2E";
@@ -1035,7 +1062,7 @@ async function processDeck(refFileName, outFileName) {
                         // Acronym letters (B/E/A/M): use original shape height, not 0.50in pill height
                         const isAcronymTextBox = maxFontSize >= 36 && cleanTxtForCheck.trim().length <= 2;
                         let finalH = isAcronymTextBox ? h
-                                   : isHeaderOnPill ? 0.50
+                                   : isHeaderOnPill ? SPACING.CARD_PILL_H
                                    : parseFloat(Math.max(0.20, estH).toFixed(2));
 
                         if (sIdx === 0) {
@@ -1058,22 +1085,23 @@ async function processDeck(refFileName, outFileName) {
                                     finalH = realTitleH;
                                     coverTitleBottomY = finalY + realTitleH;
                                 } else {
-                                    finalY = coverTitleBottomY > 0 ? parseFloat((coverTitleBottomY + 0.08).toFixed(2)) : 2.50;
+                                    finalY = coverTitleBottomY > 0 ? parseFloat((coverTitleBottomY + SPACING.SM).toFixed(2)) : 2.50;
                                     finalH = 0.50;
-                                    // FIX: Update coverTitleBottomY after EVERY element so successive items don't all land on the same Y
                                     coverTitleBottomY = parseFloat((finalY + finalH).toFixed(2));
                                 }
                             }
                         } else if (!isClosingSlide) {
                             if (!isRowMapElement || (matchedCardInfo && !matchedCardInfo.isHeader)) {
-                                finalY = resolveVerticalCollision(x, finalY, w, finalH, 0.08);
+                                finalY = resolveVerticalCollision(x, finalY, w, finalH, SPACING.SM);
                             }
                         }
 
                         // Prevent cuts / overflow by dynamic height clamping and bottom margin floor protection
-                        const MAX_SLIDE_BOTTOM = 5.08;
-                        if (!isClosingSlide && finalY + finalH > MAX_SLIDE_BOTTOM) {
-                            finalH = parseFloat((MAX_SLIDE_BOTTOM - finalY).toFixed(2));
+                        if (!isClosingSlide && finalY + finalH > SPACING.CONTENT_MAX_BOTTOM) {
+                            if (finalY + finalH > SPACING.CONTENT_MAX_BOTTOM + 0.15) {
+                                console.warn(`    [OVERFLOW WARNING] Slide ${sNum}: Element at x=${x.toFixed(2)} y=${finalY.toFixed(2)} bottom=${(finalY+finalH).toFixed(2)} exceeds boundary ${SPACING.CONTENT_MAX_BOTTOM}`);
+                            }
+                            finalH = parseFloat((SPACING.CONTENT_MAX_BOTTOM - finalY).toFixed(2));
                             if (finalH < 0.20) finalH = 0.20;
                         }
 

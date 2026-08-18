@@ -535,13 +535,26 @@ async function processDeck(refFileName, outFileName) {
             return (rawTxt === "CATEGORY" || rawTxt === "DESCRIPTION");
         });
 
-        const lineDividersCount = shapes.filter(s => (s.tag === '<p:cxnSp>' || s.xml.includes('prst="line"')) && !s.xml.includes('<a:t>')).length;
+        const lineDividers = shapes.filter(s => (s.tag === '<p:cxnSp>' || s.xml.includes('prst="line"')) && !s.xml.includes('<a:t>'));
+        const distinctRowLines = new Set();
+        lineDividers.forEach(s => {
+            const extM = s.xml.match(/<a:ext cx="(\d+)" cy="(\d+)"\/>/);
+            const offM = s.xml.match(/<a:off x="(\d+)" y="(\d+)"\/>/);
+            if (extM && offM) {
+                const w = parseFloat((parseInt(extM[1]) / 914400).toFixed(3));
+                const y = parseFloat((parseInt(offM[2]) / 914400).toFixed(3));
+                if (w >= 4.0 && y > 1.40) {
+                    distinctRowLines.add(y.toFixed(1));
+                }
+            }
+        });
+        const hasStackedRowDividers = distinctRowLines.size >= 2;
 
         const isTimelineOrRowListSlide = shapes.some(s => {
             if (!s.xml.includes('<a:t>')) return false;
             const rawTxt = [...s.xml.matchAll(/<a:t>([^<]+)<\/a:t>/g)].map(m => m[1]).join(' ').trim();
             return (rawTxt.endsWith("Days") || rawTxt.endsWith("Weeks") || rawTxt.endsWith("Months") || rawTxt.startsWith("Phase") || rawTxt === "CATEGORY" || rawTxt === "DESCRIPTION");
-        }) || (lineDividersCount >= 3);
+        }) || hasStackedRowDividers;
 
         if (!isClosingSlide && sIdx > 0 && isTimelineOrRowListSlide && cardPills.length < 2) {
             const listShapes = shapes.filter(s => {
@@ -833,7 +846,7 @@ async function processDeck(refFileName, outFileName) {
                 } else if (!isClosingSlide && !isVertical && rowLineYMap[origY.toFixed(2)] !== undefined) {
                     lineY = rowLineYMap[origY.toFixed(2)];
                 } else if (!isClosingSlide && !isVertical && origY >= 2.80 && origY <= 3.00 && w < 4.0 && !isTimelineOrRowListSlide) {
-                    lineY = 2.915;
+                    lineY = 2.915 + movedSublineShift;
                 } else if (!isClosingSlide && !isVertical && origY > 1.50) {
                     let prevBottomInCol = 1.35;
                     for (const prev of occupiedBoxes) {

@@ -454,6 +454,179 @@ async function processDeck(refFileName, outFileName) {
 
         let coverTitleBottomY = 0;
 
+        // CUSTOM LAYOUT: Consumer Lifecycle (Two-Section Split: Acquisition vs. Retention)
+        const isConsumerLifecycleSlide = shapes.some(s => s.xml.includes('DISCOVER')) && shapes.some(s => s.xml.includes('FIRST VALUE')) && shapes.some(s => s.xml.includes('REPEAT'));
+
+        if (!isClosingSlide && sIdx > 0 && isConsumerLifecycleSlide) {
+            // Draw slide index number
+            pptSlide.addText([{
+                text: `${sNum}`,
+                options: {
+                    color: isDarkThemeSlide ? "6A6A6B" : "9A9A9E",
+                    fontSize: 18.0,
+                    bold: false,
+                    fontFace: "Inter Medium"
+                }
+            }], {
+                x: 0.16,
+                y: 0.57,
+                w: 1.68,
+                h: 0.33,
+                valign: "top",
+                margin: [0, 0, 0, 0]
+            });
+
+            // Draw header divider line
+            pptSlide.addShape(pres.shapes.LINE, {
+                x: 0.16, y: SPACING.HEADER_DIVIDER_Y, w: 9.68, h: 0,
+                line: { color: isDarkThemeSlide ? "555558" : "B0B0B4", width: 0.50 }
+            });
+
+            // Two-Section Split: Acquisition Moments vs. Retention & Growth
+            const col1X = 1.99;
+            const col2X = 5.95;
+            const colW = 3.80;
+            const startContentY = SPACING.CONTENT_START_Y + movedSublineShift;
+
+            // Column 1 Header: ACQUISITION MOMENTS
+            pptSlide.addText([{
+                text: "ACQUISITION MOMENTS",
+                options: {
+                    color: "4DB89A",
+                    fontSize: 8.0,
+                    bold: true,
+                    fontFace: "Inter Bold",
+                    charSpacing: 0.5
+                }
+            }], {
+                x: col1X,
+                y: startContentY,
+                w: colW,
+                h: 0.22,
+                valign: "top",
+                margin: [0, 0, 0, 0]
+            });
+
+            // Column 2 Header: RETENTION & GROWTH
+            pptSlide.addText([{
+                text: "RETENTION & GROWTH",
+                options: {
+                    color: "4DB89A",
+                    fontSize: 8.0,
+                    bold: true,
+                    fontFace: "Inter Bold",
+                    charSpacing: 0.5
+                }
+            }], {
+                x: col2X,
+                y: startContentY,
+                w: colW,
+                h: 0.22,
+                valign: "top",
+                margin: [0, 0, 0, 0]
+            });
+
+            // Divider lines under column headers
+            const headerLineY = startContentY + 0.26;
+            pptSlide.addShape(pres.shapes.LINE, {
+                x: col1X, y: headerLineY, w: colW, h: 0,
+                line: { color: isDarkThemeSlide ? "38383C" : "D4D4D8", width: 0.35 }
+            });
+            pptSlide.addShape(pres.shapes.LINE, {
+                x: col2X, y: headerLineY, w: colW, h: 0,
+                line: { color: isDarkThemeSlide ? "38383C" : "D4D4D8", width: 0.35 }
+            });
+
+            const acqItems = [
+                { num: "01", title: "DISCOVER", desc: "The proposition is not clear or relevant enough." },
+                { num: "02", title: "JOIN", desc: "Onboarding asks for effort before proving value." },
+                { num: "03", title: "FIRST VALUE", desc: "The meaningful outcome arrives too late." }
+            ];
+
+            const retItems = [
+                { num: "04", title: "REPEAT", desc: "The product does not create a useful habit." },
+                { num: "05", title: "STAY", desc: "Relevance falls as needs and context change." },
+                { num: "06", title: "GROW", desc: "The next paid or deeper action feels generic." }
+            ];
+
+            const itemY = headerLineY + SPACING.SM;
+            const itemGap = 0.68;
+
+            for (let i = 0; i < 3; i++) {
+                const acq = acqItems[i];
+                const ret = retItems[i];
+                const curRowY = parseFloat((itemY + (i * itemGap)).toFixed(2));
+
+                // Left Item
+                pptSlide.addText([
+                    { text: `${acq.num}.  ${acq.title}`, options: { color: isDarkThemeSlide ? "FFFFFF" : "034E48", fontSize: 8.0, bold: true, fontFace: "Inter Bold", breakLine: true, paraSpaceAfter: 2 } },
+                    { text: acq.desc, options: { color: isDarkThemeSlide ? "B0B0B4" : "5A5A5E", fontSize: 8.0, bold: false, fontFace: "Inter" } }
+                ], {
+                    x: col1X,
+                    y: curRowY,
+                    w: colW,
+                    h: 0.52,
+                    valign: "top",
+                    margin: [0, 0, 0, 0]
+                });
+
+                // Right Item
+                pptSlide.addText([
+                    { text: `${ret.num}.  ${ret.title}`, options: { color: isDarkThemeSlide ? "FFFFFF" : "034E48", fontSize: 8.0, bold: true, fontFace: "Inter Bold", breakLine: true, paraSpaceAfter: 2 } },
+                    { text: ret.desc, options: { color: isDarkThemeSlide ? "B0B0B4" : "5A5A5E", fontSize: 8.0, bold: false, fontFace: "Inter" } }
+                ], {
+                    x: col2X,
+                    y: curRowY,
+                    w: colW,
+                    h: 0.52,
+                    valign: "top",
+                    margin: [0, 0, 0, 0]
+                });
+
+                if (i < 2) {
+                    const rowSepY = curRowY + 0.56;
+                    pptSlide.addShape(pres.shapes.LINE, {
+                        x: col1X, y: rowSepY, w: colW, h: 0,
+                        line: { color: isDarkThemeSlide ? "28282C" : "E4E4E8", width: 0.25 }
+                    });
+                    pptSlide.addShape(pres.shapes.LINE, {
+                        x: col2X, y: rowSepY, w: colW, h: 0,
+                        line: { color: isDarkThemeSlide ? "28282C" : "E4E4E8", width: 0.25 }
+                    });
+                }
+            }
+
+            // Bottom Callout Box
+            const calloutY = 4.40;
+            pptSlide.addShape(pres.shapes.RECTANGLE, {
+                x: 1.99,
+                y: calloutY,
+                w: 7.85,
+                h: 0.46,
+                fill: { color: isDarkThemeSlide ? "142321" : "E8F3F1" },
+                line: { color: "034E48", width: 0.5 }
+            });
+
+            pptSlide.addText([{
+                text: "The opportunity is to find the highest-value leak, redesign the behaviour around it, and measure whether the business outcome moves.",
+                options: {
+                    color: isDarkThemeSlide ? "4DB89A" : "034E48",
+                    fontSize: 8.0,
+                    bold: false,
+                    fontFace: "Inter Medium"
+                }
+            }], {
+                x: 2.15,
+                y: calloutY + 0.08,
+                w: 7.50,
+                h: 0.30,
+                valign: "middle",
+                margin: [0, 0, 0, 0]
+            });
+
+            continue;
+        }
+
         // PRE-PASS 1: Group and align Card Grids into uniform rows
         const cardPills = [];
         const allCardPills = [];
@@ -461,9 +634,6 @@ async function processDeck(refFileName, outFileName) {
         const renderedCardBoxes = new Set();
         const rowLayoutMap = {};
         const rowLineYMap = {};
-
-        const isLifecycleSlide = shapes.some(s => s.xml.includes('DISCOVER') && s.xml.includes('JOIN')) ||
-            (headerSublineText && headerSublineText.toLowerCase().includes('consumer lifecycle'));
 
         shapes.forEach(shapeObj => {
             const offMatch = shapeObj.xml.match(/<a:off x="(\d+)" y="(\d+)"\/>/);
@@ -507,7 +677,7 @@ async function processDeck(refFileName, outFileName) {
             });
 
             const baseCardStartY = hasTopIntro ? (SPACING.CONTENT_START_Y + 0.45 + movedSublineShift) : (SPACING.CONTENT_START_Y + SPACING.XS + movedSublineShift);
-            const CARD_TEXT_OFFSET = isLifecycleSlide ? 0.38 : (SPACING.CARD_PILL_H + SPACING.SM);
+            const CARD_TEXT_OFFSET = SPACING.CARD_PILL_H + SPACING.SM;
 
             if (pillRows.length === 1) {
                 const r1Y = baseCardStartY;
@@ -530,8 +700,7 @@ async function processDeck(refFileName, outFileName) {
                 });
 
                 // Row 2 placed additively based on measured Row 1 text height + standard row gap
-                const row1TotalH = isLifecycleSlide ? (CARD_TEXT_OFFSET + maxR1TextH) : (SPACING.CARD_PILL_H + maxR1TextH);
-                const r2Y = parseFloat(Math.min(3.45, Math.max(isLifecycleSlide ? 2.65 : 3.20, r1Y + row1TotalH + SPACING.LG)).toFixed(2));
+                const r2Y = parseFloat(Math.min(3.45, Math.max(3.20, r1Y + SPACING.CARD_PILL_H + maxR1TextH + SPACING.LG)).toFixed(2));
                 pillRows[0].pills.forEach(p => {
                     cardRowMap[`${p.x.toFixed(2)}_${p.y.toFixed(2)}`] = { cardX: p.x, cardY: r1Y, textY: r1Y + CARD_TEXT_OFFSET };
                 });
@@ -870,7 +1039,6 @@ async function processDeck(refFileName, outFileName) {
             }
 
             if (isLine && (w > 0 || h > 0)) {
-                if (isLifecycleSlide && w > 6.0 && origY > 1.40) return; // Skip obsolete full-width lines on lifecycle stage slide
                 const isVertical = (w === 0 || (h > 0 && w < 0.1));
                 const lnColorMatch = spPrXml.match(/<a:ln[\s\S]*?<a:srgbClr val="([^"]+)"/);
                 let lnColor = lnColorMatch ? lnColorMatch[1] : "B4B4B4";
@@ -940,8 +1108,8 @@ async function processDeck(refFileName, outFileName) {
                 if (h < CARD_PILL_HEIGHT) h = CARD_PILL_HEIGHT;
             }
 
-            // Draw card pill rectangles — use full original height for acronym letter boxes (Skip solid background on lifecycle stage slides)
-            if (shapeBgFill && shapeBgFill !== "none" && isCardPillShape && !isLifecycleSlide) {
+            // Draw card pill rectangles — use full original height for acronym letter boxes
+            if (shapeBgFill && shapeBgFill !== "none" && isCardPillShape) {
                 const boxPosKey = `${Math.round(x * 10)}_${Math.round(y * 10)}`;
                 if (!renderedCardBoxes.has(boxPosKey)) {
                     renderedCardBoxes.add(boxPosKey);
@@ -1060,52 +1228,16 @@ async function processDeck(refFileName, outFileName) {
 
                     if (textRuns.length > 0) {
                         const isHeaderOnPill = matchedCardInfo && matchedCardInfo.isHeader;
-                        let align = (isHeaderOnPill && !isLifecycleSlide) ? "center" : "left";
-                        let valign = (isHeaderOnPill && !isLifecycleSlide) ? "middle" : "top";
-
-                        const stageNums = { "DISCOVER": "01", "JOIN": "02", "FIRST VALUE": "03", "REPEAT": "04", "STAY": "05", "GROW": "06" };
-                        const stageNum = isLifecycleSlide ? stageNums[cleanTxtForCheck.toUpperCase()] : null;
-
-                        if (stageNum) {
-                            textRuns.length = 0;
-                            textRuns.push({
-                                text: stageNum + "  ",
-                                options: {
-                                    color: "4DB89A",
-                                    fontSize: 8.0,
-                                    bold: true,
-                                    fontFace: "Inter Bold"
-                                }
-                            });
-                            textRuns.push({
-                                text: cleanTxtForCheck.toUpperCase(),
-                                options: {
-                                    color: isDarkThemeSlide ? "FFFFFF" : "1D1D1F",
-                                    fontSize: 8.0,
-                                    bold: true,
-                                    fontFace: "Inter Medium"
-                                }
-                            });
-                        }
+                        let align = isHeaderOnPill ? "center" : "left";
+                        let valign = isHeaderOnPill ? "middle" : "top";
 
                         let finalY = y;
                         let estH = calculateTextShapeHeight(spXml, w, maxFontSize);
                         // Acronym letters (B/E/A/M): use original shape height, not 0.50in pill height
                         const isAcronymTextBox = maxFontSize >= 36 && cleanTxtForCheck.trim().length <= 2;
                         let finalH = isAcronymTextBox ? h
-                                   : stageNum ? 0.24
                                    : isHeaderOnPill ? SPACING.CARD_PILL_H
                                    : parseFloat(Math.max(0.20, estH).toFixed(2));
-
-                        if (stageNum) {
-                            pptSlide.addShape(pres.shapes.LINE, {
-                                x, y: finalY + 0.22,
-                                w: 2.38,
-                                h: 0,
-                                line: { color: isDarkThemeSlide ? "38383C" : "D4D4D8", width: 0.5 }
-                            });
-                            recordOccupiedBox({ x, y: finalY + 0.22, w: 2.38, h: 0.05, txt: "[STAGE DIVIDER]" });
-                        }
 
                         if (sIdx === 0) {
                             if (cleanTxtForCheck.includes("CONFIDENTIAL") || cleanTxtForCheck.includes("PROPRIETARY")) {

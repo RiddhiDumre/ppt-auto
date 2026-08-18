@@ -462,6 +462,9 @@ async function processDeck(refFileName, outFileName) {
         const rowLayoutMap = {};
         const rowLineYMap = {};
 
+        const isLifecycleSlide = shapes.some(s => s.xml.includes('DISCOVER') && s.xml.includes('JOIN')) ||
+            (headerSublineText && headerSublineText.toLowerCase().includes('consumer lifecycle'));
+
         shapes.forEach(shapeObj => {
             const offMatch = shapeObj.xml.match(/<a:off x="(\d+)" y="(\d+)"\/>/);
             const extMatch = shapeObj.xml.match(/<a:ext cx="(\d+)" cy="(\d+)"\/>/);
@@ -504,7 +507,7 @@ async function processDeck(refFileName, outFileName) {
             });
 
             const baseCardStartY = hasTopIntro ? (SPACING.CONTENT_START_Y + 0.45 + movedSublineShift) : (SPACING.CONTENT_START_Y + SPACING.XS + movedSublineShift);
-            const CARD_TEXT_OFFSET = SPACING.CARD_PILL_H + SPACING.SM;
+            const CARD_TEXT_OFFSET = isLifecycleSlide ? 0.38 : (SPACING.CARD_PILL_H + SPACING.SM);
 
             if (pillRows.length === 1) {
                 const r1Y = baseCardStartY;
@@ -527,7 +530,8 @@ async function processDeck(refFileName, outFileName) {
                 });
 
                 // Row 2 placed additively based on measured Row 1 text height + standard row gap
-                const r2Y = parseFloat(Math.min(3.45, Math.max(3.20, r1Y + SPACING.CARD_PILL_H + maxR1TextH + SPACING.LG)).toFixed(2));
+                const row1TotalH = isLifecycleSlide ? (CARD_TEXT_OFFSET + maxR1TextH) : (SPACING.CARD_PILL_H + maxR1TextH);
+                const r2Y = parseFloat(Math.min(3.45, Math.max(isLifecycleSlide ? 2.65 : 3.20, r1Y + row1TotalH + SPACING.LG)).toFixed(2));
                 pillRows[0].pills.forEach(p => {
                     cardRowMap[`${p.x.toFixed(2)}_${p.y.toFixed(2)}`] = { cardX: p.x, cardY: r1Y, textY: r1Y + CARD_TEXT_OFFSET };
                 });
@@ -866,6 +870,7 @@ async function processDeck(refFileName, outFileName) {
             }
 
             if (isLine && (w > 0 || h > 0)) {
+                if (isLifecycleSlide && w > 6.0 && origY > 1.40) return; // Skip obsolete full-width lines on lifecycle stage slide
                 const isVertical = (w === 0 || (h > 0 && w < 0.1));
                 const lnColorMatch = spPrXml.match(/<a:ln[\s\S]*?<a:srgbClr val="([^"]+)"/);
                 let lnColor = lnColorMatch ? lnColorMatch[1] : "B4B4B4";
@@ -935,8 +940,8 @@ async function processDeck(refFileName, outFileName) {
                 if (h < CARD_PILL_HEIGHT) h = CARD_PILL_HEIGHT;
             }
 
-            // Draw card pill rectangles — use full original height for acronym letter boxes
-            if (shapeBgFill && shapeBgFill !== "none" && isCardPillShape) {
+            // Draw card pill rectangles — use full original height for acronym letter boxes (Skip solid background on lifecycle stage slides)
+            if (shapeBgFill && shapeBgFill !== "none" && isCardPillShape && !isLifecycleSlide) {
                 const boxPosKey = `${Math.round(x * 10)}_${Math.round(y * 10)}`;
                 if (!renderedCardBoxes.has(boxPosKey)) {
                     renderedCardBoxes.add(boxPosKey);
@@ -1055,16 +1060,52 @@ async function processDeck(refFileName, outFileName) {
 
                     if (textRuns.length > 0) {
                         const isHeaderOnPill = matchedCardInfo && matchedCardInfo.isHeader;
-                        let align = isHeaderOnPill ? "center" : "left";
-                        let valign = isHeaderOnPill ? "middle" : "top";
+                        let align = (isHeaderOnPill && !isLifecycleSlide) ? "center" : "left";
+                        let valign = (isHeaderOnPill && !isLifecycleSlide) ? "middle" : "top";
+
+                        const stageNums = { "DISCOVER": "01", "JOIN": "02", "FIRST VALUE": "03", "REPEAT": "04", "STAY": "05", "GROW": "06" };
+                        const stageNum = isLifecycleSlide ? stageNums[cleanTxtForCheck.toUpperCase()] : null;
+
+                        if (stageNum) {
+                            textRuns.length = 0;
+                            textRuns.push({
+                                text: stageNum + "  ",
+                                options: {
+                                    color: "4DB89A",
+                                    fontSize: 8.0,
+                                    bold: true,
+                                    fontFace: "Inter Bold"
+                                }
+                            });
+                            textRuns.push({
+                                text: cleanTxtForCheck.toUpperCase(),
+                                options: {
+                                    color: isDarkThemeSlide ? "FFFFFF" : "1D1D1F",
+                                    fontSize: 8.0,
+                                    bold: true,
+                                    fontFace: "Inter Medium"
+                                }
+                            });
+                        }
 
                         let finalY = y;
                         let estH = calculateTextShapeHeight(spXml, w, maxFontSize);
                         // Acronym letters (B/E/A/M): use original shape height, not 0.50in pill height
                         const isAcronymTextBox = maxFontSize >= 36 && cleanTxtForCheck.trim().length <= 2;
                         let finalH = isAcronymTextBox ? h
+                                   : stageNum ? 0.24
                                    : isHeaderOnPill ? SPACING.CARD_PILL_H
                                    : parseFloat(Math.max(0.20, estH).toFixed(2));
+
+                        if (stageNum) {
+                            pptSlide.addShape(pres.shapes.LINE, {
+                                x, y: finalY + 0.22,
+                                w: 2.38,
+                                h: 0,
+                                line: { color: isDarkThemeSlide ? "38383C" : "D4D4D8", width: 0.5 }
+                            });
+                            recordOccupiedBox({ x, y: finalY + 0.22, w: 2.38, h: 0.05, txt: "[STAGE DIVIDER]" });
+                        }
 
                         if (sIdx === 0) {
                             if (cleanTxtForCheck.includes("CONFIDENTIAL") || cleanTxtForCheck.includes("PROPRIETARY")) {

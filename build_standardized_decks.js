@@ -664,8 +664,9 @@ async function processDeck(refFileName, outFileName) {
             const rawTxtForCheck = [...spXml.matchAll(/<a:t>([^<]+)<\/a:t>/g)].map(m => m[1]).join(' ').replace(/\s+/g, ' ').trim();
             const cleanTxtForCheck = decodeXmlEntities(rawTxtForCheck);
 
-            // FIX: Cover slide — skip header-bar text shapes (BOMBAYDC / bombaydc.com already in background image)
+            // FIX: Cover slide — skip header-bar text shapes AND floating bombaydc.com URL anywhere on cover
             if (sIdx === 0 && spXml.includes('<a:t>') && origY < 0.65) return;
+            if (sIdx === 0 && (cleanTxtForCheck === 'bombaydc.com' || cleanTxtForCheck.toLowerCase() === 'bombaydc.com' || cleanTxtForCheck === 'BOMBAYDC' || cleanTxtForCheck.toLowerCase().includes('www.bombaydc'))) return;
 
             // FIX: Skip CATEGORY / DESCRIPTION table-header labels everywhere (layout engine handles spacing; we don't render them)
             if (!isClosingSlide && (cleanTxtForCheck === "CATEGORY" || cleanTxtForCheck === "DESCRIPTION")) return;

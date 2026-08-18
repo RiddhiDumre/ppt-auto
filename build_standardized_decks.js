@@ -143,11 +143,11 @@ function calculateTextShapeHeight(spXml, w, customFontSize = null) {
     pMatches.forEach(p => {
         const pXml = p[0];
         const szMatch = pXml.match(/sz="(\d+)"/);
-        let fontSize = customFontSize ? customFontSize : (szMatch ? parseFloat((parseInt(szMatch[1]) / 100).toFixed(1)) : 8.55);
+        let fontSize = customFontSize ? customFontSize : (szMatch ? parseFloat((parseInt(szMatch[1]) / 100).toFixed(1)) : 10.0);
         
         if (fontSize >= 40) fontSize = 48.0;
-        else if (pCount >= 4 && fontSize <= 11) fontSize = 8.0;
-        else if (fontSize >= 9.0 && fontSize <= 11.0) fontSize = 9.0;
+        else if (fontSize >= 16) fontSize = 18.0;
+        else fontSize = 10.0;
         
         const isBullet = pXml.includes('<a:buChar') || pXml.includes('<a:buAutoNum');
         const rawTxt = [...pXml.matchAll(/<a:t>([^<]+)<\/a:t>/g)].map(m => m[1]).join('');
@@ -965,7 +965,7 @@ async function processDeck(refFileName, outFileName) {
                                     color = "034E48";
                                 }
                             } else {
-                                fontSize = (pMatches.length >= 4) ? 8.5 : 9.0;
+                                fontSize = 10.0; // Unified standard body text font size (10pt)
                                 if (isDarkContext) {
                                     color = isDarkCardBg ? "E8E8EC" : "A0A0A6";
                                 } else {

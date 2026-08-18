@@ -977,7 +977,7 @@ async function processDeck(refFileName, outFileName) {
                             isBold = false;
                             color = isDarkContext ? "ECE9E4" : "034E48";
                         } else if (isTimelineBadge) {
-                            fontSize = 10.0;
+                            fontSize = 8.0;
                             isBold = true;
                             color = isDarkContext ? "4DB89A" : "034E48";
                         } else if (sIdx === 0 && fontSize >= 24) {
@@ -988,8 +988,7 @@ async function processDeck(refFileName, outFileName) {
                                 fontSize = 18.8;
                                 color = isDarkContext ? "FFFFFF" : "1A1A1A";
                             } else if (fontSize >= 10.0 || isColumnCategoryTitle || isBottomSectionHeader || (cleanTxt === cleanTxt.toUpperCase() && cleanTxt.length < 50 && !isBullet && !cleanTxt.includes('.')) || cleanTxt.endsWith(':')) {
-                                // FIX: Card-box header text reduced from 10.5 → 9.0 pt to prevent overflow in 0.50in pill boxes
-                                fontSize = isCardPillShape ? 9.0 : 10.5;
+                                fontSize = 8.0; // 8pt bold inside card boxes and category headers
                                 isBold = true;
                                 if (isDarkContext) {
                                     color = isDarkCardBg ? "4DB89A" : "FFFFFF";

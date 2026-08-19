@@ -1139,6 +1139,305 @@ async function processDeck(inputFilePath, outFileName) {
     console.log(`  ✔ Written to: ${outPath}`);
 }
 
+async function processPdf(pdfFilePath, outFileName) {
+    const refFileName = path.basename(pdfFilePath);
+    console.log(`\n==================================================`);
+    console.log(`Converting PDF with BombayDC Trained Engine: ${refFileName} -> ${outFileName}`);
+    console.log(`==================================================`);
+
+    let pdfParse;
+    try {
+        pdfParse = loadModule('pdf-parse');
+    } catch(e) {
+        console.error('  [!] pdf-parse module not found. Run npm install.');
+        return;
+    }
+
+    const pages = [];
+    function render_page(pageData) {
+        return pageData.getTextContent().then(function(textContent) {
+            let lastY, text = '';
+            for (let item of textContent.items) {
+                if (lastY == item.transform[5] || !lastY){
+                    text += ' ' + item.str;
+                } else {
+                    text += '\n' + item.str;
+                }
+                lastY = item.transform[5];
+            }
+            pages.push(text);
+            return text;
+        });
+    }
+
+    const buffer = fs.readFileSync(pdfFilePath);
+    await pdfParse(buffer, { pagerender: render_page });
+
+    if (pages.length === 0) {
+        console.warn('  [!] No pages extracted from PDF.');
+        return;
+    }
+
+    const pres = new pptxgen();
+    pres.layout = 'LAYOUT_16x9';
+    pres.title = refFileName.replace(/\.[^/.]+$/, '');
+
+    for (let pIdx = 0; pIdx < pages.length; pIdx++) {
+        const pageText = pages[pIdx];
+        const rawLines = pageText.split('\n').map(l => l.trim()).filter(Boolean);
+        const lines = rawLines.filter(l => l !== 'BOMBAYDC' && l !== 'bombaydc.com');
+
+        const sNum = pIdx + 1;
+        const isCover = (pIdx === 0);
+        const isDark = (pIdx % 3 === 0);
+        const slide = pres.addSlide();
+
+        if (isCover) {
+            let coverImgPath = coverBgMap[refFileName];
+            if (!coverImgPath || !fs.existsSync(coverImgPath)) {
+                const bgFiles = fs.existsSync(BG_DIR) ? fs.readdirSync(BG_DIR).filter(f => /\.(jpg|jpeg|png)$/i.test(f)) : [];
+                if (bgFiles.length > 0) {
+                    coverImgPath = path.join(BG_DIR, bgFiles[0]);
+                }
+            }
+            if (coverImgPath && fs.existsSync(coverImgPath)) {
+                slide.background = { path: coverImgPath };
+            } else {
+                slide.background = { color: '0A0A0A' };
+            }
+
+            slide.addShape(pres.shapes.RECTANGLE, { x: 0, y: 0, w: 10.0, h: 5.625, fill: { color: '000000', transparency: 40 }, line: { width: 0 } });
+            slide.addText('BOMBAYDC', { x: 0.20, y: 0.14, w: 3.0, h: 0.30, fontSize: 10, bold: true, color: 'FFFFFF', fontFace: 'Inter Bold', charSpacing: 1.5 });
+            slide.addText('bombaydc.com', { x: 7.60, y: 0.14, w: 2.20, h: 0.30, fontSize: 8, color: 'AAAAAA', fontFace: 'Inter', align: 'right' });
+            slide.addShape(pres.shapes.LINE, { x: 0.16, y: 0.50, w: 9.68, h: 0, line: { color: '555558', width: 0.5 } });
+
+            const title = lines.find(l => l.length > 3) || refFileName.replace(/\.[^/.]+$/, '').toUpperCase();
+            const subtitleLines = lines.filter(l => l !== title);
+            const subtitle = subtitleLines.slice(0, 3).join(' ');
+
+            slide.addText(title.toUpperCase(), { x: 1.00, y: 1.80, w: 8.00, h: 1.40, fontSize: 32, bold: false, color: 'FFFFFF', fontFace: 'Inter Medium', valign: 'middle' });
+            if (subtitle) {
+                slide.addText(subtitle, { x: 1.00, y: 3.40, w: 7.50, h: 1.00, fontSize: 10, color: 'D0D0D4', fontFace: 'Inter', valign: 'top' });
+            }
+            console.log(`  Slide ${sNum}/${pages.length + 1} processed (Cover Slide).`);
+            continue;
+        }
+
+        const bgColor = isDark ? '121212' : 'ECE9E4';
+        const titleColor = isDark ? 'FFFFFF' : '1A1A1A';
+        const bodyColor = isDark ? 'FFFFFF' : '2C2C2E';
+        const subColor = isDark ? 'A0A0A4' : '5A5A5E';
+        const lineColor = isDark ? '444448' : 'C0C0C4';
+
+        slide.background = { color: bgColor };
+
+        slide.addText('BOMBAYDC', { x: 0.20, y: 0.14, w: 3.0, h: 0.30, fontSize: 10, bold: true, color: isDark ? 'FFFFFF' : '1A1A1A', fontFace: 'Inter Bold', charSpacing: 1.5 });
+        slide.addText('bombaydc.com', { x: 7.60, y: 0.14, w: 2.20, h: 0.30, fontSize: 8, color: isDark ? '888888' : '888888', fontFace: 'Inter', align: 'right' });
+        slide.addShape(pres.shapes.LINE, { x: 0.16, y: 0.50, w: 9.68, h: 0, line: { color: isDark ? '333336' : 'CCCCCC', width: 0.5 } });
+
+        slide.addText(`${sNum}`, { x: 0.16, y: 0.57, w: 1.68, h: 0.33, fontSize: 18, bold: false, color: isDark ? '5A5A5E' : '9A9A9E', fontFace: 'Inter Medium', valign: 'top' });
+
+        let title = lines[0] || 'SLIDE TITLE';
+        let subline = '';
+        let bodyStartIndex = 1;
+
+        if (lines[1] && (lines[1].endsWith('.') || lines[1].length > 25)) {
+            subline = lines[1];
+            bodyStartIndex = 2;
+        }
+
+        const isTitleLong = title.length > 38;
+        slide.addText([
+            { text: title.toUpperCase(), options: { color: titleColor, fontSize: 18, bold: false, fontFace: 'Inter Medium', breakLine: isTitleLong || !!subline, charSpacing: 0.3 } },
+            ...(!isTitleLong && subline ? [{ text: subline, options: { color: subColor, fontSize: 8, bold: false, fontFace: 'Inter', paraSpaceBefore: 2 } }] : [])
+        ], { x: 1.99, y: 0.57, w: 7.85, h: 0.76, valign: 'top', margin: [0, 0, 0, 0] });
+
+        slide.addShape(pres.shapes.LINE, { x: 0.16, y: 1.35, w: 9.68, h: 0, line: { color: lineColor, width: 0.5 } });
+
+        const contentY = 1.60 + (isTitleLong && subline ? 0.30 : 0);
+        if (isTitleLong && subline) {
+            slide.addText(subline, { x: 1.99, y: 1.60, w: 7.85, h: 0.26, fontSize: 8, color: subColor, fontFace: 'Inter', valign: 'top', margin: [0, 0, 0, 0] });
+        }
+
+        const contentLines = lines.slice(bodyStartIndex);
+        const runs = [];
+        contentLines.forEach(cl => {
+            const isBullet = cl.startsWith('•') || cl.startsWith('-') || cl.startsWith('*');
+            const cleanText = cl.replace(/^[•\-\*]\s*/, '').trim();
+            if (cleanText.length > 0) {
+                runs.push({
+                    text: isBullet ? `• ${cleanText}` : cleanText,
+                    options: {
+                        color: bodyColor,
+                        fontSize: 8.0,
+                        bold: false,
+                        fontFace: 'Inter',
+                        breakLine: true,
+                        paraSpaceAfter: isBullet ? 2.5 : 4.0
+                    }
+                });
+            }
+        });
+
+        if (runs.length > 0) {
+            slide.addText(runs, { x: 1.99, y: contentY, w: 7.85, h: 5.08 - contentY, valign: 'top', margin: [0, 0, 0, 0] });
+        }
+
+        console.log(`  Slide ${sNum}/${pages.length + 1} processed.`);
+    }
+
+    // Add Master Closing Slide
+    const closingSlide = pres.addSlide();
+    closingSlide.background = { color: '034E48' };
+    const closingMediaDir = path.join(ASSETS_DIR, 'closing_media');
+    const hdrImg = path.join(closingMediaDir, 'image-10-1.png');
+    if (fs.existsSync(hdrImg)) {
+        closingSlide.addImage({ path: hdrImg, x: 0.16, y: 0.0, w: 9.69, h: 0.57 });
+    } else {
+        closingSlide.addText('BOMBAYDC', { x: 0.16, y: 0.28, w: 2.0, h: 0.3, fontSize: 11.5, fontFace: 'Inter Medium', color: 'ECE9E4', align: 'left' });
+        closingSlide.addText('bombaydc.com', { x: 7.84, y: 0.28, w: 2.0, h: 0.3, fontSize: 11.5, fontFace: 'Inter Medium', color: 'ECE9E4', align: 'right' });
+    }
+    closingSlide.addText("LET'S BUILD", { x: 1.99, y: 0.65, w: 7.85, h: 0.55, fontSize: 36.0, fontFace: 'Inter Medium', color: 'ECE9E4', valign: 'top', margin: 0 });
+    closingSlide.addText("WHAT'S NEXT.", { x: 1.99, y: 1.15, w: 7.85, h: 0.55, fontSize: 36.0, fontFace: 'Inter Medium', color: 'ECE9E4', valign: 'top', margin: 0 });
+    closingSlide.addText('Explore our work, sectors, and point of view at www.bombaydc.com', { x: 1.99, y: 1.70, w: 7.85, h: 0.35, fontSize: 9.0, fontFace: 'Inter', color: 'B4B4B4', valign: 'top', margin: 0 });
+    closingSlide.addShape(pres.shapes.LINE, { x: 1.99, y: 2.15, w: 7.85, h: 0, line: { color: '3E8D86', width: 0.5 } });
+    closingSlide.addShape(pres.shapes.RECTANGLE, { x: 1.99, y: 2.50, w: 3.8, h: 1.65, fill: { color: '000000' }, line: { width: 0 } });
+    const profileImg = path.join(closingMediaDir, 'image-10-2.png');
+    if (fs.existsSync(profileImg)) {
+        closingSlide.addImage({ path: profileImg, x: 2.24, y: 2.75, w: 1.15, h: 1.15, rounding: true });
+    }
+    closingSlide.addText('Siddesh Pednekar', { x: 3.55, y: 2.75, w: 2.1, h: 0.3, fontSize: 11.0, fontFace: 'Inter Medium', color: 'FFFFFF', valign: 'top', margin: 0 });
+    closingSlide.addText('Partner & COO', { x: 3.55, y: 3.10, w: 2.1, h: 0.2, fontSize: 9.0, fontFace: 'Inter', color: 'B4B4B4', valign: 'top', margin: 0 });
+    closingSlide.addText('sid@bombaydc.com', { x: 3.55, y: 3.33, w: 2.1, h: 0.2, fontSize: 9.0, fontFace: 'Inter', color: 'B4B4B4', valign: 'top', margin: 0 });
+    closingSlide.addText('9819981354', { x: 3.55, y: 3.55, w: 2.1, h: 0.2, fontSize: 9.0, fontFace: 'Inter', color: 'B4B4B4', valign: 'top', margin: 0 });
+    closingSlide.addText('CONFIDENTIAL AND PROPRIETARY | © BombayDC. This material is intended solely for your internal use and any use of this material without specific permission of BombayDC is strictly prohibited. All rights reserved.', {
+        x: 1.99, y: 4.85, w: 7.5, h: 0.45, fontSize: 9.0, fontFace: 'Inter', color: 'B4B4B4', lineSpacingMultiple: 1.2, margin: 0
+    });
+
+    const outPath = path.join(OUTPUT_DIR, outFileName);
+    await pres.writeFile({ fileName: outPath });
+    console.log(`  ✔ Written to: ${outPath}`);
+}
+
+async function processDocx(docxFilePath, outFileName) {
+    const refFileName = path.basename(docxFilePath);
+    console.log(`\n==================================================`);
+    console.log(`Converting DOCX with BombayDC Trained Engine: ${refFileName} -> ${outFileName}`);
+    console.log(`==================================================`);
+
+    let mammoth;
+    try {
+        mammoth = loadModule('mammoth');
+    } catch(e) {
+        console.error('  [!] mammoth module not found. Run npm install.');
+        return;
+    }
+
+    const result = await mammoth.extractRawText({ path: docxFilePath });
+    const lines = result.value.split('\n').map(l => l.trim()).filter(Boolean);
+
+    const slides = [];
+    let curSlide = null;
+
+    lines.forEach(l => {
+        const isHeading = (l === l.toUpperCase() && l.length <= 60 && l.length >= 3) || l.startsWith('# ');
+        if (isHeading) {
+            if (curSlide) slides.push(curSlide);
+            curSlide = { title: l.replace(/^#+\s*/, '').toUpperCase(), subline: '', content: [] };
+        } else if (curSlide) {
+            if (!curSlide.subline && curSlide.content.length === 0 && (l.endsWith('.') || l.length > 25)) {
+                curSlide.subline = l;
+            } else {
+                curSlide.content.push(l);
+            }
+        } else {
+            curSlide = { title: refFileName.replace(/\.[^/.]+$/, '').toUpperCase(), subline: l, content: [] };
+        }
+    });
+    if (curSlide) slides.push(curSlide);
+
+    const pres = new pptxgen();
+    pres.layout = 'LAYOUT_16x9';
+    pres.title = refFileName.replace(/\.[^/.]+$/, '');
+
+    for (let sIdx = 0; sIdx < slides.length; sIdx++) {
+        const sData = slides[sIdx];
+        const sNum = sIdx + 1;
+        const isCover = (sIdx === 0);
+        const isDark = (sIdx % 3 === 0);
+        const slide = pres.addSlide();
+
+        if (isCover) {
+            const bgFiles = fs.existsSync(BG_DIR) ? fs.readdirSync(BG_DIR).filter(f => /\.(jpg|jpeg|png)$/i.test(f)) : [];
+            const coverImg = bgFiles.length > 0 ? path.join(BG_DIR, bgFiles[0]) : null;
+            if (coverImg && fs.existsSync(coverImg)) {
+                slide.background = { path: coverImg };
+            } else {
+                slide.background = { color: '0A0A0A' };
+            }
+
+            slide.addShape(pres.shapes.RECTANGLE, { x: 0, y: 0, w: 10.0, h: 5.625, fill: { color: '000000', transparency: 40 }, line: { width: 0 } });
+            slide.addText('BOMBAYDC', { x: 0.20, y: 0.14, w: 3.0, h: 0.30, fontSize: 10, bold: true, color: 'FFFFFF', fontFace: 'Inter Bold', charSpacing: 1.5 });
+            slide.addText('bombaydc.com', { x: 7.60, y: 0.14, w: 2.20, h: 0.30, fontSize: 8, color: 'AAAAAA', fontFace: 'Inter', align: 'right' });
+            slide.addShape(pres.shapes.LINE, { x: 0.16, y: 0.50, w: 9.68, h: 0, line: { color: '555558', width: 0.5 } });
+
+            slide.addText(sData.title, { x: 1.00, y: 1.80, w: 8.00, h: 1.40, fontSize: 32, bold: false, color: 'FFFFFF', fontFace: 'Inter Medium', valign: 'middle' });
+            if (sData.subline) {
+                slide.addText(sData.subline, { x: 1.00, y: 3.40, w: 7.50, h: 1.00, fontSize: 10, color: 'D0D0D4', fontFace: 'Inter', valign: 'top' });
+            }
+            continue;
+        }
+
+        const bgColor = isDark ? '121212' : 'ECE9E4';
+        const titleColor = isDark ? 'FFFFFF' : '1A1A1A';
+        const bodyColor = isDark ? 'FFFFFF' : '2C2C2E';
+        const subColor = isDark ? 'A0A0A4' : '5A5A5E';
+        const lineColor = isDark ? '444448' : 'C0C0C4';
+
+        slide.background = { color: bgColor };
+
+        slide.addText('BOMBAYDC', { x: 0.20, y: 0.14, w: 3.0, h: 0.30, fontSize: 10, bold: true, color: isDark ? 'FFFFFF' : '1A1A1A', fontFace: 'Inter Bold', charSpacing: 1.5 });
+        slide.addText('bombaydc.com', { x: 7.60, y: 0.14, w: 2.20, h: 0.30, fontSize: 8, color: isDark ? '888888' : '888888', fontFace: 'Inter', align: 'right' });
+        slide.addShape(pres.shapes.LINE, { x: 0.16, y: 0.50, w: 9.68, h: 0, line: { color: isDark ? '333336' : 'CCCCCC', width: 0.5 } });
+
+        slide.addText(`${sNum}`, { x: 0.16, y: 0.57, w: 1.68, h: 0.33, fontSize: 18, bold: false, color: isDark ? '5A5A5E' : '9A9A9E', fontFace: 'Inter Medium', valign: 'top' });
+
+        const isTitleLong = sData.title.length > 38;
+        slide.addText([
+            { text: sData.title.toUpperCase(), options: { color: titleColor, fontSize: 18, bold: false, fontFace: 'Inter Medium', breakLine: isTitleLong || !!sData.subline, charSpacing: 0.3 } },
+            ...(!isTitleLong && sData.subline ? [{ text: sData.subline, options: { color: subColor, fontSize: 8, bold: false, fontFace: 'Inter', paraSpaceBefore: 2 } }] : [])
+        ], { x: 1.99, y: 0.57, w: 7.85, h: 0.76, valign: 'top', margin: [0, 0, 0, 0] });
+
+        slide.addShape(pres.shapes.LINE, { x: 0.16, y: 1.35, w: 9.68, h: 0, line: { color: lineColor, width: 0.5 } });
+
+        const contentY = 1.60 + (isTitleLong && sData.subline ? 0.30 : 0);
+        if (isTitleLong && sData.subline) {
+            slide.addText(sData.subline, { x: 1.99, y: 1.60, w: 7.85, h: 0.26, fontSize: 8, color: subColor, fontFace: 'Inter', valign: 'top', margin: [0, 0, 0, 0] });
+        }
+
+        const runs = [];
+        sData.content.forEach(cl => {
+            const isBullet = cl.startsWith('•') || cl.startsWith('-') || cl.startsWith('*');
+            const cleanText = cl.replace(/^[•\-\*]\s*/, '').trim();
+            if (cleanText.length > 0) {
+                runs.push({
+                    text: isBullet ? `• ${cleanText}` : cleanText,
+                    options: { color: bodyColor, fontSize: 8.0, bold: false, fontFace: 'Inter', breakLine: true, paraSpaceAfter: isBullet ? 2.5 : 4.0 }
+                });
+            }
+        });
+
+        if (runs.length > 0) {
+            slide.addText(runs, { x: 1.99, y: contentY, w: 7.85, h: 5.08 - contentY, valign: 'top', margin: [0, 0, 0, 0] });
+        }
+        console.log(`  Slide ${sNum}/${slides.length + 1} processed.`);
+    }
+
+    const outPath = path.join(OUTPUT_DIR, outFileName);
+    await pres.writeFile({ fileName: outPath });
+    console.log(`  ✔ Written to: ${outPath}`);
+}
+
 async function main() {
     console.log('\n==================================================');
     console.log('  BombayDC Standardized Presentation Converter (Trained Engine)');
@@ -1146,17 +1445,17 @@ async function main() {
 
     if (!fs.existsSync(INPUT_DIR)) {
         fs.mkdirSync(INPUT_DIR, { recursive: true });
-        console.log(`\n  Created input/ folder. Place any .pptx files there and run again.\n`);
+        console.log(`\n  Created input/ folder. Place any .pptx, .docx, or .pdf files there and run again.\n`);
         return;
     }
 
     const inputFiles = fs.readdirSync(INPUT_DIR)
-        .filter(f => f.toLowerCase().endsWith('.pptx'))
+        .filter(f => /\.(pptx|docx|pdf)$/i.test(f))
         .map(f => path.join(INPUT_DIR, f));
 
     if (!inputFiles.length) {
-        console.log(`\n  [!] No .pptx files found in input/ folder.`);
-        console.log(`  Drop your presentation files into: ${INPUT_DIR}\n`);
+        console.log(`\n  [!] No .pptx, .docx, or .pdf files found in input/ folder.`);
+        console.log(`  Drop your presentation or document files into: ${INPUT_DIR}\n`);
         return;
     }
 
@@ -1165,12 +1464,20 @@ async function main() {
     console.log('');
 
     for (const inputFilePath of inputFiles) {
-        const fileName = path.basename(inputFilePath);
-        const outFileName = fileName.replace(/\.pptx$/i, '') + '_BDC_Styled.pptx';
-        await processDeck(inputFilePath, outFileName);
+        const ext = path.extname(inputFilePath).toLowerCase();
+        const baseName = path.basename(inputFilePath, ext);
+        const outFileName = `${baseName}_BDC_Styled.pptx`;
+
+        if (ext === '.pptx') {
+            await processDeck(inputFilePath, outFileName);
+        } else if (ext === '.pdf') {
+            await processPdf(inputFilePath, outFileName);
+        } else if (ext === '.docx') {
+            await processDocx(inputFilePath, outFileName);
+        }
     }
 
-    console.log(`\n🎉 All presentations successfully converted with full BombayDC trained engine!`);
+    console.log(`\n🎉 All files successfully converted with BombayDC trained engine!`);
     console.log(`   Output folder: ${OUTPUT_DIR}\n`);
 }
 

@@ -1,693 +1,1177 @@
-/**
- * BombayDC Style Converter — convert.js
- *
- * Drop any PPTX, DOCX, or PDF into ../input/
- * Run: node convert.js
- * Results appear in: ../output/
- */
-
-'use strict';
-
-const fs   = require('fs');
+const fs = require('fs');
 const path = require('path');
 
-const ENGINE_DIR  = __dirname;
-const ROOT        = path.join(ENGINE_DIR, '..');
-const INPUT_DIR   = path.join(ROOT, 'input');
-const OUTPUT_DIR  = path.join(ROOT, 'output');
-const ASSETS_DIR  = path.join(ROOT, 'assets');
-const BG_DIR      = path.join(ASSETS_DIR, 'cover_backgrounds');
-const CLOSING_DIR = path.join(ASSETS_DIR, 'closing_media');
-const CLOSING_REF = path.join(ASSETS_DIR, 'closing_slide.pptx');
+const ENGINE_DIR = __dirname;
+const PROJECT_ROOT = path.join(ENGINE_DIR, '..');
+const INPUT_DIR = path.join(PROJECT_ROOT, 'input');
+const OUTPUT_DIR = path.join(PROJECT_ROOT, 'output');
+const ASSETS_DIR = path.join(PROJECT_ROOT, 'assets');
+const BG_DIR = path.join(ASSETS_DIR, 'cover_backgrounds');
+const MEDIA_EXTRACT_DIR = path.join(ASSETS_DIR, 'extracted_media');
 
-[OUTPUT_DIR].forEach(d => { if (!fs.existsSync(d)) fs.mkdirSync(d, { recursive: true }); });
+[INPUT_DIR, OUTPUT_DIR, MEDIA_EXTRACT_DIR, BG_DIR].forEach(dir => {
+    if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+});
 
-// ─── Load modules ────────────────────────────────────────────────────────────
-function req(name) {
-    try { return require(name); } catch(e) {
-        try { return require(path.join(ENGINE_DIR, 'node_modules', name)); } catch(e2) {
-            throw new Error(`Missing: '${name}'. Run: npm install (inside engine/)`);
+function loadModule(name) {
+    try { return require(name); } catch (e) {
+        try { return require(path.join(ENGINE_DIR, 'node_modules', name)); } catch (e2) {
+            throw new Error('Cannot find module ' + name + '. Run: npm install (inside engine/)');
         }
     }
 }
-const pptxgen = req('pptxgenjs');
-const AdmZip  = req('adm-zip');
+const pptxgen = loadModule('pptxgenjs');
+const AdmZip = loadModule('adm-zip');
 
-// ─── BDC Design Constants ─────────────────────────────────────────────────────
-const BDC = {
-    FONT_TITLE:     'Inter Medium',
-    FONT_BODY:      'Inter',
-    FONT_BOLD:      'Inter Bold',
-    ACCENT:         '034E48',
-    ACCENT_LIGHT:   '4DB89A',
-    DARK_BG:        '121212',
-    LIGHT_BG:       'ECE9E4',
-    WHITE:          'FFFFFF',
-    DARK_TEXT:      '1A1A1A',
-    BODY_DARK:      'B0B0B4',
-    BODY_LIGHT:     '2C2C2E',
-    SUB_LIGHT:      '5A5A5E',
-    DIVIDER_DARK:   '444448',
-    DIVIDER_LIGHT:  'C0C0C4',
-    HEADER_Y:       1.35,
-    CONTENT_Y:      1.60,
-    MAX_Y:          5.08,
-    SLIDE_W:        10.0,
-    SLIDE_H:        5.625,
+const BASE_DIR = ENGINE_DIR;
+
+const bgMappingsPath = fs.existsSync(path.join(ASSETS_DIR, 'deck_bg_mappings.json'))
+    ? path.join(ASSETS_DIR, 'deck_bg_mappings.json')
+    : path.join(ENGINE_DIR, 'deck_bg_mappings.json');
+const bgMappings = fs.existsSync(bgMappingsPath) ? JSON.parse(fs.readFileSync(bgMappingsPath, 'utf8')) : {};
+
+const coverBgMapPath = fs.existsSync(path.join(ASSETS_DIR, 'cover_bg_map.json'))
+    ? path.join(ASSETS_DIR, 'cover_bg_map.json')
+    : path.join(ENGINE_DIR, 'cover_bg_map.json');
+const coverBgMap = fs.existsSync(coverBgMapPath) ? JSON.parse(fs.readFileSync(coverBgMapPath, 'utf8')) : {};
+
+// LOAD BDC DECK (COPY) EXACT CLOSING SLIDE
+const refDeckPath = fs.existsSync(path.join(ASSETS_DIR, 'closing_slide.pptx'))
+    ? path.join(ASSETS_DIR, 'closing_slide.pptx')
+    : (fs.existsSync(path.join(ASSETS_DIR, 'BDC Deck (Copy).pptx'))
+        ? path.join(ASSETS_DIR, 'BDC Deck (Copy).pptx')
+        : path.join(ENGINE_DIR, 'BDC Deck (Copy).pptx'));
+const refDeckZip = fs.existsSync(refDeckPath) ? new AdmZip(refDeckPath) : null;
+const refSlideEntries = refDeckZip ? refDeckZip.getEntries().filter(e => e.entryName.startsWith('ppt/slides/slide') && e.entryName.endsWith('.xml')) : [];
+if (refSlideEntries.length > 0) {
+    refSlideEntries.sort((a, b) => parseInt(a.entryName.match(/slide(\d+)\.xml/)[1]) - parseInt(b.entryName.match(/slide(\d+)\.xml/)[1]));
+}
+const closingSlideEntry = refSlideEntries.length > 0 ? refSlideEntries[refSlideEntries.length - 1] : null;
+const closingSlideXml = (refDeckZip && closingSlideEntry) ? refDeckZip.readAsText(closingSlideEntry) : "";
+
+const closingSlideRelPath = closingSlideEntry ? `ppt/slides/_rels/${path.basename(closingSlideEntry.entryName)}.rels` : "";
+const closingSlideRelEntry = refDeckZip ? refDeckZip.getEntries().find(e => e.entryName === closingSlideRelPath) : null;
+
+const closingMediaDir = path.join(ASSETS_DIR, "closing_media");
+if (!fs.existsSync(closingMediaDir)) fs.mkdirSync(closingMediaDir, { recursive: true });
+if (refDeckZip) {
+    refDeckZip.getEntries().filter(e => e.entryName.startsWith('ppt/media/')).forEach(m => {
+        fs.writeFileSync(path.join(closingMediaDir, path.basename(m.entryName)), m.getData());
+    });
+}
+
+const closingRelMap = {};
+if (closingSlideRelEntry && refDeckZip) {
+    const relXml = refDeckZip.readAsText(closingSlideRelEntry);
+    const relMatches = [...relXml.matchAll(/<Relationship[\s\S]*?\/>/g)];
+    relMatches.forEach(rel => {
+        const idMatch = rel[0].match(/Id="([^"]+)"/);
+        const targetMatch = rel[0].match(/Target="\.\.\/media\/([^"]+)"/);
+        if (idMatch && targetMatch) {
+            closingRelMap[idMatch[1]] = path.join(closingMediaDir, targetMatch[1]);
+        }
+    });
+}
+
+function decodeXmlEntities(str) {
+    if (!str) return "";
+    return str
+        .replace(/&apos;/g, "'")
+        .replace(/&amp;/g, "&")
+        .replace(/&quot;/g, '"')
+        .replace(/&lt;/g, "<")
+        .replace(/&gt;/g, ">")
+        .trim();
+}
+
+// AUTO-DETECT slide background colour from source PPTX XML
+// Returns the hex colour string (e.g. "034E48") or null if not found
+function detectSlideBg(slideXml) {
+    const bgMatch = slideXml.match(/<p:bg>[\s\S]*?<\/p:bg>/);
+    if (!bgMatch) return null;
+    const solidClr = bgMatch[0].match(/a:srgbClr val="([^"]+)"/i);
+    if (solidClr) return solidClr[1].toUpperCase();
+    // Theme colour references
+    const schemeClr = bgMatch[0].match(/a:schemeClr val="([^"]+)"/i);
+    if (schemeClr) {
+        const s = schemeClr[1].toLowerCase();
+        if (s === 'dk1' || s === 'dk2') return '121212';
+        if (s === 'lt1' || s === 'lt2') return 'ECE9E4';
+    }
+    return null;
+}
+
+// ==========================================
+// 1. STANDARDIZED SPACING TOKENS (INCHES)
+// ==========================================
+const SPACING = {
+    XS: 0.05,       // Tight cluster (e.g. number + label, pill text offset)
+    SM: 0.08,       // Between category/header and immediate body/divider
+    MD: 0.12,       // Between list items/bullets within a block
+    LG: 0.20,       // Between sibling blocks / grid rows
+    XL: 0.30,       // Between major vertical sections
+    CONTENT_START_Y: 1.60, // Standard start Y for slide content
+    CONTENT_MAX_BOTTOM: 5.08, // Maximum Y bottom boundary
+    HEADER_DIVIDER_Y: 1.35, // Fixed header line divider
+    CARD_PILL_H: 0.50, // Standard card pill height
 };
 
-// ─── Dark slide detection (every 3rd content slide alternates dark) ───────────
-function isDark(slideIdx) {
-    if (slideIdx === 0) return true;
-    return (slideIdx % 3) === 0;
+// Returns true when hex colour luminance < 128 (perceptual threshold)
+function isColorDark(hex) {
+    if (!hex || hex.length < 6) return false;
+    const r = parseInt(hex.substring(0, 2), 16);
+    const g = parseInt(hex.substring(2, 4), 16);
+    const b = parseInt(hex.substring(4, 6), 16);
+    return (r * 299 + g * 587 + b * 114) / 1000 < 128;
 }
 
-// ─── Random cover background ─────────────────────────────────────────────────
-function randomCoverBg() {
-    if (!fs.existsSync(BG_DIR)) return null;
-    const files = fs.readdirSync(BG_DIR).filter(f => /\.(jpg|jpeg|png)$/i.test(f));
-    if (!files.length) return null;
-    return path.join(BG_DIR, files[Math.floor(Math.random() * files.length)]);
+// Round any font size to the nearest EVEN whole number
+function toEvenPt(n) {
+    return Math.round(n / 2) * 2;
 }
 
-// ─── XML helpers ─────────────────────────────────────────────────────────────
-function decodeXml(s) {
-    if (!s) return '';
-    return s.replace(/&apos;/g,"'").replace(/&amp;/g,'&').replace(/&quot;/g,'"')
-            .replace(/&lt;/g,'<').replace(/&gt;/g,'>').trim();
+// Word-wrap and line measurement for Inter font
+function measureParagraphHeight(text, widthInches, fontSizePt, isBullet, paraSpaceAfterPt = 2.0) {
+    if (!text || text.trim().length === 0) return 0;
+    const effectiveWidth = Math.max(0.4, isBullet ? widthInches - 0.16 : widthInches);
+    // Character width estimate for Inter font: ~0.52 * (fontSize / 72)
+    const avgCharWidth = (fontSizePt / 72) * 0.52;
+    const charsPerLine = Math.max(1, Math.floor(effectiveWidth / avgCharWidth));
+    
+    // Compute wrapped line count with word boundary wrapping
+    const words = text.trim().split(/\s+/);
+    let lineCount = 1;
+    let currentLineLen = 0;
+    words.forEach(word => {
+        if (currentLineLen + word.length + 1 > charsPerLine) {
+            lineCount++;
+            currentLineLen = word.length;
+        } else {
+            currentLineLen += word.length + 1;
+        }
+    });
+    
+    const lineHeight = (fontSizePt / 72) * 1.22;
+    const spaceAfter = paraSpaceAfterPt / 72;
+    return (lineCount * lineHeight) + spaceAfter;
 }
 
-// ─── Layout auto-detection ────────────────────────────────────────────────────
-function detectLayout(slide) {
-    const { items } = slide;
-    if (slide.isCover) return 'COVER';
-    if (slide.isClosing) return 'CLOSING';
+function calculateTextShapeHeight(spXml, w, customFontSize = null) {
+    const txBodyMatch = spXml.match(/<p:txBody>[\s\S]*?<\/p:txBody>/) || spXml.match(/<a:txBody>[\s\S]*?<\/a:txBody>/);
+    if (!txBodyMatch) return 0.20;
+    
+    const pMatches = [...txBodyMatch[0].matchAll(/<a:p>[\s\S]*?<\/a:p>/g)];
+    let totalH = 0.02;
+    const pCount = pMatches.length;
 
-    const cols = items.filter(i => i.type === 'column');
-    if (cols.length === 3) return 'THREE_COLUMN';
-    if (cols.length === 2) return 'TWO_COLUMN';
-
-    const cards = items.filter(i => i.type === 'card');
-    if (cards.length >= 4 && cards.length <= 6) return 'CARD_GRID';
-
-    const rows = items.filter(i => i.type === 'row');
-    if (rows.length >= 3) return 'TIMELINE_LIST';
-
-    const acronymItems = items.filter(i => i.type === 'body' && i.key && i.key.length <= 2);
-    if (acronymItems.length === 4) return 'ACRONYM_GRID';
-
-    return 'NARRATIVE';
-}
-
-// ─────────────────────────────────────────────────────────────────────────────
-// PPTX EXTRACTOR
-// ─────────────────────────────────────────────────────────────────────────────
-function extractPptx(filePath) {
-    const zip    = new AdmZip(filePath);
-    const entries = zip.getEntries();
-
-    const slideEntries = entries
-        .filter(e => /^ppt\/slides\/slide\d+\.xml$/.test(e.entryName))
-        .sort((a,b) => {
-            const na = parseInt(a.entryName.match(/(\d+)/)[1]);
-            const nb = parseInt(b.entryName.match(/(\d+)/)[1]);
-            return na - nb;
-        });
-
-    const slides = [];
-
-    slideEntries.forEach((entry, sIdx) => {
-        const xml  = zip.readAsText(entry);
-        const relPath = `ppt/slides/_rels/${path.basename(entry.entryName)}.rels`;
-        const relEntry = entries.find(e => e.entryName === relPath);
-        const relXml = relEntry ? zip.readAsText(relEntry) : '';
-
-        const mediaRelMap = {};
-        if (relXml) {
-            [...relXml.matchAll(/<Relationship[^>]+Id="([^"]+)"[^>]+Target="\.\.\/media\/([^"]+)"/g)]
-                .forEach(m => { mediaRelMap[m[1]] = m[2]; });
+    pMatches.forEach((p, pIdx) => {
+        const pXml = p[0];
+        const szMatch = pXml.match(/sz="(\d+)"/);
+        let fontSize = customFontSize ? customFontSize : (szMatch ? parseFloat((parseInt(szMatch[1]) / 100).toFixed(1)) : 8.0);
+        fontSize = toEvenPt(fontSize);
+        
+        if (fontSize >= 40) fontSize = 48.0;
+        else if (fontSize >= 16) fontSize = 18.0;
+        else fontSize = 8.0;
+        
+        const isBullet = pXml.includes('<a:buChar') || pXml.includes('<a:buAutoNum');
+        const rawTxt = [...pXml.matchAll(/<a:t>([^<]+)<\/a:t>/g)].map(m => m[1]).join('');
+        
+        if (rawTxt.trim().length === 0) return;
+        
+        if (fontSize >= 40) {
+            totalH += 0.52;
+            return;
         }
 
-        const shapeBlocks = [...xml.matchAll(/<p:sp>([\s\S]*?)<\/p:sp>/g)].map(m => m[1]);
-        const imgBlocks   = [...xml.matchAll(/<p:pic>([\s\S]*?)<\/p:pic>/g)].map(m => m[1]);
+        const spaceAfter = isBullet ? 2.0 : (pIdx === pCount - 1 ? 0 : 3.0);
+        totalH += measureParagraphHeight(rawTxt, w, fontSize, isBullet, spaceAfter);
+    });
+    
+    return Math.max(parseFloat(totalH.toFixed(2)), 0.20);
+}
 
-        let title = '';
-        let subtitle = '';
+function getTopLevelShapes(xml) {
+    const shapes = [];
+    const spTreeMatch = xml.match(/<p:spTree>([\s\S]*?)<\/p:spTree>/);
+    if (!spTreeMatch) return shapes;
+    
+    const content = spTreeMatch[1];
+    let pos = 0;
+    
+    while (pos < content.length) {
+        const nextSp = content.indexOf('<p:sp>', pos);
+        const nextPic = content.indexOf('<p:pic>', pos);
+        const nextCxn = content.indexOf('<p:cxnSp>', pos);
+        
+        const indices = [nextSp, nextPic, nextCxn].filter(i => i !== -1);
+        if (indices.length === 0) break;
+        
+        const start = Math.min(...indices);
+        let tag = '<p:sp>';
+        let closeTag = '</p:sp>';
+        if (start === nextPic) { tag = '<p:pic>'; closeTag = '</p:pic>'; }
+        if (start === nextCxn) { tag = '<p:cxnSp>'; closeTag = '</p:cxnSp>'; }
+        
+        const end = content.indexOf(closeTag, start);
+        if (end === -1) break;
+        
+        const shapeXml = content.substring(start, end + closeTag.length);
+        shapes.push({ tag, xml: shapeXml });
+        pos = end + closeTag.length;
+    }
+    return shapes;
+}
 
-        const shapesData = shapeBlocks.map(sh => {
-            const offM = sh.match(/<a:off x="(\d+)" y="(\d+)"/);
-            const extM = sh.match(/<a:ext cx="(\d+)" cy="(\d+)"/);
-            if (!offM || !extM) return null;
-            const x = parseFloat((parseInt(offM[1])/914400).toFixed(3));
-            const y = parseFloat((parseInt(offM[2])/914400).toFixed(3));
-            const w = parseFloat((parseInt(extM[1])/914400).toFixed(3));
-            const h = parseFloat((parseInt(extM[2])/914400).toFixed(3));
-            const texts = [...sh.matchAll(/<a:t>([^<]+)<\/a:t>/g)].map(m => decodeXml(m[1]));
-            const fullText = texts.join(' ').replace(/\s+/g,' ').trim();
-            const szM = sh.match(/<a:sz>(\d+)<\/a:sz>/);
-            const fontSize = szM ? parseInt(szM[1])/100 : 0;
-            const fillM = sh.match(/<a:solidFill>[\s\S]*?<a:srgbClr val="([^"]+)"/);
-            const fill  = fillM ? fillM[1].toUpperCase() : null;
-            const isBold = sh.includes('<a:b/>') || sh.includes('<a:b val="1"');
+async function processDeck(inputFilePath, outFileName) {
+    const refFileName = path.basename(inputFilePath);
+    console.log(`\n==================================================`);
+    console.log(`Converting with BombayDC Trained Engine: ${refFileName} -> ${outFileName}`);
+    console.log(`==================================================`);
 
-            return { x, y, w, h, fullText, fontSize, fill, isBold, texts };
-        }).filter(Boolean).filter(s => s.fullText.length > 0);
+    const refFilePath = fs.existsSync(inputFilePath) ? inputFilePath : path.join(INPUT_DIR, inputFilePath);
+    if (!fs.existsSync(refFilePath)) {
+        console.warn(`Source ref file not found at ${refFilePath}, skipping.`);
+        return;
+    }
 
-        const titleShape = shapesData
-            .filter(s => s.y < 1.30 && s.x > 1.5)
-            .sort((a,b) => b.fontSize - a.fontSize)[0];
-        if (titleShape) title = titleShape.fullText;
+    const zip = new AdmZip(refFilePath);
+    const zipEntries = zip.getEntries();
 
-        const subShape = shapesData.find(s => s.y >= 0.75 && s.y < 1.45 && s.x > 1.5 && s.fullText !== title);
-        if (subShape) subtitle = subShape.fullText;
+    const deckMediaDir = path.join(MEDIA_EXTRACT_DIR, refFileName.replace(/\.[^/.]+$/, ""));
+    if (!fs.existsSync(deckMediaDir)) fs.mkdirSync(deckMediaDir, { recursive: true });
 
-        const contentShapes = shapesData.filter(s => s.y >= 1.4 && s.fullText.length > 0);
+    const mediaEntries = zipEntries.filter(e => e.entryName.startsWith('ppt/media/'));
+    mediaEntries.forEach(m => {
+        fs.writeFileSync(path.join(deckMediaDir, path.basename(m.entryName)), m.getData());
+    });
 
-        const items = [];
+    const slideEntries = zipEntries.filter(e => e.entryName.startsWith('ppt/slides/slide') && e.entryName.endsWith('.xml'));
+    slideEntries.sort((a, b) => {
+        const numA = parseInt(a.entryName.match(/slide(\d+)\.xml/)[1]);
+        const numB = parseInt(b.entryName.match(/slide(\d+)\.xml/)[1]);
+        return numA - numB;
+    });
 
-        const byX = {};
-        contentShapes.forEach(s => {
-            const bucket = Math.round(s.x * 2) / 2;
-            if (!byX[bucket]) byX[bucket] = [];
-            byX[bucket].push(s);
-        });
-        const xBuckets = Object.keys(byX).map(Number).sort((a,b)=>a-b);
+    const pres = new pptxgen();
+    pres.layout = "LAYOUT_16x9";
+    pres.title = refFileName.replace(/\.[^/.]+$/, "");
 
-        if (xBuckets.length >= 2 && xBuckets.length <= 3) {
-            xBuckets.forEach(xk => {
-                const colShapes = byX[xk].sort((a,b)=>a.y-b.y);
-                const header = colShapes.find(s => s.isBold || s.fill || s.fontSize >= 9)?.fullText || '';
-                const bullets = colShapes.filter(s => s.fullText !== header).map(s => s.fullText);
-                items.push({ type: 'column', header, bullets });
-            });
+    const deckBgInfo = bgMappings[refFileName];
+
+    for (let sIdx = 0; sIdx < slideEntries.length; sIdx++) {
+        const sEntry = slideEntries[sIdx];
+        const sNum = sIdx + 1;
+        const isClosingSlide = (sIdx === slideEntries.length - 1);
+        const darkSlidesList = (deckBgInfo && deckBgInfo.dark_slides) ? deckBgInfo.dark_slides : [];
+        // Start with config-based flag; will be overridden by XML detection below
+        let isDarkThemeSlide = sIdx === 0 || isClosingSlide || darkSlidesList.includes(sNum);
+        
+        const xml = isClosingSlide ? closingSlideXml : zip.readAsText(sEntry);
+
+        // AUTO-DETECT background from source XML
+        let detectedBgColor = null;
+        if (!isClosingSlide && sIdx > 0) {
+            const detected = detectSlideBg(xml);
+            if (detected) {
+                detectedBgColor = detected;
+                isDarkThemeSlide = isColorDark(detected);
+            }
+        }
+
+        let relMap = {};
+        if (isClosingSlide) {
+            relMap = closingRelMap;
         } else {
-            contentShapes.forEach(s => {
-                const isCard = s.fill && ['034E48','4DB89A','1C1C1E','224B12','1A3632',
-                    '0A3B36','08322D','0D524A','004B44','024E48','034D47','333333'].includes(s.fill);
-                if (isCard) {
-                    items.push({ type: 'card', header: s.fullText, desc: '' });
-                } else {
-                    const prevCard = items.length && items[items.length-1].type === 'card' && !items[items.length-1].desc;
-                    if (prevCard) {
-                        items[items.length-1].desc = s.fullText;
-                    } else {
-                        items.push({ type: 'body', text: s.fullText });
+            const relPath = `ppt/slides/_rels/${path.basename(sEntry.entryName)}.rels`;
+            const relEntry = zipEntries.find(e => e.entryName === relPath);
+            if (relEntry) {
+                const relXml = zip.readAsText(relEntry);
+                const relMatches = [...relXml.matchAll(/<Relationship[\s\S]*?\/>/g)];
+                relMatches.forEach(rel => {
+                    const idMatch = rel[0].match(/Id="([^"]+)"/);
+                    const targetMatch = rel[0].match(/Target="\.\.\/media\/([^"]+)"/);
+                    if (idMatch && targetMatch) {
+                        relMap[idMatch[1]] = path.join(deckMediaDir, targetMatch[1]);
+                    }
+                });
+            }
+        }
+
+        const pptSlide = pres.addSlide();
+
+        if (isClosingSlide) {
+            pptSlide.background = { color: "034E48" };
+
+            const hdrImg = path.join(ASSETS_DIR, "closing_media", "image-10-1.png");
+            if (fs.existsSync(hdrImg)) {
+                pptSlide.addImage({ path: hdrImg, x: 0.16, y: 0.0, w: 9.69, h: 0.57 });
+            } else {
+                pptSlide.addText("BOMBAYDC", { x: 0.16, y: 0.28, w: 2.0, h: 0.3, fontSize: 11.5, fontFace: "Inter Medium", color: "ECE9E4", align: "left" });
+                pptSlide.addText("bombaydc.com", { x: 7.84, y: 0.28, w: 2.0, h: 0.3, fontSize: 11.5, fontFace: "Inter Medium", color: "ECE9E4", align: "right" });
+            }
+
+            pptSlide.addText("LET'S BUILD", { x: 1.99, y: 0.65, w: 7.85, h: 0.55, fontSize: 36.0, fontFace: "Inter Medium", color: "ECE9E4", valign: "top", margin: 0 });
+            pptSlide.addText("WHAT'S NEXT.", { x: 1.99, y: 1.15, w: 7.85, h: 0.55, fontSize: 36.0, fontFace: "Inter Medium", color: "ECE9E4", valign: "top", margin: 0 });
+            pptSlide.addText("Explore our work, sectors, and point of view at www.bombaydc.com", { x: 1.99, y: 1.70, w: 7.85, h: 0.35, fontSize: 9.0, fontFace: "Inter", color: "B4B4B4", valign: "top", margin: 0 });
+
+            pptSlide.addShape(pres.shapes.LINE, { x: 1.99, y: 2.15, w: 7.85, h: 0, line: { color: "3E8D86", width: 0.5 } });
+            pptSlide.addShape(pres.shapes.RECTANGLE, { x: 1.99, y: 2.50, w: 3.8, h: 1.65, fill: { color: "000000" }, line: { width: 0 } });
+
+            const profileImg = path.join(ASSETS_DIR, "closing_media", "image-10-2.png");
+            if (fs.existsSync(profileImg)) {
+                pptSlide.addImage({ path: profileImg, x: 2.24, y: 2.75, w: 1.15, h: 1.15, rounding: true });
+            }
+
+            pptSlide.addText("Siddesh Pednekar", { x: 3.55, y: 2.75, w: 2.1, h: 0.3, fontSize: 11.0, fontFace: "Inter Medium", color: "FFFFFF", valign: "top", margin: 0 });
+            pptSlide.addText("Partner & COO", { x: 3.55, y: 3.10, w: 2.1, h: 0.2, fontSize: 9.0, fontFace: "Inter", color: "B4B4B4", valign: "top", margin: 0 });
+            pptSlide.addText("sid@bombaydc.com", { x: 3.55, y: 3.33, w: 2.1, h: 0.2, fontSize: 9.0, fontFace: "Inter", color: "B4B4B4", valign: "top", margin: 0 });
+            pptSlide.addText("9819981354", { x: 3.55, y: 3.55, w: 2.1, h: 0.2, fontSize: 9.0, fontFace: "Inter", color: "B4B4B4", valign: "top", margin: 0 });
+
+            pptSlide.addText("CONFIDENTIAL AND PROPRIETARY | © BombayDC. This material is intended solely for your internal use and any use of this material without specific permission of BombayDC is strictly prohibited. All rights reserved.", {
+                x: 1.99, y: 4.85, w: 7.5, h: 0.45, fontSize: 9.0, fontFace: "Inter", color: "B4B4B4", lineSpacingMultiple: 1.2, margin: 0
+            });
+
+            console.log(`  Slide ${sNum}/${slideEntries.length} processed (Master Closing Slide).`);
+            continue;
+        } else if (sIdx === 0) {
+            let coverImgPath = coverBgMap[refFileName];
+            if (!coverImgPath || !fs.existsSync(coverImgPath)) {
+                const bgFiles = fs.existsSync(BG_DIR) ? fs.readdirSync(BG_DIR).filter(f => /\.(jpg|jpeg|png)$/i.test(f)) : [];
+                if (bgFiles.length > 0) {
+                    coverImgPath = path.join(BG_DIR, bgFiles[Math.floor(Math.random() * bgFiles.length)]);
+                }
+            }
+            if (coverImgPath && fs.existsSync(coverImgPath)) {
+                pptSlide.background = { path: coverImgPath };
+            } else {
+                pptSlide.background = { color: "0A0A0A" };
+            }
+        } else {
+            // Use detected source colour if available; otherwise fall back to normalised light/dark
+            const bgColor = detectedBgColor || (isDarkThemeSlide ? "121212" : "ECE9E4");
+            pptSlide.background = { color: bgColor };
+        }
+
+        const shapes = getTopLevelShapes(xml);
+
+        // PRE-PASS 2: Unified Header Processing (Title + Subline in ONE Single Container)
+        const FIXED_DIVIDER_Y = 1.35;
+        let headerTitleText = "";
+        let headerSublineText = "";
+        let hasHeaderTitle = false;
+
+        shapes.forEach(shapeObj => {
+            const offMatch = shapeObj.xml.match(/<a:off x="(\d+)" y="(\d+)"\/>/);
+            if (!offMatch) return;
+            const py = parseFloat((parseInt(offMatch[2]) / 914400).toFixed(3));
+            const px = parseFloat((parseInt(offMatch[1]) / 914400).toFixed(3));
+            const szMatch = shapeObj.xml.match(/sz="(\d+)"/);
+            const fontSize = szMatch ? parseFloat((parseInt(szMatch[1]) / 100).toFixed(1)) : 0;
+
+            if (py < 0.85 && px >= 1.8 && fontSize >= 16 && shapeObj.xml.includes('<a:t>')) {
+                const rawTxt = [...shapeObj.xml.matchAll(/<a:t>([^<]+)<\/a:t>/g)].map(m => m[1]).join(' ').replace(/\s+/g, ' ');
+                headerTitleText = decodeXmlEntities(rawTxt).trim().toUpperCase();
+                if (headerTitleText.length > 0) hasHeaderTitle = true;
+            }
+
+            if (py >= 0.75 && py <= 1.30 && px >= 1.8 && fontSize > 0 && fontSize < 14 && shapeObj.xml.includes('<a:t>')) {
+                const rawTxt = [...shapeObj.xml.matchAll(/<a:t>([^<]+)<\/a:t>/g)].map(m => m[1]).join(' ').replace(/\s+/g, ' ').trim();
+                if (rawTxt.length > 3 && !rawTxt.startsWith('1') && !rawTxt.startsWith('2') && !rawTxt.startsWith('3') && !rawTxt.startsWith('4') && !rawTxt.startsWith('5')) {
+                    headerSublineText = decodeXmlEntities(rawTxt);
+                }
+            }
+        });
+
+        const isTitle2Lines = headerTitleText.length > 38;
+
+        if (hasHeaderTitle && !isClosingSlide) {
+            const displaySublineAbove = !isTitle2Lines ? headerSublineText : "";
+
+            const headerRuns = [
+                {
+                    text: headerTitleText,
+                    options: {
+                        color: isDarkThemeSlide ? "FFFFFF" : "1A1A1A",
+                        fontSize: toEvenPt(18.8),
+                        bold: false,
+                        fontFace: "Inter Medium",
+                        breakLine: displaySublineAbove ? true : false,
+                        charSpacing: 0.3,
+                        paraSpaceAfter: displaySublineAbove ? 4 : 0
                     }
                 }
+            ];
+
+            if (displaySublineAbove) {
+                headerRuns.push({
+                    text: displaySublineAbove,
+                    options: {
+                        color: isDarkThemeSlide ? "B0B0B4" : "5A5A5E",
+                        fontSize: 8.0,
+                        bold: false,
+                        fontFace: "Inter",
+                        paraSpaceBefore: 2
+                    }
+                });
+            }
+
+            pptSlide.addText(headerRuns, {
+                x: 1.99,
+                y: 0.57,
+                w: 7.85,
+                h: 0.76,
+                valign: "top",
+                margin: [0, 0, 0, 0]
             });
         }
 
-        const footnoteShape = contentShapes.find(s => s.y > 4.0 && s.w > 5.0);
-        const footnote = footnoteShape ? footnoteShape.fullText : '';
+        let movedSublineShift = 0;
+        if (isTitle2Lines && headerSublineText && !isClosingSlide) {
+            movedSublineShift = 0.30;
+            pptSlide.addText([{
+                text: headerSublineText,
+                options: {
+                    color: isDarkThemeSlide ? "D0D0D4" : "4A4A4E",
+                    fontSize: 8.0,
+                    bold: false,
+                    fontFace: "Inter",
+                    paraSpaceAfter: 3
+                }
+            }], {
+                x: 1.99,
+                y: 1.60,
+                w: 7.85,
+                h: 0.26,
+                valign: "top",
+                margin: [0, 0, 0, 0]
+            });
+        }
 
-        const images = [];
-        imgBlocks.forEach(img => {
-            const rEmbedM = img.match(/r:embed="([^"]+)"/);
-            if (!rEmbedM || !mediaRelMap[rEmbedM[1]]) return;
-            const mediaFile = mediaRelMap[rEmbedM[1]];
-            const mediaEntry = entries.find(e => e.entryName === `ppt/media/${mediaFile}`);
-            if (!mediaEntry) return;
-            const tmpPath = path.join(OUTPUT_DIR, `_tmp_${path.basename(filePath,'pptx')}_${mediaFile}`);
-            fs.writeFileSync(tmpPath, mediaEntry.getData());
-            images.push(tmpPath);
+        let coverTitleBottomY = 0;
+
+        // PRE-PASS 1: Group and align Card Grids into uniform rows
+        const cardPills = [];
+        const allCardPills = [];
+        const cardRowMap = {};
+        const renderedCardBoxes = new Set();
+        const rowLayoutMap = {};
+        const rowLineYMap = {};
+
+        shapes.forEach(shapeObj => {
+            const offMatch = shapeObj.xml.match(/<a:off x="(\d+)" y="(\d+)"\/>/);
+            const extMatch = shapeObj.xml.match(/<a:ext cx="(\d+)" cy="(\d+)"\/>/);
+            if (!offMatch || !extMatch) return;
+            const px = parseFloat((parseInt(offMatch[1]) / 914400).toFixed(3));
+            const py = parseFloat((parseInt(offMatch[2]) / 914400).toFixed(3));
+            const pw = parseFloat((parseInt(extMatch[1]) / 914400).toFixed(3));
+            const ph = parseFloat((parseInt(extMatch[2]) / 914400).toFixed(3));
+            
+            const spPrMatch = shapeObj.xml.match(/<p:spPr>[\s\S]*?<\/p:spPr>/);
+            const fillMatch = spPrMatch ? spPrMatch[0].match(/<a:solidFill>[\s\S]*?<a:srgbClr val="([^"]+)"/) : null;
+            const fill = fillMatch ? fillMatch[1].toUpperCase() : null;
+            const isCardPill = fill && pw < 4.0 && ["034E48", "4DB89A", "1C1C1E", "224B12", "1A3632", "0A3B36", "08322D", "0D524A", "004B44", "024E48", "034D47", "333333", "222222", "1E1E1E", "2A2A2C", "3A3A3C"].includes(fill);
+            
+            if (isCardPill) {
+                cardPills.push({ x: px, y: py, w: pw, h: ph });
+                allCardPills.push({ x: px, y: py });
+            }
         });
 
-        slides.push({ index: sIdx, title, subtitle, items, footnote, images });
-    });
+        if (cardPills.length >= 2) {
+            const pillRows = [];
+            cardPills.sort((a, b) => a.y - b.y);
+            cardPills.forEach(p => {
+                let row = pillRows.find(r => Math.abs(r.y - p.y) < 0.45);
+                if (!row) {
+                    row = { y: p.y, pills: [] };
+                    pillRows.push(row);
+                }
+                row.pills.push(p);
+            });
 
-    return slides;
-}
+            const hasTopIntro = shapes.some(sh => {
+                const offM = sh.xml.match(/<a:off x="(\d+)" y="(\d+)"\/>/);
+                const extM = sh.xml.match(/<a:ext cx="(\d+)" cy="(\d+)"\/>/);
+                if (!offM || !extM || !sh.xml.includes('<a:t>')) return false;
+                const py = parseFloat((parseInt(offM[2]) / 914400).toFixed(3));
+                const pw = parseFloat((parseInt(extM[1]) / 914400).toFixed(3));
+                return (py >= 1.50 && py <= 1.95 && pw >= 5.0);
+            });
 
-// ─────────────────────────────────────────────────────────────────────────────
-// DOCX EXTRACTOR
-// ─────────────────────────────────────────────────────────────────────────────
-async function extractDocx(filePath) {
-    let mammoth;
-    try { mammoth = req('mammoth'); } catch(e) {
-        console.warn('  mammoth not found, skipping DOCX. Run: npm install');
-        return [];
-    }
+            const baseCardStartY = hasTopIntro ? (SPACING.CONTENT_START_Y + 0.45 + movedSublineShift) : (SPACING.CONTENT_START_Y + SPACING.XS + movedSublineShift);
+            const CARD_TEXT_OFFSET = SPACING.CARD_PILL_H + SPACING.SM;
 
-    const result = await mammoth.extractRawText({ path: filePath });
-    const text = result.value;
-    const lines = text.split('\n').map(l => l.trim()).filter(Boolean);
+            if (pillRows.length === 1) {
+                const r1Y = baseCardStartY;
+                pillRows[0].pills.forEach(p => {
+                    cardRowMap[`${p.x.toFixed(2)}_${p.y.toFixed(2)}`] = { cardX: p.x, cardY: r1Y, textY: r1Y + CARD_TEXT_OFFSET };
+                });
+            } else if (pillRows.length >= 2) {
+                const r1Y = baseCardStartY;
+                let maxR1TextH = 0.40;
+                shapes.forEach(sh => {
+                    const offM = sh.xml.match(/<a:off x="(\d+)" y="(\d+)"\/>/);
+                    const extM = sh.xml.match(/<a:ext cx="(\d+)" cy="(\d+)"\/>/);
+                    if (!offM || !extM || !sh.xml.includes('<a:t>')) return;
+                    const py = parseFloat((parseInt(offM[2]) / 914400).toFixed(3));
+                    const pw = parseFloat((parseInt(extM[1]) / 914400).toFixed(3));
+                    if (py > pillRows[0].y + 0.10 && py <= (pillRows[1] ? pillRows[1].y + 0.10 : 3.20) && pw < 4.0) {
+                        const estH = calculateTextShapeHeight(sh.xml, pw);
+                        if (estH > maxR1TextH) maxR1TextH = estH;
+                    }
+                });
 
-    const slides = [];
-    let current = null;
+                // Row 2 placed additively based on measured Row 1 text height + standard row gap
+                const r2Y = parseFloat(Math.min(3.45, Math.max(3.20, r1Y + SPACING.CARD_PILL_H + maxR1TextH + SPACING.LG)).toFixed(2));
+                pillRows[0].pills.forEach(p => {
+                    cardRowMap[`${p.x.toFixed(2)}_${p.y.toFixed(2)}`] = { cardX: p.x, cardY: r1Y, textY: r1Y + CARD_TEXT_OFFSET };
+                });
+                pillRows[1].pills.forEach(p => {
+                    cardRowMap[`${p.x.toFixed(2)}_${p.y.toFixed(2)}`] = { cardX: p.x, cardY: r2Y, textY: r2Y + CARD_TEXT_OFFSET };
+                });
 
-    lines.forEach(line => {
-        const isHeading = (line === line.toUpperCase() && line.length <= 60 && line.length >= 3)
-                       || line.startsWith('# ');
-        if (isHeading) {
-            if (current) slides.push(current);
-            current = {
-                title: line.replace(/^#+\s*/, '').toUpperCase(),
-                subtitle: '',
-                items: [],
-                footnote: '',
-                images: []
-            };
-        } else if (current) {
-            const isBullet = /^[•\-\*]\s/.test(line) || /^\d+\.\s/.test(line);
-            const cleanLine = line.replace(/^[•\-\*\d\.]\s+/, '').trim();
-            if (!current.subtitle && !isBullet && current.items.length === 0) {
-                current.subtitle = cleanLine;
-            } else {
-                const lastItem = current.items[current.items.length - 1];
-                if (lastItem && lastItem.type === 'body') {
-                    lastItem.bullets = lastItem.bullets || [];
-                    lastItem.bullets.push(cleanLine);
-                } else {
-                    current.items.push({ type: 'body', text: cleanLine, bullets: [] });
+                let maxR2TextH = 0.40;
+                shapes.forEach(sh => {
+                    const offM = sh.xml.match(/<a:off x="(\d+)" y="(\d+)"\/>/);
+                    const extM = sh.xml.match(/<a:ext cx="(\d+)" cy="(\d+)"\/>/);
+                    if (!offM || !extM || !sh.xml.includes('<a:t>')) return;
+                    const py = parseFloat((parseInt(offM[2]) / 914400).toFixed(3));
+                    const pw = parseFloat((parseInt(extM[1]) / 914400).toFixed(3));
+                    if (py > pillRows[1].y + 0.10 && pw < 4.0) {
+                        const estH = calculateTextShapeHeight(sh.xml, pw);
+                        if (estH > maxR2TextH) maxR2TextH = estH;
+                    }
+                });
+
+                // Footnote placed additively with SPACING.MD gap below tallest Row 2 content
+                const bottomNoteY = Math.min(SPACING.CONTENT_MAX_BOTTOM - 0.25, Math.max(4.00, r2Y + CARD_TEXT_OFFSET + maxR2TextH + SPACING.MD));
+                shapes.forEach(sh => {
+                    const offM = sh.xml.match(/<a:off x="(\d+)" y="(\d+)"\/>/);
+                    const extM = sh.xml.match(/<a:ext cx="(\d+)" cy="(\d+)"\/>/);
+                    if (!offM || !extM || !sh.xml.includes('<a:t>')) return;
+                    const py = parseFloat((parseInt(offM[2]) / 914400).toFixed(3));
+                    const pw = parseFloat((parseInt(extM[1]) / 914400).toFixed(3));
+                    if (py >= 3.20 && pw >= 5.0) {
+                        rowLayoutMap[py.toFixed(2)] = { finalY: parseFloat(bottomNoteY.toFixed(2)) };
+                    }
+                });
+            }
+        }
+
+        // PRE-PASS 3: Timeline & Row-List Layout Engine (Strictly for Timeline / Row-List layouts)
+
+        const hasCategoryHeader = shapes.some(s => {
+            if (!s.xml.includes('<a:t>')) return false;
+            const rawTxt = [...s.xml.matchAll(/<a:t>([^<]+)<\/a:t>/g)].map(m => m[1]).join(' ').trim();
+            return (rawTxt === "CATEGORY" || rawTxt === "DESCRIPTION");
+        });
+
+        const lineDividers = shapes.filter(s => (s.tag === '<p:cxnSp>' || s.xml.includes('prst="line"')) && !s.xml.includes('<a:t>'));
+        const distinctRowLines = new Set();
+        lineDividers.forEach(s => {
+            const extM = s.xml.match(/<a:ext cx="(\d+)" cy="(\d+)"\/>/);
+            const offM = s.xml.match(/<a:off x="(\d+)" y="(\d+)"\/>/);
+            if (extM && offM) {
+                const w = parseFloat((parseInt(extM[1]) / 914400).toFixed(3));
+                const y = parseFloat((parseInt(offM[2]) / 914400).toFixed(3));
+                if (w >= 4.0 && y > 1.40) {
+                    distinctRowLines.add(y.toFixed(1));
                 }
             }
-        } else {
-            if (!current) {
-                current = { title: path.basename(filePath, path.extname(filePath)).toUpperCase(), subtitle: line, items: [], footnote: '', images: [] };
+        });
+        const hasStackedRowDividers = distinctRowLines.size >= 2;
+
+        const isTimelineOrRowListSlide = shapes.some(s => {
+            if (!s.xml.includes('<a:t>')) return false;
+            const rawTxt = [...s.xml.matchAll(/<a:t>([^<]+)<\/a:t>/g)].map(m => m[1]).join(' ').trim();
+            return (rawTxt.endsWith("Days") || rawTxt.endsWith("Weeks") || rawTxt.endsWith("Months") || rawTxt.startsWith("Phase") || rawTxt === "CATEGORY" || rawTxt === "DESCRIPTION");
+        }) || hasStackedRowDividers;
+
+        if (!isClosingSlide && sIdx > 0 && isTimelineOrRowListSlide && cardPills.length < 2) {
+            const listShapes = shapes.filter(s => {
+                const offMatch = s.xml.match(/<a:off x="(\d+)" y="(\d+)"\/>/);
+                const extMatch = s.xml.match(/<a:ext cx="(\d+)" cy="(\d+)"\/>/);
+                if (!offMatch || !s.xml.includes('<a:t>')) return false;
+                const py = parseFloat((parseInt(offMatch[2]) / 914400).toFixed(3));
+                const px = parseFloat((parseInt(offMatch[1]) / 914400).toFixed(3));
+                const pw = extMatch ? parseFloat((parseInt(extMatch[1]) / 914400).toFixed(3)) : 3.0;
+                if (py < 1.55 || px < 1.0 || pw >= 5.0) return false;
+                const rawTxt = [...s.xml.matchAll(/<a:t>([^<]+)<\/a:t>/g)].map(m => m[1]).join(' ');
+                const clean = decodeXmlEntities(rawTxt).trim();
+                if (clean === "CATEGORY" || clean === "DESCRIPTION") return false;
+                const isExplicitBottom = py >= 3.8 && (clean.startsWith("New team structure:") || clean.startsWith("Illustrative use cases") || clean.startsWith("The result:") || clean.startsWith("What enterprises now expect:") || clean.startsWith("85% client repeat") || clean.startsWith("What the platform"));
+                if (isExplicitBottom) return false;
+                return clean.length > 0 && !clean.includes('CONFIDENTIAL') && !clean.includes('bombaydc.com');
+            });
+
+            const clusters = [];
+            listShapes.forEach(s => {
+                const offMatch = s.xml.match(/<a:off x="(\d+)" y="(\d+)"\/>/);
+                const py = parseFloat((parseInt(offMatch[2]) / 914400).toFixed(3));
+                const px = parseFloat((parseInt(offMatch[1]) / 914400).toFixed(3));
+                const extMatch = s.xml.match(/<a:ext cx="(\d+)" cy="(\d+)"\/>/);
+                const pw = extMatch ? parseFloat((parseInt(extMatch[1]) / 914400).toFixed(3)) : 3.0;
+
+                let c = clusters.find(cl => Math.abs(cl.origY - py) < 0.28);
+                if (!c) {
+                    c = { origY: py, shapes: [] };
+                    clusters.push(c);
+                }
+                c.shapes.push({ s, py, px, pw, xml: s.xml });
+            });
+
+            if (clusters.length >= 2) {
+                clusters.sort((a, b) => a.origY - b.origY);
+
+                const hasTopIntroText = shapes.some(sh => {
+                    const offM = sh.xml.match(/<a:off x="(\d+)" y="(\d+)"\/>/);
+                    const extM = sh.xml.match(/<a:ext cx="(\d+)" cy="(\d+)"\/>/);
+                    if (!offM || !extM || !sh.xml.includes('<a:t>')) return false;
+                    const py = parseFloat((parseInt(offM[2]) / 914400).toFixed(3));
+                    const pw = parseFloat((parseInt(extM[1]) / 914400).toFixed(3));
+                    return (py >= 1.50 && py <= 1.90 && pw >= 5.0);
+                });
+
+                const bottomShapes = shapes.filter(sh => {
+                    const offM = sh.xml.match(/<a:off x="(\d+)" y="(\d+)"\/>/);
+                    if (!offM || !sh.xml.includes('<a:t>')) return false;
+                    const py = parseFloat((parseInt(offM[2]) / 914400).toFixed(3));
+                    const rawTxt = [...sh.xml.matchAll(/<a:t>([^<]+)<\/a:t>/g)].map(m => m[1]).join(' ');
+                    const clean = decodeXmlEntities(rawTxt).trim();
+                    return py >= 3.8 && (clean.startsWith("New team structure:") || clean.startsWith("Illustrative use cases") || clean.startsWith("The result:") || clean.startsWith("What enterprises now expect:") || clean.startsWith("85% client repeat") || clean.startsWith("What the platform"));
+                });
+
+                const startY = (hasTopIntroText ? (SPACING.CONTENT_START_Y + 0.48) : (SPACING.CONTENT_START_Y + SPACING.SM)) + movedSublineShift;
+                const maxClusterEndY = (bottomShapes.length > 0) ? (3.75 + movedSublineShift) : (SPACING.CONTENT_MAX_BOTTOM - 0.30 + movedSublineShift);
+                const totalAvailH = maxClusterEndY - startY;
+                const gapBetweenRows = SPACING.XS;
+                const uniformRowH = parseFloat(((totalAvailH / clusters.length) - gapBetweenRows).toFixed(2));
+
+                let curY = startY;
+                clusters.forEach((c, idx) => {
+                    const rowContentY = curY;
+                    const rowDividerY = parseFloat((curY + uniformRowH).toFixed(2));
+
+                    c.shapes.forEach(sh => {
+                        rowLayoutMap[sh.py.toFixed(2)] = { finalY: rowContentY, lineY: rowDividerY, rowH: uniformRowH };
+                    });
+
+                    shapes.forEach(lineSh => {
+                        if (lineSh.tag === '<p:cxnSp>' || lineSh.xml.includes('prst="line"')) {
+                            const lOff = lineSh.xml.match(/<a:off x="(\d+)" y="(\d+)"\/>/);
+                            if (lOff) {
+                                const lY = parseFloat((parseInt(lOff[2]) / 914400).toFixed(3));
+                                if (lY > c.origY - 0.05 && lY <= c.origY + 0.90) {
+                                    rowLineYMap[lY.toFixed(2)] = rowDividerY;
+                                }
+                            }
+                        }
+                    });
+
+                    curY = parseFloat((rowDividerY + gapBetweenRows).toFixed(2));
+                });
+
+                bottomShapes.sort((a, b) => {
+                    const offA = a.xml.match(/<a:off x="(\d+)" y="(\d+)"\/>/);
+                    const offB = b.xml.match(/<a:off x="(\d+)" y="(\d+)"\/>/);
+                    return parseInt(offA[2]) - parseInt(offB[2]);
+                });
+
+                let bY = Math.min(SPACING.CONTENT_MAX_BOTTOM - 0.70, Math.max(3.90, curY + SPACING.SM));
+                bottomShapes.forEach(sh => {
+                    const offM = sh.xml.match(/<a:off x="(\d+)" y="(\d+)"\/>/);
+                    const py = parseFloat((parseInt(offM[2]) / 914400).toFixed(3));
+                    rowLayoutMap[py.toFixed(2)] = { finalY: bY };
+                    bY = parseFloat((bY + 0.35).toFixed(2));
+                });
             }
         }
-    });
-    if (current) slides.push(current);
 
-    return slides.map((s, i) => ({ index: i, ...s }));
-}
-
-// ─────────────────────────────────────────────────────────────────────────────
-// PDF EXTRACTOR
-// ─────────────────────────────────────────────────────────────────────────────
-async function extractPdf(filePath) {
-    let pdfParse;
-    try { pdfParse = req('pdf-parse'); } catch(e) {
-        console.warn('  pdf-parse not found, skipping PDF. Run: npm install');
-        return [];
-    }
-
-    const buffer = fs.readFileSync(filePath);
-    const data   = await pdfParse(buffer);
-
-    const pages = data.text.split(/\f|\n{3,}/).map(p => p.trim()).filter(p => p.length > 10);
-
-    return pages.map((pageText, i) => {
-        const lines = pageText.split('\n').map(l => l.trim()).filter(Boolean);
-        const title = lines[0] ? lines[0].toUpperCase().substring(0, 80) : `PAGE ${i+1}`;
-        const subtitle = lines[1] && lines[1] !== title ? lines[1] : '';
-        const bodyLines = lines.slice(subtitle ? 2 : 1);
-        const items = bodyLines.length
-            ? [{ type: 'body', text: bodyLines[0], bullets: bodyLines.slice(1) }]
-            : [];
-        return { index: i, title, subtitle, items, footnote: '', images: [] };
-    });
-}
-
-// ─────────────────────────────────────────────────────────────────────────────
-// CLOSING SLIDE — copied from reference deck
-// ─────────────────────────────────────────────────────────────────────────────
-function addClosingSlide(pres) {
-    if (!fs.existsSync(CLOSING_REF)) {
-        const s = pres.addSlide();
-        s.background = { color: BDC.ACCENT };
-        s.addText("LET'S BUILD\nWHAT'S NEXT", {
-            x: 1.5, y: 1.8, w: 7.0, h: 2.0,
-            fontSize: 36, bold: true, color: BDC.WHITE, fontFace: BDC.FONT_BOLD,
-            align: 'left', valign: 'middle'
+        // Sort shapes vertically by top Y position so text rendering flows downwards
+        shapes.sort((a, b) => {
+            const offA = a.xml.match(/<a:off x="(\d+)" y="(\d+)"\/>/);
+            const offB = b.xml.match(/<a:off x="(\d+)" y="(\d+)"\/>/);
+            const yA = offA ? parseInt(offA[2]) : 0;
+            const yB = offB ? parseInt(offB[2]) : 0;
+            return yA - yB;
         });
-        return;
-    }
 
-    const zip = new AdmZip(CLOSING_REF);
-    const slides = zip.getEntries().filter(e => /^ppt\/slides\/slide\d+\.xml$/.test(e.entryName))
-        .sort((a,b)=>parseInt(a.entryName.match(/(\d+)/)[1])-parseInt(b.entryName.match(/(\d+)/)[1]));
-    const lastSlide = slides[slides.length - 1];
-    if (!lastSlide) return;
+        // ZERO-OVERLAP BOUNDING BOX TRACKING
+        const occupiedBoxes = [];
 
-    const xml = zip.readAsText(lastSlide);
-    const pptSlide = pres.addSlide();
-    pptSlide.background = { color: BDC.ACCENT };
-
-    [...xml.matchAll(/<p:sp>([\s\S]*?)<\/p:sp>/g)].forEach(m => {
-        const sh = m[1];
-        const offM = sh.match(/<a:off x="(\d+)" y="(\d+)"/);
-        const extM = sh.match(/<a:ext cx="(\d+)" cy="(\d+)"/);
-        if (!offM || !extM) return;
-        const x = parseFloat((parseInt(offM[1])/914400).toFixed(3));
-        const y = parseFloat((parseInt(offM[2])/914400).toFixed(3));
-        const w = parseFloat((parseInt(extM[1])/914400).toFixed(3));
-        const h = parseFloat((parseInt(extM[2])/914400).toFixed(3));
-        const texts = [...sh.matchAll(/<a:t>([^<]+)<\/a:t>/g)].map(m2=>decodeXml(m2[1]));
-        const fullText = texts.join(' ').trim();
-        if (!fullText) return;
-        const szM = sh.match(/<a:sz>(\d+)<\/a:sz>/);
-        const fontSize = szM ? parseInt(szM[1])/100 : 10;
-        const isBold = sh.includes('<a:b/>') || sh.includes('<a:b val="1"');
-        const colorM = sh.match(/<a:solidFill>[\s\S]*?<a:srgbClr val="([^"]+)"/);
-        const color = colorM ? colorM[1] : BDC.WHITE;
-
-        pptSlide.addText(fullText, {
-            x, y, w, h: Math.max(h, 0.2),
-            fontSize: Math.min(Math.max(Math.round(fontSize/2)*2, 8), 48),
-            bold: isBold,
-            color,
-            fontFace: isBold ? BDC.FONT_BOLD : BDC.FONT_TITLE,
-            valign: 'top'
-        });
-    });
-
-    if (fs.existsSync(CLOSING_DIR)) {
-        const logo = path.join(CLOSING_DIR, 'image-10-1.png');
-        const person = path.join(CLOSING_DIR, 'image-10-2.png');
-        if (fs.existsSync(logo))   pptSlide.addImage({ path: logo,   x: 0.16, y: 0.10, w: 1.50, h: 0.40 });
-        if (fs.existsSync(person)) pptSlide.addImage({ path: person, x: 7.50, y: 2.20, w: 2.10, h: 2.10, rounding: true });
-    }
-}
-
-// ─────────────────────────────────────────────────────────────────────────────
-// SLIDE RENDERER — applies BDC design to one slide
-// ─────────────────────────────────────────────────────────────────────────────
-function renderSlide(pres, slideData, slideNum, totalSlides) {
-    const dark = isDark(slideData.index);
-    const bg   = dark ? BDC.DARK_BG : BDC.LIGHT_BG;
-    const titleColor  = dark ? BDC.WHITE : BDC.DARK_TEXT;
-    const bodyColor   = dark ? BDC.BODY_DARK : BDC.BODY_LIGHT;
-    const subColor    = dark ? 'A0A0A4' : BDC.SUB_LIGHT;
-    const accentColor = BDC.ACCENT_LIGHT;
-    const lineColor   = dark ? BDC.DIVIDER_DARK : BDC.DIVIDER_LIGHT;
-    const cardBg      = BDC.ACCENT;
-    const cardText    = BDC.WHITE;
-
-    const layout = detectLayout(slideData);
-
-    // Cover slide
-    if (layout === 'COVER') {
-        const pptSlide = pres.addSlide();
-        const coverBg = randomCoverBg();
-        if (coverBg) pptSlide.addImage({ path: coverBg, x: 0, y: 0, w: BDC.SLIDE_W, h: BDC.SLIDE_H, sizing: { type: 'cover' }});
-        pptSlide.background = { color: '0A0A0A' };
-
-        pptSlide.addShape(pres.shapes.RECTANGLE, { x: 0, y: 0, w: BDC.SLIDE_W, h: BDC.SLIDE_H,
-            fill: { color: '000000', transparency: 50 }, line: { color: '000000', transparency: 100 } });
-
-        pptSlide.addText('BOMBAYDC', { x: 0.20, y: 0.14, w: 3.0, h: 0.30,
-            fontSize: 10, bold: true, color: BDC.WHITE, fontFace: BDC.FONT_BOLD, charSpacing: 1.5 });
-        pptSlide.addText('bombaydc.com', { x: 7.60, y: 0.14, w: 2.20, h: 0.30,
-            fontSize: 8, color: 'AAAAAA', fontFace: BDC.FONT_BODY, align: 'right' });
-        pptSlide.addShape(pres.shapes.LINE, { x: 0.16, y: 0.50, w: 9.68, h: 0,
-            line: { color: '555558', width: 0.5 } });
-
-        pptSlide.addText(slideData.title, {
-            x: 1.00, y: 1.80, w: 8.00, h: 1.60,
-            fontSize: 36, bold: false, color: BDC.WHITE, fontFace: BDC.FONT_TITLE,
-            valign: 'middle', wrap: true
-        });
-        if (slideData.subtitle) {
-            pptSlide.addText(slideData.subtitle, {
-                x: 1.00, y: 3.50, w: 7.00, h: 0.60,
-                fontSize: 10, color: 'C0C0C4', fontFace: BDC.FONT_BODY
+        function recordOccupiedBox(box) {
+            occupiedBoxes.push({
+                x: box.x,
+                y: box.y,
+                w: box.w,
+                h: box.h,
+                bottom: parseFloat((box.y + box.h).toFixed(3)),
+                txt: box.txt || ""
             });
         }
-        return;
-    }
 
-    const pptSlide = pres.addSlide();
-    pptSlide.background = { color: bg };
-
-    pptSlide.addText('BOMBAYDC', { x: 0.20, y: 0.14, w: 3.0, h: 0.30,
-        fontSize: 10, bold: true, color: dark ? BDC.WHITE : BDC.DARK_TEXT,
-        fontFace: BDC.FONT_BOLD, charSpacing: 1.5 });
-    pptSlide.addText('bombaydc.com', { x: 7.60, y: 0.14, w: 2.20, h: 0.30,
-        fontSize: 8, color: dark ? '888888' : '888888', fontFace: BDC.FONT_BODY, align: 'right' });
-    pptSlide.addShape(pres.shapes.LINE, { x: 0.16, y: 0.50, w: 9.68, h: 0,
-        line: { color: dark ? '333336' : 'CCCCCC', width: 0.5 } });
-
-    pptSlide.addText(`${slideNum}`, {
-        x: 0.16, y: 0.57, w: 1.68, h: 0.33,
-        fontSize: 18, bold: false,
-        color: dark ? '5A5A5E' : '9A9A9E',
-        fontFace: BDC.FONT_TITLE, valign: 'top'
-    });
-
-    const titleIsLong = slideData.title.length > 38;
-    pptSlide.addText([
-        { text: slideData.title.toUpperCase(), options: {
-            color: titleColor, fontSize: 18, bold: false, fontFace: BDC.FONT_TITLE,
-            breakLine: titleIsLong || !!slideData.subtitle, charSpacing: 0.3
-        }},
-        ...(!titleIsLong && slideData.subtitle ? [{ text: slideData.subtitle, options: {
-            color: subColor, fontSize: 8, bold: false, fontFace: BDC.FONT_BODY,
-            paraSpaceBefore: 2
-        }}] : [])
-    ], { x: 1.99, y: 0.57, w: 7.85, h: 0.76, valign: 'top', margin: [0,0,0,0] });
-
-    pptSlide.addShape(pres.shapes.LINE, { x: 0.16, y: BDC.HEADER_Y, w: 9.68, h: 0,
-        line: { color: lineColor, width: 0.5 } });
-
-    const contentY = BDC.CONTENT_Y + (titleIsLong && slideData.subtitle ? 0.30 : 0);
-    if (titleIsLong && slideData.subtitle) {
-        pptSlide.addText(slideData.subtitle, {
-            x: 1.99, y: BDC.CONTENT_Y, w: 7.85, h: 0.26,
-            fontSize: 8, color: subColor, fontFace: BDC.FONT_BODY, valign: 'top', margin: [0,0,0,0]
-        });
-    }
-
-    if (layout === 'NARRATIVE') {
-        const bodyItems = slideData.items.filter(i => i.type === 'body');
-        let curY = contentY;
-        bodyItems.forEach(item => {
-            const runs = [];
-            if (item.text) {
-                runs.push({ text: item.text, options: { color: bodyColor, fontSize: 8, fontFace: BDC.FONT_BODY, breakLine: true, paraSpaceAfter: 3 }});
+        function resolveVerticalCollision(proposedX, proposedY, proposedW, proposedH, minGap = SPACING.SM) {
+            let adjustedY = proposedY;
+            for (const prev of occupiedBoxes) {
+                const hOverlap = (proposedX < prev.x + prev.w - 0.06) && (proposedX + proposedW > prev.x + 0.06);
+                if (hOverlap) {
+                    if (adjustedY < prev.bottom + minGap) {
+                        adjustedY = parseFloat((prev.bottom + minGap).toFixed(3));
+                    }
+                }
             }
-            if (item.bullets && item.bullets.length) {
-                item.bullets.forEach(b => {
-                    runs.push({ text: `• ${b}`, options: { color: bodyColor, fontSize: 8, fontFace: BDC.FONT_BODY, breakLine: true, paraSpaceAfter: 2 }});
+            return adjustedY;
+        }
+
+        shapes.forEach(shapeObj => {
+            const spXml = shapeObj.xml;
+            const shapeTag = shapeObj.tag;
+
+            const offMatch = spXml.match(/<a:off x="(\d+)" y="(\d+)"\/>/);
+            const extMatch = spXml.match(/<a:ext cx="(\d+)" cy="(\d+)"\/>/);
+            
+            if (!offMatch || !extMatch) return;
+
+            const origX = parseFloat((parseInt(offMatch[1]) / 914400).toFixed(3));
+            const origY = parseFloat((parseInt(offMatch[2]) / 914400).toFixed(3));
+            let x = origX;
+            let y = origY;
+            let w = parseFloat((parseInt(extMatch[1]) / 914400).toFixed(3));
+            let h = parseFloat((parseInt(extMatch[2]) / 914400).toFixed(3));
+
+            if (w >= 9.9 && h >= 5.5 && shapeTag !== '<p:pic>') return;
+
+            if (shapeTag !== '<p:pic>' && !spXml.includes('<a:t>')) {
+                const _spPrDecor = spXml.match(/<p:spPr>[\s\S]*?<\/p:spPr>/);
+                const _fillDecor = _spPrDecor ? _spPrDecor[0].match(/<a:solidFill>[\s\S]*?<a:srgbClr val="([^"]+)"/) : null;
+                const _fColorDecor = _fillDecor ? _fillDecor[1].toUpperCase() : null;
+                if (_fColorDecor && ["034E48","1D1D1F","121212","000000","0F2C28","1C1C1E","0A3B36"].includes(_fColorDecor)
+                    && w > 7.0 && h > 0 && h < 0.65) return;
+            }
+
+            const rawTxtForCheck = [...spXml.matchAll(/<a:t>([^<]+)<\/a:t>/g)].map(m => m[1]).join(' ').replace(/\s+/g, ' ').trim();
+            const cleanTxtForCheck = decodeXmlEntities(rawTxtForCheck);
+
+            // FIX: Cover slide â€” skip header-bar text shapes AND floating bombaydc.com URL anywhere on cover
+            if (sIdx === 0 && spXml.includes('<a:t>') && origY < 0.65) return;
+            if (sIdx === 0 && (cleanTxtForCheck === 'bombaydc.com' || cleanTxtForCheck.toLowerCase() === 'bombaydc.com' || cleanTxtForCheck === 'BOMBAYDC' || cleanTxtForCheck.toLowerCase().includes('www.bombaydc'))) return;
+
+            // FIX: Skip CATEGORY / DESCRIPTION table-header labels everywhere (layout engine handles spacing; we don't render them)
+            if (!isClosingSlide && (cleanTxtForCheck === "CATEGORY" || cleanTxtForCheck === "DESCRIPTION")) return;
+
+            if (!isClosingSlide && sIdx > 0 && spXml.includes('<a:t>')) {
+                const szMatch = spXml.match(/sz="(\d+)"/);
+                const fontSize = szMatch ? parseFloat((parseInt(szMatch[1]) / 100).toFixed(1)) : 0;
+                
+                if (origY < 0.60 && (cleanTxtForCheck === "BOMBAYDC" || cleanTxtForCheck.includes("bombaydc.com") || (origX < 0.5 && fontSize < 12) || (origX > 7.0 && fontSize < 12))) return;
+
+                if (origY < 0.85 && fontSize >= 16 && origX >= 1.8) return;
+                if (headerTitleText && cleanTxtForCheck.toUpperCase() === headerTitleText) return;
+                if (headerTitleText && cleanTxtForCheck.length > 10 && headerTitleText.includes(cleanTxtForCheck.toUpperCase())) return;
+
+                if (origY >= 0.75 && origY <= 1.30 && w >= 5.0 && fontSize < 14 && fontSize > 0) return;
+                if (headerSublineText && cleanTxtForCheck === headerSublineText) return;
+                if (headerSublineText && cleanTxtForCheck.length > 8 && (headerSublineText.includes(cleanTxtForCheck) || cleanTxtForCheck.includes(headerSublineText.substring(0, 15)))) return;
+            }
+
+            // Match card pill or text shape via cardRowMap (ONLY FOR SHAPES w < 4.0!)
+            let isRowMapElement = false;
+            let matchedCardInfo = null;
+
+            if (w < 4.0 && !isClosingSlide && cardPills.length >= 2) {
+                let matchingPill = null;
+                let bestPillY = -1;
+                cardPills.forEach(p => {
+                    if (Math.abs(p.x - origX) < 0.40 && (origY >= p.y - 0.08)) {
+                        if (p.y > bestPillY) {
+                            bestPillY = p.y;
+                            matchingPill = p;
+                        }
+                    }
                 });
-            }
-            if (!runs.length) return;
-            const h = Math.min(0.20 + (item.bullets?.length || 0) * 0.18, BDC.MAX_Y - curY);
-            pptSlide.addText(runs, { x: 1.99, y: curY, w: 7.85, h, valign: 'top', margin: [0,0,0,0] });
-            curY += h + 0.10;
-        });
-    }
 
-    else if (layout === 'TWO_COLUMN') {
-        const [col1, col2] = slideData.items.filter(i => i.type === 'column');
-        const COL_W = 3.75;
-        const COL2X = 5.95;
-        [
-            { col: col1, x: 1.99 },
-            { col: col2, x: COL2X }
-        ].forEach(({ col, x }) => {
-            if (!col) return;
-            if (col.header) {
-                pptSlide.addText(col.header, {
-                    x, y: contentY, w: COL_W, h: 0.22,
-                    fontSize: 8, bold: true, color: accentColor,
-                    fontFace: BDC.FONT_BOLD, charSpacing: 0.5, valign: 'top', margin:[0,0,0,0]
+                if (matchingPill) {
+                    const pillKey = `${matchingPill.x.toFixed(2)}_${matchingPill.y.toFixed(2)}`;
+                    if (cardRowMap[pillKey]) {
+                        const rowInfo = cardRowMap[pillKey];
+                        x = rowInfo.cardX;
+                        if (origY <= matchingPill.y + 0.30) {
+                            y = rowInfo.cardY;
+                            matchedCardInfo = { cardX: rowInfo.cardX, cardY: rowInfo.cardY, textY: rowInfo.textY, isHeader: true };
+                        } else {
+                            y = rowInfo.textY;
+                            matchedCardInfo = { cardX: rowInfo.cardX, cardY: rowInfo.cardY, textY: rowInfo.textY, isHeader: false };
+                        }
+                        isRowMapElement = true;
+                    }
+                }
+            }
+
+            if (!isClosingSlide && origY >= 1.35 && !isRowMapElement) {
+                const origYKey = origY.toFixed(2);
+                if (rowLayoutMap[origYKey] !== undefined) {
+                    y = rowLayoutMap[origYKey].finalY;
+                } else {
+                    y = origY + movedSublineShift;
+                }
+            }
+
+            const hasTxBody = spXml.includes('<a:t>');
+            const spPrMatch = spXml.match(/<p:spPr>[\s\S]*?<\/p:spPr>/);
+            const spPrXml = spPrMatch ? spPrMatch[0] : "";
+            const fillMatch = spPrXml.match(/<a:solidFill>[\s\S]*?<a:srgbClr val="([^"]+)"/);
+            let shapeBgFill = fillMatch ? fillMatch[1] : null;
+
+            if (!isClosingSlide && shapeBgFill && ["1A3632", "224B12", "4DB89A", "0A3B36", "08322D", "0D524A", "004B44", "024E48", "034D47"].includes(shapeBgFill.toUpperCase())) {
+                shapeBgFill = "034E48";
+            }
+
+            const isLine = (shapeTag === '<p:cxnSp>' || spPrXml.includes('prst="line"') || h === 0 || w === 0) && !hasTxBody;
+
+            // Constrain 2-column side-by-side widths when there is a side-by-side column OR image at the same vertical position (TEXT SHAPES ONLY)
+            if (!isClosingSlide && !isLine && hasTxBody && origY > 1.4) {
+                if (x >= 1.8 && x < 5.0 && w > 4.0) {
+                    const hasRightColOrPic = shapes.some(otherSh => {
+                        if (otherSh === shapeObj) return false;
+                        const oOff = otherSh.xml.match(/<a:off x="(\d+)" y="(\d+)"\/>/);
+                        if (!oOff) return false;
+                        const ox = parseFloat((parseInt(oOff[1]) / 914400).toFixed(3));
+                        const oy = parseFloat((parseInt(oOff[2]) / 914400).toFixed(3));
+                        const isRightCol = (ox >= 5.0 && Math.abs(oy - origY) < 0.40 && otherSh.xml.includes('<a:t>'));
+                        const isRightPic = (otherSh.tag === '<p:pic>' && ox >= 5.0);
+                        return isRightCol || isRightPic;
+                    });
+                    if (hasRightColOrPic) {
+                        w = 3.75;
+                    }
+                }
+                if (x >= 5.0 && x + w > 9.84) {
+                    w = parseFloat((9.84 - x).toFixed(3));
+                }
+            }
+
+            if (shapeTag === '<p:pic>') {
+                const rEmbedMatch = spXml.match(/r:embed="([^"]+)"/);
+                if (rEmbedMatch && relMap[rEmbedMatch[1]]) {
+                    const imgFile = relMap[rEmbedMatch[1]];
+                    if (fs.existsSync(imgFile)) {
+                        if (w >= 9.9 && h >= 5.5) return;
+                        const isProfilePic = isClosingSlide && (w < 2.0 && y > 2.0);
+                        pptSlide.addImage({ path: imgFile, x, y, w, h, rounding: isProfilePic });
+                        recordOccupiedBox({ x, y, w, h, txt: "[IMAGE]" });
+                    }
+                }
+                return;
+            }
+
+            if (isLine && (w > 0 || h > 0)) {
+                const isVertical = (w === 0 || (h > 0 && w < 0.1));
+                const lnColorMatch = spPrXml.match(/<a:ln[\s\S]*?<a:srgbClr val="([^"]+)"/);
+                let lnColor = lnColorMatch ? lnColorMatch[1] : "B4B4B4";
+                
+                const wMatch = spPrXml.match(/<a:ln w="(\d+)"/);
+                const nativeW = wMatch ? parseFloat((parseInt(wMatch[1]) / 12700).toFixed(2)) : 0.5;
+                const finalWidth = isClosingSlide ? nativeW : (isVertical ? 0.30 : 0.50);
+
+                let lineY = y;
+                if (!isClosingSlide && !isVertical && origY >= 0.90 && origY <= 1.50) {
+                    lineY = SPACING.HEADER_DIVIDER_Y;
+                } else if (!isClosingSlide && !isVertical && origY > 1.50 && origY < 1.90 && hasCategoryHeader) {
+                    // Skip obsolete CATEGORY header line (1.850 in source) because CATEGORY header was skipped
+                    return;
+                } else if (!isClosingSlide && !isVertical && rowLineYMap[origY.toFixed(2)] !== undefined) {
+                    lineY = rowLineYMap[origY.toFixed(2)];
+                } else if (!isClosingSlide && !isVertical && origY >= 2.80 && origY <= 3.00 && w < 4.0 && !isTimelineOrRowListSlide) {
+                    lineY = 2.915 + movedSublineShift;
+                } else if (!isClosingSlide && !isVertical && origY > 1.50) {
+                    let prevBottomInCol = SPACING.HEADER_DIVIDER_Y;
+                    for (const prev of occupiedBoxes) {
+                        if (x < prev.x + prev.w && x + w > prev.x) {
+                            if (prev.bottom > prevBottomInCol) prevBottomInCol = prev.bottom;
+                        }
+                    }
+                    if (prevBottomInCol > SPACING.HEADER_DIVIDER_Y && (lineY - prevBottomInCol > SPACING.XL)) {
+                        lineY = parseFloat((prevBottomInCol + SPACING.SM).toFixed(3));
+                    } else {
+                        lineY = resolveVerticalCollision(x, lineY, w, 0.05, SPACING.XS);
+                    }
+                }
+
+                if (!isClosingSlide) {
+                    const isHeaderLine = (lineY <= 1.36);
+                    lnColor = isDarkThemeSlide
+                        ? (isHeaderLine ? "555558" : "38383C")
+                        : (isHeaderLine ? "B0B0B4" : "D4D4D8");
+                }
+
+                pptSlide.addShape(pres.shapes.LINE, {
+                    x, y: lineY, 
+                    w: isVertical ? 0 : w, 
+                    h: isVertical ? h : 0,
+                    line: { color: lnColor, width: finalWidth, transparency: isClosingSlide ? 0 : 20 }
                 });
-                pptSlide.addShape(pres.shapes.LINE, { x, y: contentY + 0.26, w: COL_W, h: 0,
-                    line: { color: dark ? '38383C' : 'D4D4D8', width: 0.35 }});
-            }
-            const bodyRuns = col.bullets.map(b => ({
-                text: `• ${b}`, options: { color: bodyColor, fontSize: 8, fontFace: BDC.FONT_BODY, breakLine: true, paraSpaceAfter: 2 }
-            }));
-            if (bodyRuns.length) {
-                pptSlide.addText(bodyRuns, { x, y: contentY + 0.32, w: COL_W, h: BDC.MAX_Y - contentY - 0.32,
-                    valign: 'top', margin: [0,0,0,0] });
-            }
-        });
-    }
 
-    else if (layout === 'THREE_COLUMN') {
-        const cols = slideData.items.filter(i => i.type === 'column').slice(0,3);
-        const COL_W = 2.55;
-        const startX = 1.99;
-        const gap = 0.15;
-        cols.forEach((col, ci) => {
-            const cx = startX + ci * (COL_W + gap);
-            if (col.header) {
-                pptSlide.addText(col.header, {
-                    x: cx, y: contentY, w: COL_W, h: 0.22,
-                    fontSize: 8, bold: true, color: accentColor,
-                    fontFace: BDC.FONT_BOLD, charSpacing: 0.4, valign: 'top', margin:[0,0,0,0]
+                if (!isVertical && lineY > 1.36) {
+                    recordOccupiedBox({ x, y: lineY, w, h: 0.05, txt: "[DIVIDER LINE]" });
+                }
+                return;
+            }
+
+            const origHasFill = shapeBgFill && shapeBgFill !== "none";
+            const isCardPillShape = (origHasFill && w < 4.0 && ["034E48", "1C1C1E", "333333", "222222", "1E1E1E", "4DB89A", "2A2A2C"].includes(shapeBgFill.toUpperCase())) ||
+                                    allCardPills.some(p => Math.abs(p.x - origX) < 0.35 && Math.abs(p.y - origY) < 0.35);
+
+            // Detect single-letter acronym boxes (B, E, A, M etc.) â€” preserve original height
+            const spFirstTxt = [...spXml.matchAll(/<a:t>([^<]+)<\/a:t>/g)].map(m => m[1]).join('').trim();
+            const spFirstSzM = spXml.match(/sz="(\d+)"/);
+            const spFirstFs = spFirstSzM ? parseInt(spFirstSzM[1]) / 100 : 0;
+            const isAcronymLetter = isCardPillShape && spFirstTxt.length <= 2 && spFirstFs >= 36;
+
+            const CARD_PILL_HEIGHT = SPACING.CARD_PILL_H;
+            if (isCardPillShape && !isClosingSlide) {
+                // Always use green (034E48) â€” on dark slides 1C1C1E is invisible against 121212 background
+                shapeBgFill = "034E48";
+                if (h < CARD_PILL_HEIGHT) h = CARD_PILL_HEIGHT;
+            }
+
+            // Draw card pill rectangles â€” use full original height for acronym letter boxes
+            if (shapeBgFill && shapeBgFill !== "none" && isCardPillShape) {
+                const boxPosKey = `${Math.round(x * 10)}_${Math.round(y * 10)}`;
+                if (!renderedCardBoxes.has(boxPosKey)) {
+                    renderedCardBoxes.add(boxPosKey);
+                    const pillDrawH = isAcronymLetter ? h : CARD_PILL_HEIGHT;
+                    pptSlide.addShape(pres.shapes.RECTANGLE, {
+                        x, y, w, h: pillDrawH,
+                        fill: { color: shapeBgFill },
+                        line: { color: shapeBgFill, width: 0 }
+                    });
+                    recordOccupiedBox({ x, y, w, h: pillDrawH, txt: "[CARD PILL]" });
+                }
+            }
+
+            // Draw wide section-header banners (e.g. "Illustrative use cases" with dark fill, w>=4.0)
+            if (!isClosingSlide && hasTxBody && origHasFill &&
+                ["034E48", "1C1C1E"].includes(shapeBgFill.toUpperCase()) && w >= 4.0 && h <= 0.55) {
+                const bannerH = Math.max(h, 0.28);
+                pptSlide.addShape(pres.shapes.RECTANGLE, {
+                    x, y, w, h: bannerH,
+                    fill: { color: "034E48" },
+                    line: { color: "034E48", width: 0 }
                 });
-                pptSlide.addShape(pres.shapes.LINE, { x: cx, y: contentY + 0.26, w: COL_W, h: 0,
-                    line: { color: dark ? '38383C' : 'D4D4D8', width: 0.35 }});
+                recordOccupiedBox({ x, y, w, h: bannerH, txt: "[SECTION BANNER]" });
             }
-            const bodyRuns = col.bullets.map(b => ({
-                text: `• ${b}`, options: { color: bodyColor, fontSize: 8, fontFace: BDC.FONT_BODY, breakLine: true, paraSpaceAfter: 2 }
-            }));
-            if (bodyRuns.length) {
-                pptSlide.addText(bodyRuns, { x: cx, y: contentY + 0.32, w: COL_W, h: BDC.MAX_Y - contentY - 0.32,
-                    valign: 'top', margin:[0,0,0,0] });
+
+            if (hasTxBody) {
+                const txBodyMatch = spXml.match(/<p:txBody>[\s\S]*?<\/p:txBody>/) || spXml.match(/<a:txBody>[\s\S]*?<\/a:txBody>/);
+                if (txBodyMatch) {
+                    const pMatches = [...txBodyMatch[0].matchAll(/<a:p>[\s\S]*?<\/a:p>/g)];
+                    const textRuns = [];
+                    let maxFontSize = 8.55;
+
+                    pMatches.forEach((p, pIdx) => {
+                        const pXml = p[0];
+                        let isBold = pXml.includes('b="1"') || pXml.includes('b="true"');
+                        const isBullet = pXml.includes('<a:buChar') || pXml.includes('<a:buAutoNum');
+                        const szMatch = pXml.match(/sz="(\d+)"/);
+                        
+                        let fontSize = szMatch ? parseFloat((parseInt(szMatch[1]) / 100).toFixed(1)) : 8.55;
+                        
+                        const isDarkCardBg = ["034E48", "1C1C1E", "333333", "222222", "1E1E1E"].includes((shapeBgFill || "").toUpperCase());
+                        const isDarkContext = isDarkThemeSlide || isDarkCardBg;
+                        let color = isDarkContext ? "FFFFFF" : "1D1D1F";
+
+                        const clrMatch = pXml.match(/<a:solidFill>[\s\S]*?<a:srgbClr val="([^"]+)"/) || pXml.match(/<a:rPr[\s\S]*?<a:srgbClr val="([^"]+)"/);
+                        if (clrMatch) {
+                            const cVal = clrMatch[1].toUpperCase();
+                            if (cVal === "4DB89A" || cVal === "034E48" || cVal === "0A3B36" || cVal === "08322D") {
+                                color = isDarkContext ? "4DB89A" : "034E48";
+                            }
+                        }
+
+                        const rawTxt = [...pXml.matchAll(/<a:t>([^<]+)<\/a:t>/g)].map(m => m[1]).join('');
+                        const cleanTxt = decodeXmlEntities(rawTxt);
+                        const isHugeTitle = cleanTxt.includes("LET'S BUILD") || cleanTxt.includes("WHAT'S NEXT");
+
+                        const isColumnCategoryTitle = (!isClosingSlide && origY >= 2.2 && origY <= 3.0 && w <= 3.4 && cleanTxt.length < 40 && !isBullet && !cleanTxt.includes('.'));
+                        const isBottomSectionHeader = (!isClosingSlide && (cleanTxt.startsWith("New team structure:") || cleanTxt.startsWith("Illustrative use cases") || cleanTxt.startsWith("The result:") || cleanTxt.startsWith("What enterprises now expect:") || cleanTxt.startsWith("85% client repeat") || cleanTxt.startsWith("What the platform")));
+                        const isTimelineBadge = (!isClosingSlide && (cleanTxt.endsWith("Days") || cleanTxt.endsWith("Weeks") || cleanTxt.endsWith("Months") || cleanTxt.startsWith("Phase") || cleanTxt.startsWith("Step")));
+
+                        if (isHugeTitle) {
+                            fontSize = 36.0;
+                            isBold = false;
+                            color = "ECE9E4";
+                        } else if (cleanTxt && cleanTxt.trim().length <= 2 && (fontSize >= 28 || fontSize >= 50)) {
+                            fontSize = 48.0;
+                            isBold = false;
+                            color = isDarkContext ? "ECE9E4" : "034E48";
+                        } else if (isTimelineBadge) {
+                            fontSize = 8.0;
+                            isBold = true;
+                            color = isDarkContext ? "4DB89A" : "034E48";
+                        } else if (sIdx === 0 && fontSize >= 24) {
+                            fontSize = 28.0;
+                            color = "FFFFFF";
+                        } else if (!isClosingSlide) {
+                            if (fontSize >= 16 || (origY < 1.35 && origX >= 1.8)) {
+                                fontSize = 18.8;
+                                color = isDarkContext ? "FFFFFF" : "1A1A1A";
+                            } else if (fontSize >= 10.0 || isColumnCategoryTitle || isBottomSectionHeader || (cleanTxt === cleanTxt.toUpperCase() && cleanTxt.length < 50 && !isBullet && !cleanTxt.includes('.')) || cleanTxt.endsWith(':')) {
+                                fontSize = 8.0; // 8pt bold inside card boxes and category headers
+                                isBold = true;
+                                if (isDarkContext) {
+                                    color = isDarkCardBg ? "4DB89A" : "FFFFFF";
+                                } else {
+                                    color = "034E48";
+                                }
+                            } else {
+                                fontSize = 8.0; // Standard body text font size (8pt)
+                                if (isDarkContext) {
+                                    color = "FFFFFF";
+                                } else {
+                                    color = "2C2C2E";
+                                }
+                            }
+                        }
+
+                        if (fontSize > maxFontSize) maxFontSize = fontSize;
+
+                        if (cleanTxt) {
+                            const finalRunColor = (isCardPillShape || (matchedCardInfo && matchedCardInfo.isHeader)) ? "FFFFFF" : color;
+                            textRuns.push({
+                                text: (isBullet ? "â€¢ " : "") + cleanTxt,
+                                options: {
+                                    color: finalRunColor,
+                                    fontSize: toEvenPt(fontSize),
+                                    bold: isHugeTitle ? false : isBold,
+                                    fontFace: isHugeTitle ? "Inter" : (isClosingSlide ? (isBold ? "Inter Bold" : "Inter") : (isBold ? "Inter Medium" : "Inter")),
+                                    breakLine: pIdx < pMatches.length - 1,
+                                    paraSpaceAfter: isBullet ? 2.0 : (pMatches.length > 5 ? 1.5 : 3.0),
+                                    paraSpaceBefore: (!isBullet && pIdx > 0 && cleanTxt.length > 5) ? (pMatches.length > 5 ? 1.5 : 2.5) : 0
+                                }
+                            });
+                        }
+                    });
+
+                    if (textRuns.length > 0) {
+                        const isHeaderOnPill = matchedCardInfo && matchedCardInfo.isHeader;
+                        let align = isHeaderOnPill ? "center" : "left";
+                        let valign = isHeaderOnPill ? "middle" : "top";
+
+                        let finalY = y;
+                        let estH = calculateTextShapeHeight(spXml, w, maxFontSize);
+                        // Acronym letters (B/E/A/M): use original shape height, not 0.50in pill height
+                        const isAcronymTextBox = maxFontSize >= 36 && cleanTxtForCheck.trim().length <= 2;
+                        let finalH = isAcronymTextBox ? h
+                                   : isHeaderOnPill ? SPACING.CARD_PILL_H
+                                   : parseFloat(Math.max(0.20, estH).toFixed(2));
+
+                        if (sIdx === 0) {
+                            if (cleanTxtForCheck.includes("CONFIDENTIAL") || cleanTxtForCheck.includes("PROPRIETARY")) {
+                                x = 0.50;
+                                finalY = 4.96;
+                                w = 3.60;
+                                finalH = 0.35;
+                            } else if (cleanTxtForCheck.includes("Created By")) {
+                                x = 0.50;
+                                finalY = 3.90;
+                                w = 5.50;
+                                finalH = 0.40;
+                            } else {
+                                const isCoverTitle = (maxFontSize >= 20 || cleanTxtForCheck.length > 25 || origY < 2.3);
+                                if (isCoverTitle && coverTitleBottomY === 0) {
+                                    finalY = 1.95;
+                                    const titleLines = Math.max(1, Math.ceil(cleanTxtForCheck.length / 36));
+                                    const realTitleH = parseFloat((titleLines * 0.45).toFixed(2));
+                                    finalH = realTitleH;
+                                    coverTitleBottomY = finalY + realTitleH;
+                                } else {
+                                    finalY = coverTitleBottomY > 0 ? parseFloat((coverTitleBottomY + SPACING.SM).toFixed(2)) : 2.50;
+                                    finalH = 0.50;
+                                    coverTitleBottomY = parseFloat((finalY + finalH).toFixed(2));
+                                }
+                            }
+                        } else if (!isClosingSlide) {
+                            if (!isRowMapElement || (matchedCardInfo && !matchedCardInfo.isHeader)) {
+                                finalY = resolveVerticalCollision(x, finalY, w, finalH, SPACING.SM);
+                            }
+                        }
+
+                        // Prevent cuts / overflow by dynamic height clamping and bottom margin floor protection
+                        if (!isClosingSlide && finalY + finalH > SPACING.CONTENT_MAX_BOTTOM) {
+                            if (finalY + finalH > SPACING.CONTENT_MAX_BOTTOM + 0.15) {
+                                console.warn(`    [OVERFLOW WARNING] Slide ${sNum}: Element at x=${x.toFixed(2)} y=${finalY.toFixed(2)} bottom=${(finalY+finalH).toFixed(2)} exceeds boundary ${SPACING.CONTENT_MAX_BOTTOM}`);
+                            }
+                            finalH = parseFloat((SPACING.CONTENT_MAX_BOTTOM - finalY).toFixed(2));
+                            if (finalH < 0.20) finalH = 0.20;
+                        }
+
+                        const textOpts = {
+                            x, 
+                            y: finalY, 
+                            w, 
+                            h: finalH,
+                            align,
+                            valign,
+                            margin: [0, 0, 0, 0]
+                        };
+
+                        if (maxFontSize >= 40) {
+                            textOpts.lineSpacingMultiple = 1.0;
+                        } else if (maxFontSize >= 16) {
+                            textOpts.lineSpacingMultiple = 1.18;
+                        } else {
+                            textOpts.lineSpacingMultiple = (textRuns.length > 4 || finalH > 1.2) ? 1.22 : 1.28;
+                        }
+
+                        pptSlide.addText(textRuns, textOpts);
+                        recordOccupiedBox({ x, y: finalY, w, h: finalH, txt: cleanTxtForCheck });
+                    }
+                }
             }
         });
+
+        console.log(`  Slide ${sNum}/${slideEntries.length} processed.`);
     }
 
-    else if (layout === 'CARD_GRID') {
-        const cards = slideData.items.filter(i => i.type === 'card');
-        const numCols = Math.min(3, cards.length);
-        const numRows = Math.ceil(cards.length / numCols);
-        const CARD_W  = 2.55;
-        const CARD_H  = 0.50;
-        const TEXT_OFF = 0.58;
-        const COL_GAP = 0.12;
-        const ROW_GAP = 0.85;
-        const startX  = 1.99;
-
-        cards.forEach((card, ci) => {
-            const row = Math.floor(ci / numCols);
-            const col = ci % numCols;
-            const cx = startX + col * (CARD_W + COL_GAP);
-            const cy = contentY + row * (CARD_H + ROW_GAP);
-
-            pptSlide.addShape(pres.shapes.RECTANGLE, { x: cx, y: cy, w: CARD_W, h: CARD_H,
-                fill: { color: cardBg }, line: { color: cardBg, width: 0 } });
-            pptSlide.addText(card.header, { x: cx, y: cy, w: CARD_W, h: CARD_H,
-                fontSize: 8, bold: true, color: cardText, fontFace: BDC.FONT_BOLD,
-                align: 'center', valign: 'middle', margin: [0,0,0,0] });
-
-            if (card.desc) {
-                pptSlide.addText(card.desc, { x: cx, y: cy + TEXT_OFF, w: CARD_W, h: 0.60,
-                    fontSize: 8, color: bodyColor, fontFace: BDC.FONT_BODY,
-                    valign: 'top', margin: [0,0,0,0], wrap: true });
-            }
-        });
-    }
-
-    else if (layout === 'TIMELINE_LIST') {
-        const rows = slideData.items.filter(i => i.type === 'row' || i.type === 'body');
-        const ROW_H  = Math.min(0.50, (BDC.MAX_Y - contentY - 0.20) / Math.max(rows.length, 1));
-        rows.forEach((row, ri) => {
-            const ry = contentY + ri * (ROW_H + 0.18);
-            const label = row.key || row.header || String(ri + 1).padStart(2,'0');
-            const text  = row.text || row.desc || (row.bullets && row.bullets[0]) || '';
-
-            pptSlide.addText(label, { x: 1.99, y: ry, w: 0.60, h: ROW_H,
-                fontSize: 8, bold: true, color: accentColor, fontFace: BDC.FONT_BOLD,
-                valign: 'middle', margin:[0,0,0,0] });
-            pptSlide.addText(text, { x: 2.70, y: ry, w: 7.10, h: ROW_H,
-                fontSize: 8, color: bodyColor, fontFace: BDC.FONT_BODY,
-                valign: 'middle', margin:[0,0,0,0] });
-
-            if (ri < rows.length - 1) {
-                pptSlide.addShape(pres.shapes.LINE, { x: 1.99, y: ry + ROW_H + 0.08, w: 7.85, h: 0,
-                    line: { color: dark ? '2A2A2E' : 'E0E0E4', width: 0.25 }});
-            }
-        });
-    }
-
-    else if (layout === 'ACRONYM_GRID') {
-        const items4 = slideData.items.filter(i => i.type === 'body').slice(0,4);
-        const CELL_W = 1.80;
-        const CELL_H = 0.90;
-        const GAP    = 0.12;
-        const startX = 1.99;
-        items4.forEach((item, ci) => {
-            const cx = startX + ci * (CELL_W + GAP);
-            const cy = contentY;
-            const letter = item.key || String.fromCharCode(66 + ci);
-            pptSlide.addText(letter, { x: cx, y: cy, w: CELL_W, h: CELL_H,
-                fontSize: 48, bold: false, color: accentColor, fontFace: BDC.FONT_TITLE,
-                align: 'center', valign: 'middle' });
-            if (item.text) {
-                pptSlide.addText(item.text, { x: cx, y: cy + CELL_H + 0.06, w: CELL_W, h: 1.0,
-                    fontSize: 8, color: bodyColor, fontFace: BDC.FONT_BODY,
-                    wrap: true, valign: 'top', margin:[0,0,0,0] });
-            }
-        });
-    }
-
-    if (slideData.footnote) {
-        pptSlide.addText(slideData.footnote, {
-            x: 1.99, y: 4.85, w: 7.85, h: 0.22,
-            fontSize: 8, color: subColor, fontFace: BDC.FONT_BODY,
-            valign: 'bottom', margin: [0,0,0,0]
-        });
-    }
+    const outPath = path.join(OUTPUT_DIR, outFileName);
+    await pres.writeFile({ fileName: outPath });
+    console.log(`  ✔ Written to: ${outPath}`);
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-// RENDER FULL DECK
-// ─────────────────────────────────────────────────────────────────────────────
-function renderDeck(slides, outputPath) {
-    const pres = new pptxgen();
-    pres.layout = 'LAYOUT_WIDE';
-    pres.defineLayout({ name: 'LAYOUT_WIDE', width: 10, height: 5.625 });
-
-    slides.forEach((slide, i) => {
-        renderSlide(pres, slide, i + 1, slides.length);
-    });
-
-    addClosingSlide(pres);
-
-    return pres.writeFile({ fileName: outputPath });
-}
-
-// ─────────────────────────────────────────────────────────────────────────────
-// MAIN — scan input/ and convert each file
-// ─────────────────────────────────────────────────────────────────────────────
 async function main() {
     console.log('\n==================================================');
-    console.log('  BombayDC Style Converter');
+    console.log('  BombayDC Standardized Presentation Converter (Trained Engine)');
     console.log('==================================================');
 
     if (!fs.existsSync(INPUT_DIR)) {
         fs.mkdirSync(INPUT_DIR, { recursive: true });
-        console.log(`\n  Created input/ folder. Drop your PPTX, DOCX, or PDF files there and run again.\n`);
+        console.log(`\n  Created input/ folder. Place any .pptx files there and run again.\n`);
         return;
     }
 
     const inputFiles = fs.readdirSync(INPUT_DIR)
-        .filter(f => /\.(pptx|docx|pdf)$/i.test(f))
+        .filter(f => f.toLowerCase().endsWith('.pptx'))
         .map(f => path.join(INPUT_DIR, f));
 
     if (!inputFiles.length) {
-        console.log(`\n  [!] No PPTX, DOCX, or PDF files found in input/\n`);
-        console.log(`  Drop your files into: ${INPUT_DIR}\n`);
+        console.log(`\n  [!] No .pptx files found in input/ folder.`);
+        console.log(`  Drop your presentation files into: ${INPUT_DIR}\n`);
         return;
     }
 
     console.log(`\n  Found ${inputFiles.length} file(s) to convert:\n`);
-    inputFiles.forEach(f => console.log(`  * ${path.basename(f)}`));
+    inputFiles.forEach(f => console.log(`  • ${path.basename(f)}`));
     console.log('');
 
-    for (const filePath of inputFiles) {
-        const ext  = path.extname(filePath).toLowerCase();
-        const base = path.basename(filePath, ext);
-        const out  = path.join(OUTPUT_DIR, `${base}_BDC_Styled.pptx`);
-
-        console.log(`  >> Converting: ${path.basename(filePath)}`);
-
-        try {
-            let slides = [];
-
-            if (ext === '.pptx') {
-                slides = extractPptx(filePath);
-            } else if (ext === '.docx') {
-                slides = await extractDocx(filePath);
-            } else if (ext === '.pdf') {
-                slides = await extractPdf(filePath);
-            }
-
-            if (!slides.length) {
-                console.log(`    [x] No content extracted. Skipping.`);
-                continue;
-            }
-
-            if (slides.length > 1) slides[0].isCover = true;
-
-            await renderDeck(slides, out);
-            console.log(`    [v] Done -> ${path.basename(out)}`);
-
-            const tmpFiles = fs.readdirSync(OUTPUT_DIR).filter(f => f.startsWith('_tmp_'));
-            tmpFiles.forEach(f => { try { fs.unlinkSync(path.join(OUTPUT_DIR, f)); } catch(e){} });
-
-        } catch (err) {
-            console.error(`    [x] Error: ${err.message}`);
-        }
+    for (const inputFilePath of inputFiles) {
+        const fileName = path.basename(inputFilePath);
+        const outFileName = fileName.replace(/\.pptx$/i, '') + '_BDC_Styled.pptx';
+        await processDeck(inputFilePath, outFileName);
     }
 
-    console.log(`\n  [SUCCESS] Output saved to: ${OUTPUT_DIR}`);
-    console.log('==================================================\n');
+    console.log(`\n🎉 All presentations successfully converted with full BombayDC trained engine!`);
+    console.log(`   Output folder: ${OUTPUT_DIR}\n`);
 }
 
 main().catch(console.error);
